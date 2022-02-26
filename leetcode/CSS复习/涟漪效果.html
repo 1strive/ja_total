@@ -1,0 +1,110 @@
+<!--
+ * @Author: JA
+ * @Date: 2021-12-12 12:10:56
+ * @LastEditTime: 2021-12-28 17:06:28
+ * @LastEditors: ja
+-->
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>涟漪效果</title>
+    <style>
+        /* .GreenStetus {
+      width: 1000px;
+      height: 1000px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    } */
+
+
+        /*在本体内实现类似子元素嵌套*/
+        /* .GreenStetus::before {
+      content: "";
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      animation: GreenDot 1.5s ease-out 0s infinite;
+      background-color: rgba(108, 181, 82, 0.5);
+    } */
+
+
+        .outer {
+            margin: 0 auto;
+            width: 1000px;
+            height: 1000px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        .GreenStetus {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            content: "";
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            animation: GreenDot 1.5s ease-out 0s infinite;
+            background-color: rgba(108, 181, 82, 0.5);
+        }
+        .GreenStetus1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            content: "";
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            animation: GreenDot 1.5s ease-out 0s infinite;
+            background-color: rgba(108, 181, 82, 0.5);
+        }
+        .GreenStetus2 {
+            content: "";
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            animation: GreenDot 1.5s ease-out 0s infinite;
+            background-color: rgba(108, 181, 82, 0.5);
+        }
+
+
+        @keyframes GreenDot {
+            0% {
+                transform: scale(0.5);
+                opacity: 1;
+            }
+
+            30% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    用嵌套实现多层涟漪的效果
+    <div class="outer">
+        <div class="GreenStetus">
+            <div class="GreenStetus1">
+                <div class="GreenStetus2"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

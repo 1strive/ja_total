@@ -1,0 +1,39 @@
+<!--
+ * @Author: JA
+ * @Date: 2021-12-11 23:58:46
+ * @LastEditTime: 2021-12-24 15:34:28
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>07_面试题2</title>
+</head>
+
+<body>
+
+  <script type="text/javascript">
+    function fun(n, o) {
+      console.log(o)
+      return {
+        fun: function (m) {
+          return fun(m, n)//此处fun是最外层fun，因为此时fun自身的this是window,此处的n就是起始的n 
+        }
+      }
+    }
+    // var a = fun(3)
+    // a.fun(1)
+    // a.fun(2)
+    // a.fun(3)//undefined,3,3,3
+
+    var b = fun(0).fun(1).fun(2).fun(3)//undefined,0,1,2
+
+  // var c = fun(0).fun(1)
+  // c.fun(2)
+  // c.fun(3)//undefined,0,1,1
+  </script>
+</body>
+
+</html>

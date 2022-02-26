@@ -1,0 +1,86 @@
+<!--
+ * @Author: ja
+ * @Date: 2021-12-30 11:09:38
+ * @LastEditors: ja
+ * @LastEditTime: 2022-01-04 11:14:07
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布订阅</title>
+</head>
+
+<body>
+    <script>
+        //应用场景
+        // 小x用微信点了肯德基，取了个号码 200，接着他不想一直等着，于是去周边转了转
+        // 当小x的餐做好了的时候，微信推送消息 200 号到了，通知小x去取餐
+
+        //发布订阅模式
+        // 小x要点餐，那么小x就是消息的订阅者，即 subscribe
+        // 点餐的渠道是微信，也就是 事件调度中心，即 PubSub
+        // 肯德基通过微信推送消息给小x，告诉他的餐做好了，是消息的发布者，即 publish
+
+
+        // //事件调度中心
+        // function Pubsub() {
+        //     //订阅者集合
+        //     //集合的每个对象都包含了订阅者类型type,及要做的事情callback
+        //     this.subs = {}  //添加属性
+        // }
+
+        // //订阅者订阅
+        // Pubsub.prototype.subscribe = function (type, callback) {
+        //     // 每增加一个订阅者，就将其信息添加到订阅者集合中
+        //     this.subs[type] = callback
+        // }
+
+        // Pubsub.prototype.publish = function (type, message) {
+        //     const callback = this.subs[type]
+        //     callback(`${type},${message}`)
+        // }
+
+        class Pubsub {
+            // 订阅者集合
+            // 集合的每个对象里都包含了订阅者类型 type，及要做的事情 callback
+            subs = {}
+            //订阅者订阅
+            subscribe(type, callback) {
+                //    每增加一个订阅者，就将其信息添加到订阅者集合中
+                //type为方法名，callback为方法
+                this.subs[type] = callback
+            }
+            // 发布者发布
+            publish(type, message) {
+                const callback = this.subs[type]  //匹配相应的回调
+                callback(`${type},${message}`)   //执行订阅时添加的回调方法
+            }
+        }
+
+        //创建一个事件调度中心
+        const pb = new Pubsub()
+        console.log(pb);
+        // 小明在微信点餐了
+        pb.subscribe('小明，200号', (msg) => {
+            console.log('微信通知', msg);
+        })
+        // 小红在微信点餐了
+        pb.subscribe('小红，201号', (msg) => {
+            console.log('微信通知', msg);
+        })
+
+        pb.publish('小明，200号', '您的餐好了')
+
+        pb.publish('小红，201号', '您的餐好了')
+
+
+
+
+    </script>
+</body>
+
+</html>

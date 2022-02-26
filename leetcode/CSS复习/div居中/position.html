@@ -1,0 +1,44 @@
+<!--
+ * @Author: ja
+ * @Date: 2021-12-13 09:54:55
+ * @LastEditors: JA
+ * @LastEditTime: 2021-12-13 17:09:56
+-->
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>position</title>
+    <style>
+        .outer {
+            width: 500px;
+            height: 500px;
+            background-color: #abc;
+            position: relative;
+        }
+
+        .inner {
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+            position: absolute;
+            margin: auto;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+        /*若未确定元素尺寸，则会自动铺满父元素，因为未确定时width和height都是auto，会自动调整*/
+    </style>
+</head>
+
+<body>
+    <div class="outer">
+        <div class="inner"></div>
+    </div>
+</body>
+
+</html>

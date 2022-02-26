@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+        /**
+         * @param {TreeNode} root
+         * @return {number[]}
+         */
+
+        var f1 = () => {
+            const a = 0
+            return a < Number.MIN_VALUE
+        }
+
+        const b = f1()
+        console.log(b);
+
+        var inorderTraversal = function (root) {
+            const ans = []
+            inorder(root, ans)
+            return ans
+
+
+        };
+
+        var isValidBST = function (root) {
+            const res = []
+            inorder(root, res)
+            let ans = true
+            for (let i = 0; i < res.length - 1; i++) {
+                if (res[i] >= res[i + 1]) {
+                    return ans = false
+                }
+            }
+            return ans = true
+
+        };
+
+        var inorder = function (root, ans) {
+            if (root == null) {
+                return
+            }
+
+            inorder(root.left, ans)
+            ans.push(root.val)
+            inorder(root.right, ans)
+
+        };
+
+        var test = (root) => {
+            return help(root,Number.MIN_VALUE,Number.MAX_VALUE)
+
+        }
+
+        var help = (node, lower, higher) => {
+            if (node == null) {
+                return true
+            }
+
+            if (node.val <= lower || node.val >= higher) {
+                return false
+            }
+
+            return help(node.left, lower, node.val) && help(node.right, node.val, higher)
+        }
+
+    </script>
+</body>
+
+</html>

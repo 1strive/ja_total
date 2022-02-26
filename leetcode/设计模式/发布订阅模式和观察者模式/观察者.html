@@ -1,0 +1,95 @@
+<!--
+ * @Author: ja
+ * @Date: 2021-12-30 20:42:58
+ * @LastEditors: ja
+ * @LastEditTime: 2022-01-04 16:21:19
+-->
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>观察者</title>
+</head>
+
+<body>
+    <script>
+        //观察者类拥有两个属性，名称和回调；和一个执行回调的方法
+        class Observer {
+            constructor(type, callback) {
+                this.type = type
+                this.callback = callback
+            }
+
+            // 观察者收到通知后去做的回调
+            update(type) {
+                return this.callback(type)
+            }
+        }
+
+        // 目标类  目标类将观察者添加到一个集合中，之后依次通知；收到通知的观察者会执行自己的方法，调用回调
+        class Subject {
+            // 观察者集合，是个对象数组
+            // 每一项存放的都是一个观察者
+            observers = []
+
+            // 将观察者加入到队列中（赋予观察者排队号码）
+            addObserver(observer) {
+                this.observers.push(observer)
+            }
+
+            // 通知所有观察者事件（通知观察者们当前排到多少号）
+            notify(type) {
+                let who
+                this.observers.forEach((observer, index) => {//forEach语法 arr.forEach(callback(currentValue [, index [, array]])[, thisArg]) ,后三个参数可选，此处index是数组中正在处理的当前元素的索引。
+                    // 这里判断下是否更新完毕（当前观察者是否拿到餐了）
+                    const isUpdate = observer.update(type)
+                    // 若更新完毕，则记录这个观察者
+                    isUpdate && (who = index)
+                })
+
+                // 若有观察者拿到餐了，则将它从观察者集合中移除
+                who !== undefined && this.observers.splice(who, 1)  //array.splice(start[, deleteCount[, item1[, item2[, ...]]]])   从start开始，删除deleteCount个，添加后续参数
+            }
+        }
+
+        function callback(currentType) {
+            if (this.type !== currentType) {
+                console.log(`${this.type}还没排到`);
+                return false
+            }
+
+            console.log(`${this.type}想：排到勒`);
+            return true
+        }
+
+        const ob1 = new Observer('小明，100号', callback)
+        const ob2 = new Observer('小红，101号', callback)
+        const ob3 = new Observer('小花，102号', callback)
+
+        // 肯德基
+        const subject = new Subject()
+
+        // 将三个观察者分别加入到排队队列中
+        subject.addObserver(ob1)
+        subject.addObserver(ob2)
+        subject.addObserver(ob3)
+
+        // console.log(subject.observers);
+
+        // 通知当前号码
+        subject.notify('小明，100号')
+        // 通知当前号码
+        subject.notify('小花，102号')
+
+        // 通知当前号码
+        subject.notify('小红，101号')
+
+
+
+    </script>
+</body>
+
+</html>

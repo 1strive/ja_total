@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function TreeNode(val, left, right) {
+            this.val = (val === undefined ? 0 : val)
+            this.left = (left === undefined ? null : left)
+            this.right = (right === undefined ? null : right)
+        }
+
+
+        var t0 = new TreeNode(1)
+        var t1 = new TreeNode(5)
+        var t2 = new TreeNode(1,t1)
+        var t3 = new TreeNode(5,t0)
+        console.log(t2);
+        console.log(t3);
+
+        const res = []
+        const res1 = []
+        inorder(t3,res,res1)
+        console.log(res);
+        console.log(res1);
+
+
+
+        // foo()
+        // bar()
+        // var foo = function bar(){
+
+        // }
+
+
+
+        // function inorderTraversal(root) {
+        //     const ans = []
+        //     inorder(root, ans)
+        //     return ans
+        // };
+
+        function inorderTraversal(root) {
+            const ans = []
+            inorder(root, ans)
+            return ans
+
+        };
+
+        function inorder(root, ans, res) {
+            if (root == null) {
+                return
+            }
+
+            inorder(root.left, ans,res)
+            ans.push(root.val)
+            inorder(root.right, ans,res)
+
+        };
+
+
+        //变量提升：函数声明会被提升，但是函数表达式不会被提升
+        //函数声明和变量声明都会提升，但是在处理声明中是 函数首先被提升，然后才是变量。
+        // var inorderTraversal = function (root) {
+        //     const ans = []
+        //     inorder(root, ans)
+        //     return ans
+        // };
+
+        // var inorder = (root, ans) => {
+        //     if (root == null) {
+        //         return
+        //     }
+        //     inorder(root.left, ans)
+        //     ans.push(root.val)
+        //     inorder(root.right, ans)
+
+        // };
+
+
+    </script>
+</body>
+
+</html>

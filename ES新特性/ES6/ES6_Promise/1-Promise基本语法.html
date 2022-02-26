@@ -1,0 +1,46 @@
+<!--
+ * @Author: ja
+ * @Date: 2021-12-28 16:07:07
+ * @LastEditors: ja
+ * @LastEditTime: 2021-12-29 19:47:10
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise基本语法</title>
+</head>
+
+<body>
+    <script>
+        //实例化 Promise 对象
+        // 一个 Promise 必然处于以下几种状态之一：
+        // 待定（pending）: 初始状态，既没有被兑现，也没有被拒绝。
+        // 已兑现（fulfilled）: 意味着操作成功完成。
+        // 已拒绝（rejected）: 意味着操作失败。
+        // 1) Promise 构造函数: Promise(excutor {})
+        // 2) Promise.prototype.then 方法  //有两个回调函数，第一个成功，第二个失败
+        // 3) Promise.prototype.catch 方法
+        const p = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+
+                let data = '数据库中的用户数据';
+                resolve(data);
+
+                let err = '数据读取失败';
+                reject(err);
+            }, 1000);
+        });
+
+        //调用 promise 对象的 then 方法
+        p.then(function (value) {
+            console.log(value);
+        }, function (reason) {
+            console.error(reason);
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!--
+ * @Author: ja
+ * @Date: 2021-12-09 19:37:43
+ * @LastEditors: ja
+ * @LastEditTime: 2021-12-27 17:24:35
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var o = {};
+        var bValue = 38;//实现数据劫持，需要使用方法外的值（若直接用添加的属性b，会死循环）
+        Object.defineProperty(o, "b", {
+            // 使用了方法名称缩写（ES2015 特性）
+            // 下面两个缩写等价于：
+            // get : function() { return bValue; },
+            // set : function(newValue) { bValue = newValue; },
+            get() { return bValue; },
+            set(newValue) { bValue = newValue; },
+            enumerable: true,
+            configurable: true
+        });
+
+        console.log(o.b);
+        o.b = 2
+        console.log(o.b);
+       
+    </script>
+</body>
+
+</html>

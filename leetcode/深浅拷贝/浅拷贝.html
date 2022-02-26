@@ -1,0 +1,79 @@
+<!--
+ * @Author: ja
+ * @Date: 2021-12-29 10:30:21
+ * @LastEditors: ja
+ * @LastEditTime: 2021-12-29 15:48:44
+-->
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浅拷贝</title>
+</head>
+
+<body>
+    <script>
+// 浅拷贝：创建一个新对象，这个对象有着原始对象属性值的一份精确拷贝。如果属性是基本类型，
+// 拷贝的就是基本类型的值，如果属性是引用类型，拷贝的就是内存地址 ，所以如果其中一个对象改变了这个地址，就会影响到另一个对象。
+// 深拷贝：将一个对象从内存中完整的拷贝一份出来,从堆内存中开辟一个新的区域存放新对象,且修改新对象不会影响原对象
+
+
+
+
+
+
+        /*  浅拷贝：有两种方式，一种是把一个对象里面的所有的属性值和方法都复制给另一个对象，另一种是直接把一个对象赋给另一个对象，使得两个都指向同一个对象。
+        
+          深拷贝：把一个对象的属性和方法一个个找出来，在另一个对象中开辟对应的空间，一个个存储到另一个对象中。
+        
+          两者就在于，浅拷贝只是简单的复制，对对象里面的对象属性和数组属性只是复制了地址，并没有创建新的相同对象或者数组。而深拷贝是完完全全的复制一份，空间大小占用一样但是位置不同！！
+        */
+        //浅拷贝
+        const obj1 = {
+            age: 10,
+            gender: '男',
+            cars: ['奔驰', '宝马'],
+            f1: function () {
+                console.log(111);
+            },
+            dog: {
+                name: "大黄",
+                age: 5,
+                color: "黑白色"
+            }
+        }
+
+        const obj2 = {}
+
+        console.log(obj1);
+        console.log(obj2);
+
+        //赋值操作（并不能算是浅拷贝，只是一个赋值操作）(此方法基本数据类型也会随之改动，因为obj3和obj1指向的是同一地址)
+        // const obj3 = obj1
+        // console.log(obj3);
+
+        //浅拷贝方法
+        function shallowCopy(obj, targetObj) {//此方法基本数据类型不会随之改动，但引用数据类型会，因为引用数据类型指向的是同一个地址
+            for (let key in obj) {
+                targetObj[key] = obj[key]
+            }
+        }
+
+        shallowCopy(obj1, obj2)
+        console.log(obj2);
+        obj1.age = 22
+        // console.log(obj1.cars === obj2.cars);//true
+        // console.log(obj1.dog == obj2.dog);//true
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

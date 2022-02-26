@@ -1,0 +1,118 @@
+<!--
+ * @Author: ja
+ * @Date: 2022-01-10 16:32:39
+ * @LastEditors: ja
+ * @LastEditTime: 2022-01-11 16:09:13
+-->
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>装饰器模式</title>
+</head>
+
+<body>
+    <script>
+        // 装饰器模式在不改变原类和继承的情况下动态扩展对象功能，通过包装一个对象来实现一个新的具有原对象相同接口的新的对象
+        // 装饰器模式是一种为对象增添特性的技术，它并不使用创建新子类这种手段。装饰器模式可以用来透明地把对象包装在具有同样接口的另一对象之中。这样一来，我们可以给一个方法添加一些行为，
+        // 然后将方法调用传递给原始对象。
+        // 相对于创建子类来说，使用装饰器对象是一种更加灵活的选择。
+        // 优点：：
+        // 不需要修改对象原本的结构来进行功能添加
+        // 装饰对象和原对象具有相同的接口，可以使客户以与原对象相同的方式使用装饰对象
+        // 装饰对象中包含原对象的引用，即装饰对象为真正的原对象在此包装的对象
+        // 缺点：
+        // 在遇到用装饰器包装起来的对象时，那些依赖于类型检查的代码会出问题。
+        // 使用装饰器模式往往会增加架构的复杂程度。
+        // 使用场景:
+        // 如果需要为类增添特性或职责，而从该类派生子类的解决办法并不实际的话，就应该使用装饰器模式。
+
+
+
+        function Sale(price) {
+            this.price = price
+            this.decorators_list = []
+        }
+
+        Sale.prototype.decorate = function (decorator) {
+            this.decorators_list.push(decorator);
+        }
+        // 装饰器的调用
+        Sale.prototype.getPrice = function (decorate) {
+            let price = this.price
+            for (let i = 0; i < this.decorators_list.length; i++) {
+                var name = this.decorators_list[i]
+                price = decorators[name].getPrice(price)
+            }
+            return price
+        }
+
+        //ES6写法
+
+        class Sale1 {
+            decorators_list = []
+            constructor(price) {
+                this.price = price
+            }
+
+            decorate(decorator) {
+                this.decorators_list.push(decorator);
+            }
+
+            getPrice(decorate) {
+                let price = this.price
+                for (let i = 0; i < this.decorators_list.length; i++) {
+                    var name = this.decorators_list[i]
+                    price = decorators[name].getPrice(price)
+                }
+                return price
+            }
+        }
+
+
+        // // 装饰者对象
+        decorators = {};
+
+
+        // 装饰者
+        decorators.centraltax = {
+            getPrice: function (price) {
+                return price * 1.05
+            }
+        }
+
+        decorators.localtax = {
+            getPrice: function (price) {
+                return price * 1.8
+            }
+        }
+
+        decorators.payment = {
+            getPrice: function (price) {
+                return '$' + price.toFixed(2);
+            }
+        }
+
+
+
+        const good = new Sale(500);
+        // 添加需要的装饰器到decorators_list中
+        good.decorate('centraltax');
+        good.decorate('localtax');
+        good.decorate('payment');
+        // 使用
+        console.log(good.getPrice());
+
+        const good1 = new Sale1(600)
+        good1.decorate('centraltax');
+        good1.decorate('localtax');
+        good1.decorate('payment');
+        console.log(good1.getPrice());
+
+    </script>
+</body>
+
+</html>

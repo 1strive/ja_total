@@ -1,0 +1,38 @@
+<!--
+ * @Author: JA
+ * @Date: 2021-12-11 23:58:46
+ * @LastEditTime: 2021-12-23 22:09:24
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03_执行上下文栈</title>
+</head>
+<body>
+<!--
+1. 在全局代码执行前, JS引擎就会创建一个栈来存储管理所有的执行上下文对象
+2. 在全局执行上下文(window)确定后, 将其添加到栈中(压栈)
+3. 在函数执行上下文创建后, 将其添加到栈中(压栈)
+4. 在当前函数执行完后,将栈顶的对象移除(出栈)
+5. 当所有的代码执行完后, 栈中只剩下window
+
+栈先进后出
+-->
+<script type="text/javascript">
+  var a = 10
+  var bar = function (x) {
+    var b = 5
+    foo(x + b)
+  }
+  var foo = function (y) {
+    var c = 5
+    console.log(a + c + y)
+  }
+  bar(10) 
+  //   会产生3个  2+1 （两次bar产生4个 加上一个window）
+</script>
+
+</body>
+</html>

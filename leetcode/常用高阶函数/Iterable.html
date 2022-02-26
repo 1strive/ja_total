@@ -1,0 +1,54 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-01-19 23:13:57
+ * @LastEditTime: 2022-01-19 23:21:48
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iterable</title>
+</head>
+
+<body>
+    <ul>
+        <li>a</li>
+        <li>b</li>
+        <li>c</li>
+        <li>d</li>
+        <li>e</li>
+        <li>f</li>
+        <li>g</li>
+    </ul>
+
+    <script>
+        const isIterable = obj => obj != null
+            && typeof obj[Symbol.iterator] === 'function';
+
+        function iterative(fn) {//判断是否可迭代 进行批量操作
+            return function (subject, ...rest) {
+                if (isIterable(subject)) {
+                    const ret = [];
+                    for (let obj of subject) {
+                        ret.push(fn.apply(this, [obj, ...rest]));
+                    }
+                    return ret;
+                }
+                return fn.apply(this, [subject, ...rest]);
+            }
+        }
+
+        const setColor = iterative((el, color) => {
+            el.style.color = color;
+        });
+
+        const els = document.querySelectorAll('li:nth-child(2n+1)');
+        setColor(els, 'red');
+    </script>
+</body>
+
+</html>

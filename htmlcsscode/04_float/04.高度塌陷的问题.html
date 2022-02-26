@@ -1,0 +1,80 @@
+<!--
+ * @Author: JA
+ * @Date: 2021-12-11 23:57:52
+ * @LastEditTime: 2021-12-13 15:26:58
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .outer {
+            border: 10px red solid;
+
+            /* 
+                BFC(Block Formatting Context) 块级格式化环境
+                    - BFC是一个CSS中的一个隐含的属性，可以为一个元素开启BFC
+                        开启BFC该元素会变成一个独立的布局区域
+                    - 元素开启BFC后的特点：
+                        1.开启BFC的元素不会被浮动元素所覆盖
+                        2.开启BFC的元素子元素和父元素外边距不会重叠
+                        3.开启BFC的元素可以包含浮动的子元素
+
+                    - 可以通过一些特殊方式来开启元素的BFC：
+                        1、设置元素的浮动（不推荐）
+                        2、将元素设置为行内块元素（不推荐）
+                        3、将元素的overflow设置为一个非visible的值
+                            - 常用的方式 为元素设置 overflow:hidden 开启其BFC 以使其可以包含浮动元素
+            
+BFC：块级格式化上下文。它是一个独立的渲染区域，只有Block-level box参与， 它规定了内部的块级元素如何布局，并且与这个区域外部毫不相干。
+只要符合以下的条件就是BFC:
+1) 根元素
+2) float属性不为none
+3) position为absolute或fixed
+4) display为inline-block, table-cell, table-caption, flex, inline-flex
+5) overflow不为visible
+             */
+
+            /* float: left; */
+            /* display: inline-block; */
+            overflow: hidden;
+        }
+
+        .inner {
+            width: 100px;
+            height: 100px;
+            background-color: #bfa;
+
+            /* 
+                高度塌陷的问题：
+                    在浮动布局中，父元素的高度默认是被子元素撑开的，
+                        当子元素浮动后，其会完全脱离文档流，子元素从文档流中脱离
+                        将会无法撑起父元素的高度，导致父元素的高度丢失
+
+                    父元素高度丢失以后，其下的元素会自动上移，导致页面的布局混乱
+
+                    所以高度塌陷是浮动布局中比较常见的一个问题，这个问题我们必须要进行处理！
+             */
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="outer">
+
+        <div class="inner"></div>
+
+    </div>
+
+    <div style="width: 200px;height: 200px;background-color:yellow;"></div>
+
+</body>
+
+</html>

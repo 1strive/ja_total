@@ -1,0 +1,40 @@
+<!--
+ * @Author: JA
+ * @Date: 2021-12-12 12:01:20
+ * @LastEditTime: 2021-12-31 17:52:41
+ * @LastEditors: ja
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>回顾Object.defineproperty方法</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+
+        const Observer = function(data){
+            for(let key in data){
+                dafineReactive(data,key);
+            }
+        }
+
+        const defineReactive = function(obj,key){
+            const dep = new Dep()
+            let val = obj[key]
+            Object.defineProperty(obj,key,{
+                
+            })
+        }
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!--
+ * @Author: ja
+ * @Date: 2022-01-04 21:15:25
+ * @LastEditors: ja
+ * @LastEditTime: 2022-01-11 16:53:50
+-->
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>offer24</title>
+</head>
+
+<body>
+    <script>
+        //   Definition for singly - linked list.
+        function ListNode(val) {
+            this.val = val;
+            this.next = null;
+        }
+
+        const l1 = new ListNode(2)
+        const l2 = new ListNode(4)
+        const l3 = new ListNode(5)
+        const l4 = new ListNode(7)
+        l1.next = l2
+        l2.next = l3
+        l3.next = l4
+        console.log(l1);
+
+
+
+
+
+
+
+        const reverseList = function (head) {
+            let pre = null
+            let cur = head
+            while (cur) {
+                const next = cur.next
+                cur.next = pre
+                pre = cur
+                cur = next
+            }
+            return pre
+
+        };
+
+       const ans =  reverseList(l1)
+       console.log();
+
+
+
+    </script>
+</body>
+
+</html>

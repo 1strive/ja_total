@@ -1,0 +1,43 @@
+<!--
+ * @Author: ja
+ * @Date: 2022-01-13 15:41:54
+ * @LastEditors: ja
+ * @LastEditTime: 2022-01-13 16:58:44
+-->
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <title>lc342</title>
+</head>
+
+<body>
+    <script>
+        // 给定一个整数，写一个函数来判断它是否是 4 的幂次方。如果是，返回 true ；否则，返回 false 。
+
+        // 整数 n 是 4 的幂次方需满足：存在整数 x 使得 n == 4x
+
+        // 递归调用函数时返回的object通过打印有值，但是在获取的时候是undefined，原因是在递归函数内部没有对递归函数进行return，否则外层函数无法接收到返回值。
+        function isPowerOfFour(n) {
+            if (n == 0) return false
+            let m = n % 4
+            if (n == 1 && m == 1) return true
+            if (m) return false
+            n = n / 4
+            return isPowerOfFour(n) //需要对递归的返回值进行return
+        };
+
+        const ans = isPowerOfFour(0)
+        console.log(ans);
+
+
+        var isPowerOfFour1 = function (n) {
+            return n > 0 && (n & (n - 1)) === 0 && (n & 0xaaaaaaaa) === 0;
+        }
+            // (n & (n - 1)) === 0  如果 nn 是 44 的幂，那么 nn 的二进制表示中有且仅有一个 11，并且这个 11 出现在从低位开始的第偶数个二进制位上（这是因为这个 11 后面必须有偶数个 00）。这里我们规定最低位为第 00 位，例如 n=16n=16 时，nn 的二进制表示为(10000)_2(10000) 2唯一的 11 出现在第 44 个二进制位上，因此 nn 是 44 的幂。
+            // (n & 0xaaaaaaaa) === 0;    由于题目保证了 nn 是一个 3232 位的有符号整数，因此我们可以构造一个整数 \textit{mask}mask，它的所有偶数二进制位都是 00，所有奇数二进制位都是 11。这样一来，我们将 nn 和 \textit{mask}mask 进行按位与运算，如果结果为 00，说明 nn 二进制表示中的 11 出现在偶数的位置，否则说明其出现在奇数的位置。
+
+    </script>
+</body>
+
+</html>

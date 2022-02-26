@@ -1,0 +1,67 @@
+<!--
+ * @Author: ja
+ * @Date: 2021-12-28 16:07:50
+ * @LastEditors: JA
+ * @LastEditTime: 2022-01-13 22:52:23
+-->
+
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>offer38</title>
+</head>
+
+<body>
+    <script>
+        var permutation = function (s) {
+            const res = new Set()
+            const visit = []
+            dfs('')
+            return [...res]
+            function dfs(path) {
+                // console.log(path);
+                if (path.length === s.length) return res.add(path)
+                for (let i = 0; i < s.length; i++) {
+                    if (visit[i]) continue
+                    visit[i] = true
+                    dfs(path + s[i])
+                    visit[i] = false
+                }
+            }
+        };
+        // const t1 = new Set([1, 2, 3])
+        // t1.add(5)
+        // console.log(t1);
+        // console.log([...t1]);//...可以将伪数组转换为真正的数组
+        const str = 'abc'
+        const ans = permutation(str)
+        console.log(ans);
+
+
+        //回溯模板
+        // function backtrack("原始参数") {
+        //     //终止条件(递归必须要有终止条件)
+        //     if ("终止条件") {
+        //         //一些逻辑操作（可有可无，视情况而定）
+        //         return;
+        //     }
+
+        //     for (let i = "for循环开始的参数"; i < "for循环结束的参数"; i++) {
+        //         //一些逻辑操作（可有可无，视情况而定）
+        //         //做出选择
+
+        //         //递归
+        //         backtrack("新的参数");
+
+        //         //一些逻辑操作（可有可无，视情况而定）
+        //         //撤销选择
+        //     }
+        // }
+    </script>
+</body>
+
+</html>

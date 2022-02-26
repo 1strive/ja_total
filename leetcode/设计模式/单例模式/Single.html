@@ -1,0 +1,47 @@
+<!--
+ * @Author: ja
+ * @Date: 2022-01-04 16:24:31
+ * @LastEditors: ja
+ * @LastEditTime: 2022-01-04 16:24:32
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>single</title>
+</head>
+
+<body>
+    <script>
+        function CreateSingle(name) {
+            this.name = name;
+        }
+        CreateSingle.prototype.getName = function () {
+            console.log(this.name);
+        }
+
+        const Singleton = (function () {
+            let instance;
+            return function (name) {
+                if (instance) {
+                    return instance
+                }
+                instance = new CreateSingle(name)
+                return instance
+            }
+        })()
+
+        // console.log(Singleton);//Singleton是返回的函数
+
+        var a = new Singleton('a');
+        // console.log(a);
+        var b = new Singleton('b');
+        // console.log(b);
+        console.log(a === b);//true
+    </script>
+</body>
+
+</html>

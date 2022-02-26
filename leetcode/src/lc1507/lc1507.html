@@ -1,0 +1,35 @@
+<!--
+ * @Author: ja
+ * @Date: 2022-01-04 21:28:42
+ * @LastEditors: ja
+ * @LastEditTime: 2022-01-05 20:39:09
+-->
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1507</title>
+</head>
+
+<body>
+    <script>
+        var reformatDate = function (date) {
+            const m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+            let [day, month, year] = date.split(" ")
+
+            day = ('0' + day).slice(-4, -2)
+            month = ('0' + (m.indexOf(month) + 1)).slice(-2)
+
+            return `${year}-${month}-${day}`
+        }
+
+        const ans = reformatDate('1st Sep 1998')
+        console.log(ans);
+
+    </script>
+</body>
+
+</html>

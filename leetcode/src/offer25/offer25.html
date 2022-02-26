@@ -1,0 +1,77 @@
+<!--
+ * @Author: ja
+ * @Date: 2022-01-11 19:12:58
+ * @LastEditors: ja
+ * @LastEditTime: 2022-01-11 20:17:53
+-->
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function ListNode(val) {
+            this.val = val;
+            this.next = null;
+        }
+
+        const l1 = new ListNode(2)
+        const l2 = new ListNode(4)
+        const l3 = new ListNode(5)
+        const l4 = new ListNode(7)
+        l1.next = l2
+        l2.next = l3
+        l3.next = l4
+        // console.log(l1);
+
+        const s1 = new ListNode(1)
+        const s2 = new ListNode(2)
+        const s3 = new ListNode(3)
+        s1.next = s2
+        s2.next = s3
+        // console.log(s1);
+
+        let c1 = l1
+        let ans = c1
+        console.log(c1);
+        console.log(ans);
+        c1 = c1.next
+        console.log(c1);
+
+
+
+        const mergeTwoLists = function (l1, l2) {
+            let c1 = l1
+            let c2 = l2
+            let ans
+            if (c1.val <= c2.val) {
+                ans = c1
+                c1 = c1.next
+            } else {
+                ans = c2
+                c2 = c2.next
+            }
+            while (c1 || c2) {
+                if (c1.val <= c2.val) {
+                    let temp = c1.test
+                    ans.next = c1
+                }
+            }
+
+
+
+        };
+
+
+
+
+    </script>
+</body>
+
+</html>

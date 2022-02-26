@@ -1,0 +1,51 @@
+<!--
+ * @Author: ja
+ * @Date: 2021-12-29 19:53:11
+ * @LastEditors: ja
+ * @LastEditTime: 2021-12-29 21:01:36
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async函数</title>
+</head>
+
+<body>
+    <script>
+        //async 函数
+        //该函数一定会返回一个Promise对象
+        //返回的Promise对象的结果由async函数执行的返回值决定
+        //封装中返回的结果只要不是一个 Promise 类型的对象, 则返回的Promise对象的状态值就是成功
+        //抛出错误, 返回的结果是一个失败的 Promise
+        //若是Promise对象，则状态值取决于该Promise对象
+        //本质上就是使该函数等价于一个then方法
+        async function fn() {
+            // 返回一个字符串
+            // return '尚硅谷';
+            // 返回的结果不是一个 Promise 类型的对象, 返回的结果就是成功 Promise 对象
+            // return;
+            //抛出错误, 返回的结果是一个失败的 Promise
+            // throw new Error('出错啦!');
+            //返回的结果如果是一个 Promise 对象
+            return new Promise((resolve, reject) => {
+                resolve('成功的数据');
+                // reject("失败的错误");
+            });
+        }
+
+        const result = fn();
+
+        //调用 then 方法
+        //async函数返回Primise对象就意味着其可以调用then方法
+        result.then(value => {
+            console.log(value);
+        }, reason => {
+            console.warn(reason);
+        })
+    </script>
+</body>
+
+</html>

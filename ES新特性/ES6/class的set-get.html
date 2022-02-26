@@ -1,0 +1,44 @@
+<!--
+ * @Author: JA
+ * @Date: 2021-12-11 23:59:39
+ * @LastEditTime: 2021-12-24 15:00:53
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>get 和 set</title>
+</head>
+
+<body>
+    <script>
+       
+        // get 和 set  
+        class Phone {
+
+            // constructor(price) {
+            //     this.price = price
+            // }
+
+            get price() {
+                console.log("价格属性被读取了");
+                return 'iloveyou';//返回值即为属性值
+            }
+
+            set price(newVal) {
+                console.log('价格属性被修改了');//传入参数即为新的属性值
+            }
+        }
+
+        //实例化对象
+        let s = new Phone();
+
+        s.price = 'free';
+        console.log(s.price);
+    </script>
+</body>
+
+</html>

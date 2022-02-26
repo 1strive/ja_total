@@ -1,0 +1,62 @@
+<!--
+ * @Author: ja
+ * @Date: 2021-12-28 16:07:07
+ * @LastEditors: ja
+ * @LastEditTime: 2021-12-29 17:04:38
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义遍历数据</title>
+</head>
+
+<body>
+    <script>
+        //声明一个对象
+        const banji = {
+            name: "终极一班",
+            stus: [
+                'xiaoming',
+                'xiaoning',
+                'xiaotian',
+                'knight'
+            ],
+            [Symbol.iterator]() {//迭代器工作原理：创建一个指针对象，对象中包含(返回)next方法
+                //索引变量
+                let index = 0;
+                //也可以用箭头函数解决
+                // let _this = this;
+                return {
+                    next: () => {
+                        if (index < this.length) {
+                            const result = { value: this[index], done: false };
+                            //下标自增
+                            index++;
+                            //返回结果
+                            return result;
+                        } else {
+                            return { value: undefined, done: true };
+                        }
+                    }
+                };
+            }
+        }
+
+        let iterator = banji[Symbol.iterator]();
+
+        console.log(iterator.next());
+        console.log(iterator.next());
+        console.log(iterator.next());
+        console.log(iterator.next());
+
+        //遍历这个对象 
+        for (let v of banji) {
+            console.log(v);
+        }
+    </script>
+</body>
+
+</html>

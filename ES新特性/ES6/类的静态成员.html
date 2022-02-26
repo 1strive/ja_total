@@ -1,0 +1,44 @@
+<!--
+ * @Author: JA
+ * @Date: 2021-12-11 23:59:39
+ * @LastEditTime: 2022-01-10 17:33:11
+ * @LastEditors: ja
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>静态成员</title>
+</head>
+<body>
+    <script>
+        // function Phone(){
+
+        // }
+        // Phone.name = '手机';
+        // Phone.change = function(){
+        //     console.log("我可以改变世界");
+        // }
+        // Phone.prototype.size = '5.5inch';
+
+        // let nokia = new Phone();
+
+        // console.log(nokia.name);
+        // // nokia.change();
+        // console.log(nokia.size);
+
+        class Phone{
+            //静态属性  属于类而不属于实例对象（即加到了构造函数但没有加到构造函数的原型对象中）
+            static name = '手机';
+            static change(){
+                console.log("我可以改变世界");
+            }
+        }
+
+        let nokia = new Phone();
+        console.log(nokia.name);
+        console.log(Phone.name);
+    </script>
+</body>
+</html>

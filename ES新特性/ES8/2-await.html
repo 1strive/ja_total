@@ -1,0 +1,52 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-01-13 21:08:35
+ * @LastEditTime: 2022-01-20 18:42:51
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>await</title>
+</head>
+
+<body>
+    <script>
+        //语法 [返回值] = await 表达式;
+        // await  操作符用于等待一个Promise 对象。它只能在异步函数 async function 中使用。
+        // 表达式： 一个 Promise 对象或者任何要等待的值。
+
+        // 返回值：返回 Promise 对象的处理结果。如果等待的不是 Promise 对象，则返回该值本身。
+
+        // await 表达式会暂停当前 async function 的执行，等待 Promise 处理完成。若 Promise 正常处理(fulfilled)，其回调的resolve函数参数作为 await 表达式的值，继续执行 async function。
+
+        // 若 Promise 处理异常(rejected)，await 表达式会把 Promise 的异常原因抛出。
+
+        // 另外，如果 await 操作符后的表达式的值不是一个 Promise，则返回该值本身。
+
+
+        //创建 promise 对象
+        const p = new Promise((resolve, reject) => {
+            // resolve("用户数据");
+            reject("失败啦!");
+        })
+
+        // await 要放在 async 函数中.
+        async function main() {
+            try {
+                let result = await p;
+                //
+                console.log(result);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        //调用函数
+        main();
+    </script>
+</body>
+
+</html>
