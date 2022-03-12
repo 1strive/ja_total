@@ -1,40 +1,26 @@
 <!--
  * @Author: JA
- * @Date: 2022-02-27 14:45:35
- * @LastEditTime: 2022-02-27 18:31:57
+ * @Date: 2022-01-13 21:08:57
+ * @LastEditTime: 2022-03-12 13:42:00
  * @LastEditors: JA
 -->
-<template>
-    <div>
-      <div>
-        <router-view></router-view>
-        <template v-if="isClick">
-          <el-button type="primary" @click="clickByRouter">导航</el-button>
-        </template>
-      </div>
-    </div>
-  </template>
-  
-  <script>
-  // import SignIn from "./components/SignIn";
-  export default {
-    name: "App",
-    data() {
-      return {
-        isClick: true,
-      };
-    },
-    methods: {
-      clickByRouter() {
-        this.$router.push("/nav");
-        this.isClick = false;
-      },
-    },
-    // components: { SignIn },
-  };
-  </script>
-  
-  <!-- Add "scoped" attribute to limit CSS to this component only -->
-  <style >
-  </style>
-  
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+            background-color: #0000;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+</html>

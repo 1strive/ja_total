@@ -1,15 +1,13 @@
 /*
  * @Author: JA
- * @Date: 2021-12-16 21:08:38
- * @LastEditTime: 2021-12-27 14:05:25
+ * @Date: 2022-01-13 21:08:57
+ * @LastEditTime: 2022-03-12 13:31:19
  * @LastEditors: JA
  */
-
-const d = new Date()
-
-const a = Date.now()
-
-console.log(a);
-
-console.log(d);
-
+var bb = 1;
+function aa(bb) {
+    bb = 2;
+    console.log(bb)
+};
+aa(bb);
+console.log(bb);
