@@ -1,15 +1,18 @@
-/*
- * @Author: JA
- * @Date: 2021-12-16 21:08:38
- * @LastEditTime: 2021-12-27 14:05:25
- * @LastEditors: JA
- */
+const skillOne = {
+    q: '天音波'
+}
 
-const d = new Date()
+const skillTwo = {
+    w: '金钟罩'
+}
 
-const a = Date.now()
+const skillThree = {
+    e: '天雷破'
+}
+const skillFour = {
+    r: '猛龙摆尾'
+}
+const name = 2
+const mangseng = {...skillOne, ...skillTwo, ...skillThree, m:name};
 
-console.log(a);
-
-console.log(d);
-
+console.log(mangseng)
