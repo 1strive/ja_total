@@ -20,27 +20,100 @@
         //函数代码的分隔符
         //function 和 gen()之间要有*
         //结果代码不会直接输出，实现异步
-        function* gen() {
-            // console.log(111);
-            yield '一只没有耳朵';
-            // console.log(222);
-            yield '一只没有尾部';
-            // console.log(333);
-            yield '真奇怪';
-            // console.log(444);
+        function* gen(arg) {
+            console.log(arg);
+            let one = yield 111;
+            console.log(one);
+            // let two = yield 222;
+            // console.log(two);
+            // let three = yield 333;
+            // console.log(three);
         }
 
-        let iterator = gen();
-        console.log(iterator.next());
-        console.log(iterator.next());
-        console.log(iterator.next());
-        console.log(iterator.next());
-
+        //执行获取迭代器对象
+        let iterator = gen('AAA');
+        console.log(iterator.next(''));
+        console.log(iterator.next('222'));
+        //next方法可以传入实参
+        // console.log(iterator.next());//第二次掉的next方法传入的实参，将作为第一个yield语句的返回结果
+        // console.log(iterator.next('CCC'));
+        // console.log(iterator.next('DDD'));
         //遍历
         // for(let v of gen()){
         //     console.log(v);
         // }
 
+        //         一旦遇到 yield 表达式，生成器的代码将会被暂停执行，直到生成器的 next() 方法被调用。每次调用生成器 next() 方法时，生成器都会恢复执行，直到达到以下某个值：
+
+        //         yield，导致生成器再次暂停并返回生成器的新值。下一次调用next()时，在yield之后紧接着的语句继续执行。
+        // throw用于从生成器中抛出异常。这让生成器完全停止执行，并在调用者中继续执行，正如通常情况下抛出异常一样。
+        //         到达生成器函数的结尾；在这种情况下，生成器的执行结束，并且IteratorResult给调用者返回undefined并且done为true。
+        // 到达return 语句。在这种情况下，生成器的执行结束，并将IteratorResult返回给调用者，其值是由return语句指定的，并且done 为true。
+
+        // 如果用的是 yield* ，则表示将执行权移交给另外一个生成器函数（当前生成器暂停执行）。
+
+        function* g1() {
+            yield 2;
+            yield 3;
+            yield 4;
+        }
+
+        function* g2() {
+            yield 1;
+            yield* g1();
+            yield 5;
+        }
+        let iterator2 = g2();
+
+        // 委托给其他可迭代对象
+        // 除了生成器对象这一种可迭代对象，yield * 还可以 yield 其它任意的可迭代对象，比如说数组、字符串、arguments 对象等等。
+
+        function* g3() {
+            yield* [1, 2];
+            yield* '34';
+            yield* arguments;
+        }
+
+        let iterator3 = g3(5, 6);
+
+
+
+        function* g4() {
+            yield* [1, 2, 3];
+            return 'foo';
+        }
+        let result;
+        function* g5() {
+            result = yield* g4();
+        }
+
+        let iterator5 = g5();
+
+        console.log(iterator5.next().value);
+        console.log(iterator5.next().value);
+        console.log(iterator5.next().value);
+        console.log(result);//yield* 是一个表达式，不是语句，所以它会有自己的值。
+        //         yield* 表达式 迭代操作数，并返回它返回的每个值。
+        // yield* 表达式本身的值是当迭代器关闭时返回的值（当done为true，即为关闭）
+
+        //面试题
+        function* startGame() {
+            const answer = yield 'Do you love JavaScript?';
+            console.log(answer);
+            if (answer !== 'yes') {
+                return "Oh wow... Guess we're gone here";
+            }
+            return 'JavaScript loves you back';
+        }
+        const game = startGame();
+
+        console.log(game.next().value);
+        console.log(game.next('yes').value);
+
+        // 当在生成器函数中显式 return 时，会导致生成器立即变为完成状态，
+        // 即调用 next() 方法返回的对象的 done 为 true。如果 return 后面跟了一个值，那么这个值会作为当前调用 next() 方法返回的 value 值。
+// (就是正常函数的return逻辑)
+        //第二次掉的next方法传入的实参，将作为第一个yield语句的返回结果
     </script>
 </body>
 
