@@ -13,6 +13,10 @@
 </head>
 <body>
     <script>
+// 可进行链式调用，且每次 then 返回了新的 Promise(2次打印结果不一致，如果是同一个实例，打印结果应该一致。
+// 只输出第一次 resolve 的内容，reject 的内容没有输出，即 Promise 是有状态且状态只可以由pending -> fulfilled或 pending-> rejected,是不可逆的。
+// then 中返回了新的 Promise,但是then中注册的回调仍然是属于上一个 Promise 的。
+
         //创建 promise 对象
         const p = new Promise((resolve, reject)=>{
             setTimeout(()=>{

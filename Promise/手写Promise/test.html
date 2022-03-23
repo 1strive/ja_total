@@ -1,4 +1,14 @@
-function Promise(fn){ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Promise1(fn){ 
     let state = 'pending';
     let value = null;
     const callbacks = [];
@@ -49,33 +59,10 @@ function Promise(fn){
     fn(resolve)
 }
 
-const p = new Promise((resolve,reject) => {
-    setTimeout(() => {
-        resolve({ test: 1 })
-    }, 1000)
-})
-console.log(p);
-p.then((data) => {
-    console.log('result1', data)
-    //dosomething
-    console.log('result3')
-})
-//result1 { test: 1 }
-//result3
-
-// 基于 PromiseA+ 规范的只含 resolve 方法的 Promise 模型:
-
-class Promise {
-    constructor(fn) {
-        this.fn = fn
-    }
-
-    state = 'pending'
-    value = null
-    callbacks = []
-
-    then(onFullfilled){
-        
-    }
-
-}
+const obj = new Promise1(()=>console.log(1))
+const obj1 = new Promise(()=>console.log(1))
+console.log(obj);
+console.log(obj1,'1');
+    </script>
+</body>
+</html>

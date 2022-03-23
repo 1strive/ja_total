@@ -8,6 +8,7 @@ export default function personReducer(preState=initState,action){
 	const {type,data} = action
 	switch (type) {
 		case ADD_PERSON: //若是添加一个人
+		//react底层是浅比较，比较是前后返回结果的引用值
 			//preState.unshift(data) //此处不可以这样写，这样会导致preState被改写了，personReducer就不是纯函数了。
 			return [data,...preState]
 		default:
