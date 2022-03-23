@@ -15,3 +15,4 @@ function myModule() {
     doOtherthing: doOtherthing
   }
 }
+

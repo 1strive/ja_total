@@ -1,6 +1,42 @@
-<!--
- * @Author: ja
- * @Date: 2021-12-30 10:49:46
- * @LastEditors: ja
- * @LastEditTime: 2021-12-30 10:49:46
--->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1</title>
+</head>
+
+<body>
+    <script>
+        const p = new Promise((resolve, reject) => {
+            resolve(1)
+        })
+
+        p.then((value) => {
+            console.log(value);
+           return new Promise(((resolve) => {
+                setTimeout(() => {
+                    resolve({ test: 2 })
+                }, 2000)
+            }))
+        }).then((value) => {
+            console.log(value);
+        })
+        // new Promise((resolve, reject) => {
+        //     resolve({ test: 1 })
+        // }).then((data) => {//then中传入的是Promise
+        //     console.log('result1', data)
+        //     //dosomething
+        //     return new Promise(((resolve) => {
+        //         resolve({ test: 2 })
+        //     }))
+        // }).then((data) => {
+        //     console.log('result2', data)
+        // })
+
+    </script>
+</body>
+
+</html>
