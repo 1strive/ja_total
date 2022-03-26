@@ -500,8 +500,7 @@
       enumerable: !!enumerable,
       writable: true,
       configurable: true
-    });
-  }
+    });   
 
   /**
    * Parse simple path.
