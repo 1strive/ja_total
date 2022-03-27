@@ -1,8 +1,8 @@
 <!--
  * @Author: ja
  * @Date: 2021-12-30 11:09:38
- * @LastEditors: ja
- * @LastEditTime: 2022-01-04 11:14:07
+ * @LastEditors: JA
+ * @LastEditTime: 2022-03-26 20:39:15
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -50,11 +50,11 @@
             subs = {}
             //订阅者订阅
             subscribe(type, callback) {
-                //    每增加一个订阅者，就将其信息添加到订阅者集合中
+                // 每增加一个订阅者，就将其信息添加到订阅者集合中
                 //type为方法名，callback为方法
                 this.subs[type] = callback
             }
-            // 发布者发布
+            // 发布者发布   当发布时 依赖其的订阅者会执行自身回调
             publish(type, message) {
                 const callback = this.subs[type]  //匹配相应的回调
                 callback(`${type},${message}`)   //执行订阅时添加的回调方法

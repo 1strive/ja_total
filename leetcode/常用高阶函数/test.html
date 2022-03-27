@@ -1,7 +1,7 @@
 <!--
  * @Author: JA
  * @Date: 2022-01-19 22:57:30
- * @LastEditTime: 2022-03-27 17:27:19
+ * @LastEditTime: 2022-03-27 17:26:59
  * @LastEditors: JA
 -->
 <!DOCTYPE html>
@@ -11,15 +11,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Throttle</title>
+    <title>test</title>
     <style>
         #circle {
             width: 50px;
             height: 50px;
             border-radius: 50%;
             background-color: red;
-            line-height: 50px;/*行高50px*//*%是指基于当前字体尺寸的百分比行间距。*/
-            text-align: center;/*行内内容居中*/
+            line-height: 50px;
+            /*行高50px*/
+            /*%是指基于当前字体尺寸的百分比行间距。*/
+            text-align: center;
+            /*行内内容居中*/
             color: white;
             opacity: 1.0;
             transition: opacity .25s;
@@ -43,27 +46,30 @@
     <div id="circle">0</div>
     <script>
         function Throttle(fn, time = 500) {//节流  每过规定时间执行一次事件
-            console.log(1);
             let timer;
             return function (...args) {
-                console.log(args);
-                if (timer == null) {
+                console.log(timer);
+                if (timer == null) { //timer会在0.5s后置为null 在此之前 均不会执行fn
                     fn.apply(this, args)
-                    timer = setTimeout(() => {  //返回值timeoutID是一个正整数，表示定时器的编号。这个值可以传递给clearTimeout()来取消该定时器。
+                    timer = setTimeout(() => {
                         timer = null
                     }, time)
                 }
             }
         }
 
-        const btn = document.querySelector('button')
+        // const btn = document.querySelector('button')
         btn.onclick = Throttle(function (e) {
+            // console.log(btn);
             circle.innerHTML = parseInt(circle.innerHTML) + 1
-            circle.className = 'fade'
-            setTimeout(() => {
-                circle.className = '', 250
-            })
+            // circle.className = 'fade'
+            // setTimeout(() => {
+            //     circle.className = '', 250
+            // })
         })
+
+
+
     </script>
 </body>
 

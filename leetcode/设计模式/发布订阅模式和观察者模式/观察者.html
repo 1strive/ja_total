@@ -1,8 +1,8 @@
 <!--
  * @Author: ja
  * @Date: 2021-12-30 20:42:58
- * @LastEditors: ja
- * @LastEditTime: 2022-01-04 16:21:19
+ * @LastEditors: JA
+ * @LastEditTime: 2022-03-26 22:58:46
 -->
 <!DOCTYPE html>
 <html lang="zh">
@@ -16,7 +16,17 @@
 
 <body>
     <script>
+        //观察者 定义了对象之间 一对多 的依赖关系定义了对象之间 一对多 的依赖关系
+
+        //Vue的响应式 是在setter和getter中利用的观察者模式
         //观察者类拥有两个属性，名称和回调；和一个执行回调的方法
+        //用于创造观察者实例
+
+        // 观察者模式：定义了对象之间 一对多 的依赖关系，它只有两个角色，分别是观察的目标对象 Subject 和观察者对象 Observer
+        // 当目标对象 Subject 的状态发生改变时，所有依赖它的观察者对象 Observer 都会得到响应
+
+
+        //观察者:提供一个更新自身状态的方法，以便给目标对象(Subject)状态发生改变时可以调用。
         class Observer {
             constructor(type, callback) {
                 this.type = type
@@ -29,23 +39,26 @@
             }
         }
 
-        // 目标类  目标类将观察者添加到一个集合中，之后依次通知；收到通知的观察者会执行自己的方法，调用回调
+        // 目标类  目标类将观察者添加到一个集合中，之后依次通知；收到通知的观察者会执行自己的方法，调用回调  
+        //即实现目标对象变化后，所以依赖其的观察者都会得到响应
+
+        //目标类:拥有一个观察者列表，并提供注册、删除观察者的方法，以及在状态发生改变时，通知所有已注册的观察者对象。
         class Subject {
             // 观察者集合，是个对象数组
             // 每一项存放的都是一个观察者
             observers = []
 
             // 将观察者加入到队列中（赋予观察者排队号码）
-            addObserver(observer) {
+            subscribe(observer) {
                 this.observers.push(observer)
             }
 
-            // 通知所有观察者事件（通知观察者们当前排到多少号）
+            // 通知所有观察者事件（通知观察者们当前排到多少号）  使得每个观察者都可以执行自身的callback，即调用updated方法
             notify(type) {
                 let who
                 this.observers.forEach((observer, index) => {//forEach语法 arr.forEach(callback(currentValue [, index [, array]])[, thisArg]) ,后三个参数可选，此处index是数组中正在处理的当前元素的索引。
                     // 这里判断下是否更新完毕（当前观察者是否拿到餐了）
-                    const isUpdate = observer.update(type)
+                    const isUpdate = observer.update(type)  //isUpdate是布尔值  输出在此步已经完成
                     // 若更新完毕，则记录这个观察者
                     isUpdate && (who = index)
                 })
@@ -54,6 +67,31 @@
                 who !== undefined && this.observers.splice(who, 1)  //array.splice(start[, deleteCount[, item1[, item2[, ...]]]])   从start开始，删除deleteCount个，添加后续参数
             }
         }
+
+        //ja自己的写法（没有考虑先后顺序）
+        // class Subject {
+        //     Observers = []
+
+        //     addObserver(observer) {
+        //         this.Observers.push(observer)
+        //     }
+
+        //     notify(type) {
+        //         const who = this.Observers.filter((i) => {
+        //             return i.type === type
+        //         })[0]
+        //         if (who === undefined) {
+        //             console.log('没得了');
+        //             return
+        
+        //         }
+        //         this.Observers = this.Observers.filter((i) => {
+        //             return i.type !== type
+        //         })
+        //         return who.updated(who.type)
+        //     }
+        // }
+
 
         function callback(currentType) {
             if (this.type !== currentType) {
@@ -72,10 +110,11 @@
         // 肯德基
         const subject = new Subject()
 
+        //订阅操作
         // 将三个观察者分别加入到排队队列中
-        subject.addObserver(ob1)
-        subject.addObserver(ob2)
-        subject.addObserver(ob3)
+        subject.subscribe(ob1)
+        subject.subscribe(ob2)
+        subject.subscribe(ob3)
 
         // console.log(subject.observers);
 
