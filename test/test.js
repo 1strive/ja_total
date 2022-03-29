@@ -1,11 +1,3 @@
-class Pubsub {
-    subs = {}
-    subscribe(type, callback) {
-        this.subs[type] = callback
-    }
-
-    publish(type, msg) {
-        const callback = this.subs[type]
-        callback(`${type},${msg}`)
-    }
-}
+const set = new Set([2,3,4,5])
+console.log(Array.from(set));
+console.log(set);

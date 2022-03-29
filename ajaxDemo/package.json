@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cookie.js": "^6.0.0",
+    "cookies.js": "^2.1.15",
+    "express": "^4.17.1"
+  }
+}
