@@ -1,3 +1,18 @@
+=======
+// 使用express搭建第一个服务A(http://localhost:8000)，
+// 运行在8000端口上；
+
+// A服务托管index.html(用于在前端页面发送网络请求)文件；
+
+// 在A服务中写一个处理请求的路由，加载index.html页面时，
+// 种下cookie(这里种cookie为了在请求B服务时携带上);
+
+// 使用express搭建第二个服务B(http://localhost:8003)，运行在8003端口上；
+// 在A服务托管的index.html页面去请求B服务，然后把cookie传过去；
+
+
+
+>>>>>>> 8123dafdac6109740359a035efe5c1cc5ced8a42
 // src/app1.js
 const express = require("express");
 const app = express();
@@ -5,7 +20,11 @@ const app = express();
 // `index.html` 加载时会请求login接口
 // 设置`cookie`
 app.get("/login", (req, res) => {
+<<<<<<< HEAD
   res.cookie("user", "ja", { maxAge: 2000000, httpOnly: true });
+=======
+  res.cookie("user", "jay", { maxAge: 2000000, httpOnly: true });
+>>>>>>> 8123dafdac6109740359a035efe5c1cc5ced8a42
   res.json({ code: 0, message: "登录成功" });
 });
 
@@ -19,8 +38,13 @@ app.get("/user", (req, res) => {
 // 托管`index.html`页面
 // 这样的话在`index.html`中发起的请求，默认的源就是`http://localhost:8000`
 // 然后再去请求`http://localhost:8003`就会出现跨域了
+<<<<<<< HEAD
 app.use("/static", express.static("public"));
 
+=======
+// app.use("/static", express.static("public"));
+app.use(express.static(__dirname + '/static'))
+>>>>>>> 8123dafdac6109740359a035efe5c1cc5ced8a42
 app.listen("8000", () => {
   console.log("app1 running at port 8000");
 });
