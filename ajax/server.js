@@ -132,7 +132,6 @@ app.all('/jquery-jsonp-server', (request, response) => {
 
 app.all('/cors-server', (request, response) => {
     //设置响应头
-    response.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:8000"); 
     response.setHeader("Access-Control-Allow-Origin", "*");//通配符*//允许任意URL
     // response.setHeader("Access-Control-Allow-Headers", '*');//允许任意请求头
     // response.setHeader("Access-Control-Allow-Method", '*');//允许任意方法
@@ -141,6 +140,6 @@ app.all('/cors-server', (request, response) => {
 });
 
 //4. 监听端口启动服务
-app.listen(8000, () => {
-    console.log("服务已经启动, 8000 端口监听中....");
+app.listen(8010, () => {
+    console.log("服务已经启动, 8010 端口监听中....");
 });
