@@ -10,14 +10,9 @@
 
 <body>
     <script>
-        let value = 0
-        Object.defineProperty(window, 'a', {
-            get() {
-                console.log('gethahaha');
-                return ++value
-            }
-        })
-        console.log(a === 1 && a === 2 && a === 3);
+        console.log({}.toString());
+        console.log(![] + []);
+        console.log(false);
     </script>
 </body>
 
