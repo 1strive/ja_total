@@ -35,14 +35,16 @@ function HeapAdJust(arr, i, length) {
 function HeapSort(arr, length) {
     for (let i = length / 2 - 1; i >= 0; i--) {
         HeapAdJust(arr, i, length)
+        // console.log(arr,'arr');
     }
-    console.log(arr);
     for (let i = length - 1; i >= 0; i--) {
         var temp
         temp = arr[i]
         arr[i] = arr[0]
         arr[0] = temp
+        console.log(arr,'arr');
         HeapAdJust(arr, 0, i)
-        console.log(arr);
+        console.log(arr,'arr1');
+
     }
 }
