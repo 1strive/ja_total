@@ -17,12 +17,42 @@
 				name:'张三',
 				sex:'男',
 			}
+// 			对象里目前存在的属性描述符有两种主要形式：数据描述符和存取描述符。数据描述符是一个具有值的属性，该值可以是可写的，也可以是不可写的。存取描述符是由 getter 函数和 setter 函数所描述的属性。一个描述符只能是这两者其中之一；不能同时是两者。
+
+// 这两种描述符都是对象。它们共享以下可选键值（默认值是指在使用 Object.defineProperty() 定义属性时的默认值）：
+
+// configurable
+// 当且仅当该属性的 configurable 键值为 true 时，该属性的描述符才能够被改变，同时该属性也能从对应的对象上被删除。
+// 默认为 false。
+// enumerable
+// 当且仅当该属性的 enumerable 键值为 true 时，该属性才会出现在对象的枚举属性中。
+// 默认为 false。
+// 数据描述符还具有以下可选键值：
+
+// value
+// 该属性对应的值。可以是任何有效的 JavaScript 值（数值，对象，函数等）。
+// 默认为 undefined。
+// writable
+// 当且仅当该属性的 writable 键值为 true 时，属性的值，也就是上面的 value，才能被赋值运算符 (en-US)改变。
+// 默认为 false。
+// 存取描述符还具有以下可选键值：
+
+// get
+// 属性的 getter 函数，如果没有 getter，则为 undefined。当访问该属性时，会调用此函数。执行时不传入任何参数，但是会传入 this 对象（由于继承关系，这里的this并不一定是定义该属性的对象）。该函数的返回值会被用作属性的值。
+// 默认为 undefined。
+// set
+// 属性的 setter 函数，如果没有 setter，则为 undefined。当属性值被修改时，会调用此函数。该方法接受一个参数（也就是被赋予的新值），会传入赋值时的 this 对象。
+// 默认为 undefined。
+// 描述符默认值汇总
+// 拥有布尔值的键 configurable、enumerable 和 writable 的默认值都是 false。
+// 属性值和函数的键 value、get 和 set 字段的默认值为 undefined。
 
 			Object.defineProperty(person,'age',{
 				// value:18, //属性对应的值，可以使用任意数据类型，默认为undefined
 				// enumerable:true, //控制属性是否可以枚举，默认值是false 
 				// writable:true, //控制属性是否可以被修改，默认值是false(控制的是person对象形成之后，不会影响本次value的赋值)(不可与getter和setter同时指定)
-				// configurable:true //控制属性是否可以被删除，默认值是false
+				// configurable:true //控制属性是否可以被删除，默认值是false  如果属性已经存在，Object.defineProperty()将尝试根据描述符中的值以及对象当前的配置来修改这个属性。如果旧描述符将其configurable 属性设置为false，则该属性被认为是“不可配置的”，并且没有属性可以被改变（除了单向改变 writable 为 false）。当属性不可配置时，不能在数据和访问器属性类型之间切换。
+                 // 当试图改变不可配置属性（除了 value 和 writable 属性之外）的值时，会抛出TypeError，除非当前值和新值相同。
 
 				//Object 自身没有提供方法删除其自身属性（Map 中的 Map.prototype.delete() 可以删除自身属性 ）为了删除对象上的属性，必须使用 delete 操作符
 				//即 delete person.age

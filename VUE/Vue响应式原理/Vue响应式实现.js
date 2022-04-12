@@ -34,6 +34,28 @@
 //     })
 // }
 
+// Object.defineProperty(person,'age',{
+//     // value:18, //属性对应的值，可以使用任意数据类型，默认为undefined
+//     // enumerable:true, //控制属性是否可以枚举，默认值是false 
+//     // writable:true, //控制属性是否可以被修改，默认值是false(控制的是person对象形成之后，不会影响本次value的赋值)(不可与getter和setter同时指定)
+//     // configurable:true //控制属性是否可以被删除，默认值是false
+
+//     //Object 自身没有提供方法删除其自身属性（Map 中的 Map.prototype.delete() 可以删除自身属性 ）为了删除对象上的属性，必须使用 delete 操作符
+//     //即 delete person.age
+
+//     //当有人读取person的age属性时，get函数(getter)就会被调用，且返回值就是age的值
+//     get(){
+//         console.log('有人读取age属性了')
+//         return number
+//     },
+
+//     //当有人修改person的age属性时，set函数(setter)就会被调用，且会收到修改的具体值
+//     set(value){
+//         console.log('有人修改了age属性，且值是',value)
+//         number = value
+//     }
+
+// })
 // 总结
 //  本文实现了一个简单的响应式系统，来帮助大家理解响应式原理。主要包括监听变化、订阅依赖和状态通知三个部分：
 
