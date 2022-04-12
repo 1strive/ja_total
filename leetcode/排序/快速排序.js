@@ -8,7 +8,7 @@
 // 重复这两个步骤直到low=high为止。
 
 
-const arr = [4, 3, 8, 2, 5, 1]
+const arr = [4, 3, 8, 2, 4, 4, 1]
 const arr1 = [1, 7]
 const arr2 = [3, 7]
 
@@ -24,13 +24,12 @@ function quickSort(arr) {
     var left = [];
     var right = [];
     var pivot = arr[0];
-    for (var i = 0; i < arr.length; i++) {
+    for (var i = 1; i < arr.length; i++) {
         if (arr[i] < pivot) {
             left.push(arr[i]);
-        }
-        else if(arr[i] > pivot){
+        }else {
             right.push(arr[i]);
         }
     }
-    return quickSort(left).concat(pivot,quickSort(right));
+    return quickSort(left).concat(pivot, quickSort(right));
 }
