@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hash</title>
+</head>
+
+<body>
+    <ul>
+        <!-- 定义路由 -->
+        <li><a href="#/home">home</a></li>
+        <li><a href="#/about">about</a></li>
+
+        <!-- 渲染路由对应的UI -->
+        <div id="routeView"></div>
+    </ul>
+</body>
+<script>
+    let routerView = routeView
+
+    //给window绑定事件
+    // window.addEventListener('hashchange', () => {
+    //     console.log('ja');
+    //     let hash = location.hash
+    //     routerView.innerHTML = hash
+    // })
+    window.onhashchange = () => {
+        console.log('ja');
+        let hash = location.hash
+        routerView.innerHTML = hash
+    }
+
+    //当初始的 HTML 文档被完全加载和解析完成之后，DOMContentLoaded 事件被触发，而无需等待样式表、图像和子框架的完全加载。
+    //为何又监听了load事件？这时应为页面第一次加载完不会触发 hashchange，因而用load事件来监听hash值，再将视图渲染成对应的内容。
+    window.addEventListener('DOMContentLoaded', () => {
+        if(!location.hash){//如果不存在hash值，那么重定向到#/
+            location.hash = '/'
+        }else{//如果存在hash值，那就渲染对应UI
+            let hash = location.hash
+            routerView.innerHTML = hash
+        }
+    })
+
+
+
+</script>
+
+</html>
