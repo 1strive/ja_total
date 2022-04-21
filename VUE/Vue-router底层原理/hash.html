@@ -19,6 +19,14 @@
     </ul>
 </body>
 <script>
+
+// hash 是 URL 中 hash (#) 及后面的那部分，常用作锚点在页面内进行导航，改变 URL 中的 hash 部分不会引起页面刷新
+
+// 通过 hashchange 事件监听 URL 的变化，改变 URL 的方式只有这几种：
+// 通过浏览器前进后退改变 URL
+// 通过<a>标签改变 URL
+// 通过window.location改变URL
+
     let routerView = routeView
 
     //给window绑定事件
@@ -36,15 +44,20 @@
     //当初始的 HTML 文档被完全加载和解析完成之后，DOMContentLoaded 事件被触发，而无需等待样式表、图像和子框架的完全加载。
     //为何又监听了load事件？这时应为页面第一次加载完不会触发 hashchange，因而用load事件来监听hash值，再将视图渲染成对应的内容。
     window.addEventListener('DOMContentLoaded', () => {
-        if(!location.hash){//如果不存在hash值，那么重定向到#/
+        if (!location.hash) {//如果不存在hash值，那么重定向到#/
             location.hash = '/'
-        }else{//如果存在hash值，那就渲染对应UI
+        } else {//如果存在hash值，那就渲染对应UI
             let hash = location.hash
             routerView.innerHTML = hash
         }
     })
 
 
+//   1.  我们通过a标签的href属性来改变URL的hash值（当然，你触发浏览器的前进后退按钮也可以，或者在控制台输入window.location赋值来改变hash）
+
+//   2.  我们监听hashchange事件。一旦事件触发，就改变routerView的内容，若是在vue中，这改变的应当是router - view这个组件的内容
+  
+//   3.  为何又监听了load事件？这时应为页面第一次加载完不会触发 hashchange，因而用load事件来监听hash值，再将视图渲染成对应的内容
 
 </script>
 
