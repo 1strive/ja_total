@@ -1,12 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>history</title>
 </head>
+
 <body>
-    
+    <ul>
+        <ul>
+            <li><a href='/home'>home</a></li>
+            <li><a href='/about'>about</a></li>
+
+            <div id="routeView"></div>
+        </ul>
+    </ul>
 </body>
+<script>
+    // history 提供了 pushState 和 replaceState 两个方法，这两个方法改变 URL 的 path 部分不会引起页面刷新
+    // history 提供类似 hashchange 事件的 popstate 事件，但 popstate 事件有些不同：
+
+    // 通过浏览器前进后退改变 URL 时会触发 popstate 事件
+    // 通过pushState/replaceState或<a>标签改变 URL 不会触发 popstate 事件。
+    // 好在我们可以拦截 pushState/replaceState的调用和<a>标签的点击事件来检测 URL 变化
+    // 通过js 调用history的back，go，forward方法可触发该事件
+
+    // 所以监听 URL 变化可以实现，只是没有 hashchange 那么方便。
+
+
+
+    let routerView = routeView
+    window.addEventListener('DOMContentLoaded', onLoad)
+    window.addEventListener('popstate', () => {
+        routerView.innerHTML = location.pathname
+    })
+
+    function onLoad() {
+        routerView.innerHTML = location.pathname
+        let linkList = document.querySelectorAll('a[href]')//返回类数组（nodelist),可用foreach遍历（object不能用foreach,只能用for in）
+        console.log(linkList[0].getAttribute('href'), 'ja');
+        linkList.forEach(el => el.addEventListener('click', function (e) {
+            e.preventDefault()
+            history.pushState(null, '', el.getAttribute('href'))//getAttribute() 返回元素上一个指定的属性值。如果指定的属性不存在，则返回  null 或 "" （空字符串）
+            routerView.innerHTML = location.pathname
+        }))
+
+    }
+
+// 1.    我们通过a标签的href属性来改变URL的path值（当然，你触发浏览器的前进后退按钮也可以，或者在控制台输入history.go,back,forward赋值来触发popState事件）。这里需要注意的就是，当改变path值时，默认会触发页面的跳转，所以需要拦截 <a> 标签点击事件默认行为， 点击时使用 pushState 修改 URL并更新手动 UI，从而实现点击链接更新 URL 和 UI 的效果。
+// 2.    我们监听popState事件。一旦事件触发，就改变routerView的内容。
+// 3.     load事件则是一样的
+
+
+</script>
+
 </html>
