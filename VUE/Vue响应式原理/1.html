@@ -1,7 +1,7 @@
 <!--
  * @Author: JA
  * @Date: 2022-03-27 11:42:18
- * @LastEditTime: 2022-03-27 14:41:10
+ * @LastEditTime: 2022-04-27 17:25:18
  * @LastEditors: JA
 -->
 <!DOCTYPE html>
@@ -73,7 +73,7 @@
             // this.observers = [];
             // }
             subscribe() {
-                console.log(this.observers, 'tar');
+                // console.log(this.observers, 'tar');
                 let observer = Subject.target
                 if (!this.observers.includes(observer)) {
                     this.observers.push(Subject.target)//不含时添加
@@ -189,7 +189,7 @@
             console.log(`数据变化，刷新视图。newVal=${newVal},oldVal=${oldVal}`);
         })
         // console.log(Subject.target,'tas');
-        data.pro1 = '666';
+        // data.pro1 = '666';
 
 
 //输出
