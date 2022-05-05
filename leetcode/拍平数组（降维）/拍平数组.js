@@ -66,3 +66,16 @@ function flatten4(arr) {
     }
     return arr
 }
+
+//指定维数
+function flattenNum(arr, m) {
+    while (arr.some(item => Array.isArray(item)) && m > 0) {
+        arr = [].concat(...arr);//『...』 扩展运算符能将『数组』转换为逗号分隔的『参数序列』 // concat会连接所有的参数
+        m = m - 1
+    }
+    return arr
+}
+
+const arrT = [1,2,3,[4,[1,23,44]],6]
+const ansT = flattenNum(arrT,1)
+console.log(ansT);
