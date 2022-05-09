@@ -11,9 +11,9 @@
  *     this.next = (next===undefined ? null : next)
  * }
  */
-function NodeList(val) {
-    this.val = val
-    this.next = null
+function NodeList(val,next) {
+    this.val = (val === undefined ? 0 : val)
+    this.next = (next === undefined ? null : next)
 }
 
 function removeNthFromEnd(head, n) {
