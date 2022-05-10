@@ -3,20 +3,37 @@ function ListNode(val, next) {
     this.next = (next === undefined ? null : next)
 }
 
-function removeNthFromEnd (head,n){
+//数组转链表
+function arrayToNodeList(list) {
+    let header = new ListNode(0)
+    let current = header
+    for (let i = 0; i < list.length; i++) {
+        current.next = { val: list[i], next: null }
+        current = current.next
+    }
+    return header.next
+}
+
+const test = [5, 4, 3, 2, 1]
+const head = arrayToNodeList(test)
+const ans = removeNthFromEnd(head, 2)
+console.log(ans.next.next, 'ans');
+
+function removeNthFromEnd(head, n) {
     let stack = new Array()
-    let newListNode = new ListNode(0,head)
+    let newListNode = new ListNode(0, head)
     let tempNode = newListNode
-    while(tempNode){
+    while (tempNode) {
         stack.push(tempNode)
         tempNode = tempNode.next
     }
+    console.log(stack, 'stack');
     let tempNum = n
-    while(tempNum){
+    while (tempNum) {
         stack.pop()
         tempNum--
     }
-    tempNode = stack.pop()
+    tempNode = stack.pop() //pop n+1 个
     tempNode.next = tempNode.next.next
     return newListNode.next
 }
