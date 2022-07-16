@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: JA
  * @Date: 2020-07-21 14:31:53
- * @LastEditTime: 2021-12-21 15:12:23
+ * @LastEditTime: 2022-07-03 14:44:57
  * @LastEditors: JA
  * @Reference: 
 -->
@@ -28,6 +28,7 @@
     <script>
         //处理数据
         function handle(data) {
+            console.log(JSON.parse(data));
             //获取 result 元素
             const result = document.getElementById('result');
             result.innerHTML = data.name;
