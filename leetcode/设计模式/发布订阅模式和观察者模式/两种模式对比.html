@@ -61,6 +61,9 @@
                 if (!this.topics[type]) {
                     return;
                 }
+                if ('jajaja') {
+                    console.log('哈哈哈');
+                }
                 for (let fn of this.topics[type]) {      //通知相关主题订阅者
                     fn(...args);
                 }
