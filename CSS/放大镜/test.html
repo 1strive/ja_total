@@ -78,6 +78,7 @@
         var bigimg = document.getElementById("bigimg")
         // 在小图区域内获取鼠标移动事件;遮罩跟随鼠标移动
         small.onmousemove = function (e) {
+            console.log(e, 'e');
             // 得到遮罩相对于小图的偏移量(鼠标所在坐标-小图相对于body的偏移-遮罩本身宽度或高度的一半)
             var s_left = e.pageX - mark.offsetWidth / 2 - small.offsetLeft
             var s_top = e.pageY - mark.offsetHeight / 2 - small.offsetTop
