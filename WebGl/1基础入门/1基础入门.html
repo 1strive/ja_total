@@ -1,0 +1,85 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-08-10 19:02:22
+ * @LastEditTime: 2022-08-13 22:21:36
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用WebGL绘制一个点</title>
+</head>
+
+<body>
+    <!-- canvas对象也可以不通过<canvas>标签创建，然后id方式获取，也可以通过DOM直接创建 -->
+    <canvas id="webgl" width="500" height="500" style="background-color: #bfa"></canvas>
+    <script>
+        //通过getElementById()方法获取canvas画布
+        var canvas = document.getElementById('webgl');
+        //通过方法getContext()获取WebGL上下文
+        var gl = canvas.getContext('webgl');
+
+
+
+        // //顶点着色器源码
+        var vertexShaderSource = '' +
+            'void main(){' +
+            //给内置变量gl_PointSize赋值像素大小
+            '   gl_PointSize=20.0;' +
+            //顶点位置，位于坐标原点
+            '   gl_Position =vec4(0.0,0.0,0.0,1.0);' +
+            '}';
+        // 给内置变量gl_Position赋值vec4(0.0,0.0,0.0,1.0)，也就是设置顶点位置坐标，vec4代表的是一种数据类型， 
+        // 在这里可以理解为vec4()是一个可以构造出vec4类型数据的构造函数，前三个参数表示顶点坐标值xyz。
+
+
+
+        // //片元着色器源码
+        var fragShaderSource = '' +
+            'void main(){' +
+            //定义片元颜色
+            '   gl_FragColor = vec4(0.0,0.0,1.0,1.0);' +
+            '}';
+        // 给内置变量gl_FragColor赋值vec4(1.0,0.0,0.0,1.0)，也就是设置会在屏幕上显示的像素的颜色，vec4()构造函数 前三
+        // 个参数，表示颜色RGB值，最后一个参数是透明度A。在WebGL着色器中颜色值使用[0,1]区间表示。
+
+
+        //初始化着色器
+        var program = initShader(gl, vertexShaderSource, fragShaderSource);
+        //开始绘制，显示器显示结果
+        gl.drawArrays(gl.POINTS, 0, 1);
+
+
+        //声明初始化着色器函数
+        function initShader(gl, vertexShaderSource, fragmentShaderSource) {
+            //创建顶点着色器对象
+            var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+            //创建片元着色器对象
+            var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+            //引入顶点、片元着色器源代码
+            gl.shaderSource(vertexShader, vertexShaderSource);
+            gl.shaderSource(fragmentShader, fragmentShaderSource);
+            //编译顶点、片元着色器
+            gl.compileShader(vertexShader);
+            gl.compileShader(fragmentShader);
+
+            //创建程序对象program
+            var program = gl.createProgram();
+            //附着顶点着色器和片元着色器到program
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            //链接program
+            gl.linkProgram(program);
+            //使用program
+            gl.useProgram(program);
+            //返回程序program对象
+            return program;
+        }
+    </script>
+</body>
+
+</html>
