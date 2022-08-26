@@ -1,7 +1,7 @@
 <!--
  * @Author: JA
  * @Date: 2022-06-09 20:43:59
- * @LastEditTime: 2022-07-03 00:33:26
+ * @LastEditTime: 2022-08-25 00:10:20
  * @LastEditors: JA
 -->
 <!DOCTYPE html>
@@ -11,21 +11,33 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>test</title>
     <style>
-        .test {
-            width: 1px;
-            height: 1px;
-            background-color: red;
-            transform: scale(0.3);
-        }
     </style>
 </head>
 
 <body>
-    <div class="test"></div>
 </body>
 <script>
-    console.log('</script>');
+    const vm = new WeakMap()
+    const User = (() => {
+        class User {
+            constructor(id) {
+                this.idProperty = Symbol('id')
+                this.setId(id)
+            }
+
+            setPrivate(propty, value) {
+                const privateMembers = vm.get()
+            }
+        }
+        return User
+    })()
+
+
+    const user = new User(123)
+    console.log(user);
+
 </script>
+
 </html>
