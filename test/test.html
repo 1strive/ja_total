@@ -7,17 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .test {
-            width: 1px;
-            height: 1px;
+        div {
+            width: 200px;
+            height: 200px;
             background-color: red;
-            transform: scale(0.3);
         }
     </style>
 </head>
 
 <body>
-    <div class="test"></div>
+    <div></div>
+
+
+    <script>
+        const doct = document.getElementsByTagName('div')[0]
+        console.log(doct, 'doct');
+        const styleDoc = window.getComputedStyle(doct)
+        console.log(styleDoc.width,'ja');
+    </script>
 </body>
 
 </html>

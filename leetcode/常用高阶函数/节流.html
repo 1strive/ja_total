@@ -18,8 +18,11 @@
             height: 50px;
             border-radius: 50%;
             background-color: red;
-            line-height: 50px;/*行高50px*//*%是指基于当前字体尺寸的百分比行间距。*/
-            text-align: center;/*行内内容居中*/
+            line-height: 50px;
+            /*行高50px*/
+            /*%是指基于当前字体尺寸的百分比行间距。*/
+            text-align: center;
+            /*行内内容居中*/
             color: white;
             opacity: 1.0;
             transition: opacity .25s;
@@ -43,11 +46,11 @@
     <div id="circle">0</div>
     <script>
         function Throttle(fn, time = 500) {//节流  每过规定时间执行一次事件
-            console.log(1);
             let timer;
+            console.log(timer, 'timer');
             return function (...args) {
-                console.log(args);
                 if (timer == null) {
+                    // function的this指向调用的上下文对象
                     fn.apply(this, args)
                     timer = setTimeout(() => {  //返回值timeoutID是一个正整数，表示定时器的编号。这个值可以传递给clearTimeout()来取消该定时器。
                         timer = null
@@ -64,6 +67,13 @@
                 circle.className = '', 250
             })
         })
+
+        function add() {
+            console.log(1);
+        }
+        const obj = {}
+        const addT = Throttle(add, 500)
+        addT.apply(obj)
     </script>
 </body>
 
