@@ -1,3 +1,9 @@
+/*
+ * @Author: JA
+ * @Date: 2022-06-09 20:43:59
+ * @LastEditTime: 2022-07-24 16:18:15
+ * @LastEditors: JA
+ */
 
 // JS数据类型：Number Boolean String undefined BigInt Symbol null Object
 
@@ -25,7 +31,7 @@ console.log(arr[1]);
 
 // null与undefined的区别
 // null 是 javascript 的关键字，表示一个特殊值，常用来描述"空值"，typeof 运算返回"object"，
-// 所以可以将 null 认为是一个特殊的对象值，含义是"非对象"。
+// 所以可以将 null 认为是一个特殊的对象值，含义是"空对象"。
 // undefined 是预定义的全局变量，他的值就是"未定义"， typeof 运算返回 "undefined"
 
 console.log(Boolean(null));//false

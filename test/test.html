@@ -1,3 +1,9 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-06-09 20:43:59
+ * @LastEditTime: 2022-08-25 00:10:20
+ * @LastEditors: JA
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,17 +11,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>test</title>
     <style>
+<<<<<<< HEAD
         div {
             width: 200px;
             height: 200px;
             background-color: red;
         }
+=======
+>>>>>>> 63c743e4333a14dbf2c6c8667ce432a1374c963a
     </style>
 </head>
 
 <body>
+<<<<<<< HEAD
     <div></div>
 
 
@@ -25,6 +35,29 @@
         const styleDoc = window.getComputedStyle(doct)
         console.log(styleDoc.width,'ja');
     </script>
+=======
+>>>>>>> 63c743e4333a14dbf2c6c8667ce432a1374c963a
 </body>
+<script>
+    const vm = new WeakMap()
+    const User = (() => {
+        class User {
+            constructor(id) {
+                this.idProperty = Symbol('id')
+                this.setId(id)
+            }
+
+            setPrivate(propty, value) {
+                const privateMembers = vm.get()
+            }
+        }
+        return User
+    })()
+
+
+    const user = new User(123)
+    console.log(user);
+
+</script>
 
 </html>

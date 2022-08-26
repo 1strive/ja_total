@@ -1,3 +1,9 @@
+/*
+ * @Author: JA
+ * @Date: 2022-06-09 20:43:59
+ * @LastEditTime: 2022-07-25 23:32:22
+ * @LastEditors: JA
+ */
 // 1. a==1&&a==2&&a==3 为 true
 // const a = {
 //     value: 0,
@@ -36,3 +42,24 @@ console.log(b === 1 && b === 2 && b === 3);
 // 触发get属性获取值，并且每一次获取值都会触发一次函数
 // 实行一次自增，判断三次就自增三次，所以最后会让公式成立。
 
+// console.log(undefined === null);//false
+
+
+// const a = {
+//     value: 0,
+//     [Symbol.toPrimitive](hint) {
+//         console.log(hint);
+//         this.value++
+//         return this.value
+//     },
+//     toString() {    //重写 valueOf()
+//         console.log('str5被调用');
+//         this.value++
+//         return this.value
+//     },
+//     valueOf() {    //重写 valueOf()
+//         console.log('val被调用');
+//         this.value++
+//         return this.value
+//     },
+// }

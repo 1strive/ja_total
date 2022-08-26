@@ -1,3 +1,9 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-06-09 20:43:57
+ * @LastEditTime: 2022-08-16 11:34:45
+ * @LastEditors: JA
+-->
 # HTTP
 HTTP（hypertext transport protocol）协议『超文本传输协议』，协议详细规定了浏览器和万维网服务器之间互相通信的规则。
 约定, 规则
@@ -11,7 +17,7 @@ HTTP（hypertext transport protocol）协议『超文本传输协议』，协议
         Content-type: application/x-www-form-urlencoded
         User-Agent: chrome 83
 空行
-体      username=admin&password=admin
+体      username=admin&password=admin（请求体POST才有）
 ```
 
 ## 响应报文

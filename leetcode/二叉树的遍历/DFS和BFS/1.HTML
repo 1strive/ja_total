@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: JA
  * @Date: 2021-11-27 13:33:20
- * @LastEditTime: 2022-02-22 15:47:56
+ * @LastEditTime: 2022-08-15 16:19:34
  * @LastEditors: JA
  * @Reference: 
 -->
@@ -18,7 +18,7 @@
 
 <body>
     <script>
-
+        // DFS和BFS遍历二叉树 DFS和BFS属于图的算法
         function TreeNode(val, left, right) {
             this.val = (val === undefined ? 0 : val)
             this.left = (left === undefined ? null : left)
@@ -32,7 +32,7 @@
         var t5 = new TreeNode(6, t4, t3)
         var t6 = new TreeNode(6, t4, t5)
 
-        // console.log(t6);
+        console.log(t6);
 
         // var dfs = DFS(t6)
         // console.log(dfs);
@@ -40,9 +40,11 @@
         // var bfs = BFS(t6)
         // console.log(bfs);
 
-        var dfs1 = DFS1(t6)
-        console.log(dfs1);
+        // var dfs1 = DFS1(t6)
+        // console.log(dfs1);
 
+        var dfs2 = BFS(t6)
+        console.log(dfs2);
 
         //DFS(递归)
         function DFS(node) {

@@ -1,0 +1,36 @@
+<!--
+ * @Author: JA
+ * @Date: 2021-12-12 22:07:02
+ * @LastEditTime: 2022-08-09 12:37:06
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="box1">
+        <div class="box2"></div>
+    </div>
+    <script>
+        function Test() {
+            let a = 4
+            this.pub = function () {
+                console.log(this, 'this');
+            }
+            console.log(this, 'asdasdasd');
+        }
+
+        const a = new Test()
+        a.pub()
+        console.log(Test);
+    </script>
+</body>
+
+</html>

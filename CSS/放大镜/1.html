@@ -1,3 +1,9 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-06-09 20:43:53
+ * @LastEditTime: 2022-07-17 16:56:02
+ * @LastEditors: JA
+-->
 <!DOCTYPE html>
 <html lang="zh">
 
@@ -7,32 +13,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>放大镜</title>
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
 
-        .wrap{
-            
+
+        #small {
+            position: fixed;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            width: 400px;
+            height: 600px;
+        }
+
+        #mark {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: absolute;
+            background-color: #fff;
+            left: 0;
+            top: 0;
+            visibility: hidden;
+            overflow: hidden;
+        }
+
+
+        /* #big {
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            margin-left: 20px;
+            position: relative;
+        } */
+
+        #bigimg {
+            position: absolute;
+            left: 0;
+            top: 0;
         }
     </style>
 </head>
 
 <body>
-    <div class="wrap">
-        <!-- 小图与遮罩 -->
-        <div id="small">
-            <img src="img/1.jpg" alt="">
-            <div id="mark"></div>
+    <!-- 遮罩 -->
+
+    <!-- 小图 -->
+    <div id="small">
+        <img src="./testJa.jpg" width="400" height="600" id="smallImg">
+        <div id="mark">
+            <img id="bigimg">
         </div>
-        <!-- 等比例放大的大图 -->
-        <div id="big">
-            <img src="img/2.jpg" alt="" id="bigimg">
-        </div>
+    </div>
+    <!-- 等比例放大的大图 -->
+    <!-- big取景框 -->
+    <div id="big">
     </div>
 
     <script>
+        const n = 2 //放大倍数
+        small.onmousemove = function (e) {
+            //遮罩相对于小图的偏移（(鼠标所在坐标）
+            var s_left = e.pageX - mark.offsetWidth / 2 - small.offsetLeft + small.offsetWidth / 2
+            var s_top = e.pageY - mark.offsetHeight / 2 - small.offsetTop + small.offsetHeight / 2
 
+            max_left = small.offsetWidth - mark.offsetWidth / 2
+            max_top = small.offsetHeight - mark.offsetHeight / 2
+            min_left = -mark.offsetWidth / 2
+            min_top = -mark.offsetHeight / 2
+
+            if (s_left > max_left) s_left = max_left
+            if (s_left < min_left) s_left = min_left
+            if (s_top > max_top) s_top = max_top
+            if (s_top < min_top) s_top = min_top
+
+            // 放大后宽高
+            bigimg.src = smallImg.src
+            bigimg.width = n * small.offsetWidth
+            bigimg.height = n * small.offsetHeight
+
+            //利用绝对定位是放大后图片动起来
+            bigimg.style.left = -n * s_left + 'px'
+            bigimg.style.top = -n * s_top + 'px'
+
+
+            mark.style.left = s_left + 'px'
+            mark.style.top = s_top + 'px'
+        }
+
+        small.onmouseenter = function () {
+            console.log(mark.offsetWidth);
+            mark.style.visibility = "visible"
+            big.style.visibility = "visible"
+        }
+
+        small.onmouseleave = function () {
+            mark.style.visibility = "hidden"
+            big.style.visibility = "hidden"
+        }
     </script>
 </body>
 

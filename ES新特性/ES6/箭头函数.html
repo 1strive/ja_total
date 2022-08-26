@@ -1,3 +1,9 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-06-09 20:43:56
+ * @LastEditTime: 2022-07-31 00:25:28
+ * @LastEditors: JA
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,9 +27,19 @@
         // let result = fn(1, 2);
         // console.log(result);
 
-
+        //普通函数的this指向是动态的，谁调用函数，函数内部的this就指向谁
         //1. this 是静态的. this 始终指向函数声明时所在作用域下的 this 的值
-        function getName(){
+        // 箭头函数没有自己的执行上下文，this指向是在定义函数时就被确定下来的，
+        // 箭头函数中的this，永远指向外层作用域中最接近自己的普通函数的this(没有时默认指向window)
+        // 箭头函数会忽略任何形式的this指向的改变，箭头函数的this指向是静态的：（所以箭头函数不能当成构造函数使用）
+
+        // 在普通函数中，arguments是类数组对象，保存着函数执行时传入的参数：
+        // 箭头函数没有arguments：
+
+        // 箭头函数没有prototype属性
+        // 箭头函数不能当做Generator函数，不能使用yield关键字
+        // 箭头函数不能被new关键字调用，不具有new.target
+        function getName() {
             console.log(this.name);
         }
         let getName2 = () => {
@@ -37,8 +53,8 @@
         }
 
         //直接调用
-        // getName();
-        // getName2();
+        getName();
+        getName2();
 
         //call 方法调用
         // getName.call(school);
@@ -59,16 +75,16 @@
         // fn(1,2,3);
 
         //4. 箭头函数的简写
-            //1) 省略小括号, 当形参有且只有一个的时候
-            // let add = n => {
-            //     return n + n;
-            // }
-            // console.log(add(9));
-            //2) 省略花括号, 当代码体只有一条语句的时候, 此时 return 必须省略
-            // 而且语句的执行结果就是函数的返回值
-            let pow = n => n * n;
-                
-            console.log(pow(8));
+        //1) 省略小括号, 当形参有且只有一个的时候
+        // let add = n => {
+        //     return n + n;
+        // }
+        // console.log(add(9));
+        //2) 省略花括号, 当代码体只有一条语句的时候, 此时 return 必须省略
+        // 而且语句的执行结果就是函数的返回值
+        let pow = n => n * n;
+
+        console.log(pow(8));
 
     </script>
 </body>

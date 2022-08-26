@@ -1,0 +1,73 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-07-02 17:45:17
+ * @LastEditTime: 2022-07-02 18:37:42
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function TreeNode(val, left, right) {
+            this.val = (val === undefined ? 0 : val)
+            this.left = (left === undefined ? null : left)
+            this.right = (right === undefined ? null : right)
+        }
+
+        var t0 = new TreeNode(1)
+        var t1 = new TreeNode(2)
+        var t3 = new TreeNode(8)
+        var t4 = new TreeNode(5, t1, t0)
+        var t5 = new TreeNode(6, t4, t3)
+        var t6 = new TreeNode(6, t4, t5)
+        var t7 = new TreeNode(6, t0, t5)
+
+        const max = maxDeep(t0)
+        console.log(max);
+
+        const ans = isBalanced(t0)
+        console.log(ans, 'ans');
+
+        function maxDeep(root) {
+            if (root === null) {
+                return 0
+            } else {
+                let left = maxDeep(root.left)
+                let right = maxDeep(root.right)
+                return Math.max(left, right) + 1
+            }
+        }
+
+        function isBalanced(root) {
+            let ans = true
+            function inorder(node) {
+                if (ans === false) return
+                let left = maxDeep(node.left)
+                let right = maxDeep(node.right)
+                // console.log(left, right);
+                if (Math.abs(left - right) > 1) {
+                    ans = false
+                    return
+                }
+                node.left && inorder(node.left)
+                node.right && inorder(node.right)
+
+            }
+            root && inorder(root)
+            return ans
+        }
+
+
+
+    </script>
+</body>
+
+</html>
