@@ -1,43 +1,6 @@
 <!--
  * @Author: JA
  * @Date: 2022-06-09 20:43:59
- * @LastEditTime: 2022-08-25 00:10:20
+ * @LastEditTime: 2022-09-04 11:52:34
  * @LastEditors: JA
 -->
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>test</title>
-    <style>
-    </style>
-</head>
-
-<body>
-</body>
-<script>
-    const vm = new WeakMap()
-    const User = (() => {
-        class User {
-            constructor(id) {
-                this.idProperty = Symbol('id')
-                this.setId(id)
-            }
-
-            setPrivate(propty, value) {
-                const privateMembers = vm.get()
-            }
-        }
-        return User
-    })()
-
-
-    const user = new User(123)
-    console.log(user);
-
-</script>
-
-</html>

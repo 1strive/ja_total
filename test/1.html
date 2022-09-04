@@ -1,40 +1,6 @@
 <!--
  * @Author: JA
  * @Date: 2022-06-09 20:43:59
- * @LastEditTime: 2022-08-31 17:02:39
+ * @LastEditTime: 2022-09-04 11:52:14
  * @LastEditors: JA
 -->
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test</title>
-</head>
-
-<body>
-    <button value="YES! ">YES! </button>
-    <button value="NO! ">NO! </button>
-    <button value="WE CAN! ">WE CAN! </button>
-
-    <hr />
-
-    <p id="p1">段落的第一行。</p>
-
-    <script>
-        const p1 = document.getElementById("p1"),
-            buttons = document.body.querySelectorAll(":scope > button");
-        function addTextNode(text) {
-            p1.appendChild(document.createTextNode(text));
-        }
-        buttons.forEach(button =>
-            button.addEventListener("click", () =>
-                addTextNode(button.value)
-            )
-        );
-    </script>
-</body>
-
-</html>

@@ -11,17 +11,30 @@
  */
 
 //建议参考常用高阶函数中月影做法
-function throttle(fn, delay) {
-    //记录上一次函数触发的时间
-    var lastTime = 0;
-    return function () {
-        //记录当前函数触发的时间
-        var nowTime = Date.now();
-        if (nowTime - lastTime > delay) {
-            //修正this指向问题
-            fn.call(this);
-            //同步执行结束时间
-            lastTime = nowTime;
+// function throttle(fn, delay) {
+//     //记录上一次函数触发的时间
+//     var lastTime = 0;
+//     return function () {
+//         //记录当前函数触发的时间
+//         var nowTime = Date.now();
+//         if (nowTime - lastTime > delay) {
+//             //修正this指向问题
+//             fn.call(this);
+//             //同步执行结束时间
+//             lastTime = nowTime;
+//         }
+//     }
+// }
+
+function Throttle(fn, time = 500) {//节流  每过规定时间执行一次事件
+    let timer;
+    return function (...args) {
+        console.log(args, 'args');
+        if (timer == null) {
+            fn.apply(this, args)
+            timer = setTimeout(() => {  //返回值timeoutID是一个正整数，表示定时器的编号。这个值可以传递给clearTimeout()来取消该定时器。
+                timer = null
+            }, time)
         }
     }
 }
@@ -35,32 +48,29 @@ document.onscroll = throttle(function () {
  * @param fn要被节流的函数
  * @param delay规定的时间
  */
-function debounce(fn, delay) {
-    //记录上一次的延时器
-    let timer = null;
-    return function () {
-        //清除上一次的演示器
-        clearTimeout(timer);
-        //重新设置新的延时器
-        timer = setTimeout(function () {
-            //修正this指向问题
-            fn.apply(this);
-        }, delay);
-    }
-}
-//节流 月影
-// function Throttle(fn, time = 500) {//节流  每过规定时间执行一次事件
-//     let timer;
-//     return function (...args) {
-//         console.log(args);
-//         if (timer == null) {
-//             fn.apply(this, args)
-//             timer = setTimeout(() => {  //返回值timeoutID是一个正整数，表示定时器的编号。这个值可以传递给clearTimeout()来取消该定时器。
-//                 timer = null
-//             }, time)
-//         }
+// function debounce(fn, delay) {
+//     //记录上一次的延时器
+//     let timer = null;
+//     return function () {
+//         //清除上一次的演示器
+//         clearTimeout(timer);
+//         //重新设置新的延时器
+//         timer = setTimeout(function () {
+//             //修正this指向问题
+//             fn.apply(this);
+//         }, delay);
 //     }
 // }
+function debounce(fn, dur) {
+    var timer;
+    return function () {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            fn.apply(this, arguments);
+        }, dur);
+    }
+}
+
 document.getElementById('btn').onclick = debounce(function () {
     console.log('按钮被点击了' + Date.now());
 }, 1000);
