@@ -1,0 +1,115 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-08-31 18:36:59
+ * @LastEditTime: 2022-08-31 20:00:57
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>105</title>
+</head>
+
+<body>
+    <script>
+        function TreeNode(val, left, right) {
+            this.val = (val === undefined ? 0 : val)
+            this.left = (left === undefined ? null : left)
+            this.right = (right === undefined ? null : right)
+        }
+
+        let t1 = new TreeNode(9)
+        let t3 = new TreeNode(20, new TreeNode(15), new TreeNode(7))
+        let t4 = new TreeNode(3, t1, t3)
+
+        console.log(t4);
+        function preorderTraversal(node) {
+            const ans = []
+            inorder(node, ans)
+            return ans
+
+            function inorder(node, res) {
+                if (node == null) {
+                    return
+                }
+
+                res.push(node.val)
+                inorder(node.left, res)
+                inorder(node.right, res) // 此处不需要递归的返回值故不用return(对比lc342)
+
+            }
+        }
+        function inorderTraversal(node) {
+            const ans = []
+            inorder(node, ans)
+            return ans
+
+            function inorder(node, res) {
+                if (node == null) {
+                    return
+                }
+
+                inorder(node.left, res)
+                res.push(node.val)
+                inorder(node.right, res) // 此处不需要递归的返回值故不用return(对比lc342)
+
+            }
+        }
+
+        function backTraversal(node) {
+            const stack = []
+            const ret = []
+
+            while (node || stack.length) {
+                while (node) {
+                    stack.push(node)
+                    node = node.left
+                }
+                node = stack.pop()
+                if (node.right) {
+                    stack.push({ val: node.val })//若有右侧分支则讲其val单独压进栈，待右侧分支也遍历完毕后出栈
+                } else {
+                    ret.push(node.val)
+                }
+                node = node.right
+            }
+            return ret
+        }
+        const pre = preorderTraversal(t4)
+        const inorder = inorderTraversal(t4)
+        const back = backTraversal(t4)
+        // console.log(pre);
+        // console.log(inorder);
+        // console.log(back);
+        function buildTree(preorder, inorder) {
+            if (!preorder.length) {
+                return []
+            }
+            const node = new TreeNode()
+            let val = preorder.shift()
+            node.val = val
+            const idx = inorder.indexOf(val)
+            let left = inorder.slice(0, idx)
+            let right = inorder.slice(idx + 1)
+            if (left.length > 0) {
+                node.left = buildTree(preorder, left)
+            }
+            if (right.length > 0) {
+                node.right = buildTree(preorder, right)
+            }
+            return node
+            // console.log(left, 'left');
+            // console.log(right, 'right');
+        };
+        // const ans = buildTree(pre, inorder)
+        const ans = buildTree([], [])
+        console.log(ans, 'ans');
+
+    </script>
+</body>
+
+</html>

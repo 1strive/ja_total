@@ -1,7 +1,7 @@
 <!--
  * @Author: JA
  * @Date: 2022-08-15 15:56:11
- * @LastEditTime: 2022-08-16 00:05:55
+ * @LastEditTime: 2022-08-31 20:12:13
  * @LastEditors: JA
 -->
 <!--
@@ -36,13 +36,14 @@
         let t6 = new TreeNode(6, t4, t5)
 
         console.log(t6);
-        const ans = postorderTraversal(t6)
-        console.log(ans);
+        const ans = BFS1(t6)
+        console.log(ans, 'ans');
         const ans1 = postorderTraversal2(t6)
         console.log(ans1);
         //DFS(迭代)（栈：stack 一端进 同一端出 先进后出） 等同于先序遍历
         //前序遍历（先序遍历）
         function DFS1(node) {
+
             const stack = []
             const ans = []
 
@@ -175,7 +176,7 @@
                 node = stack.pop()
                 if (node.right) {
                     stack.push({ val: node.val })//若有右侧分支则讲其val单独压进栈，待右侧分支也遍历完毕后出栈
-                    console.log(...stack,'ass');
+                    console.log(...stack, 'ass');
                 } else {
                     ret.push(node.val)
                 }
@@ -218,6 +219,7 @@
                 return ans
             }
             queue.unshift(node)
+            // let n = 0
             while (queue.length != 0) {
                 let len = queue.length
                 let level = []
@@ -232,10 +234,44 @@
                     }
                 }
                 ans.push(level)
+                n++
             }
             return ans.reverse()
+            // return n
         }
         /*************************************************************************************/
+
+        //最大深度
+        function maxDeep(root) {
+            if (root === null) {
+                return 0
+            } else {
+                let left = maxDeep(root.left)
+                let right = maxDeep(root.right)
+                return Math.max(left, right) + 1
+            }
+        }
+
+        //判断是否为平衡二叉树
+        function isBalanced(root) {
+            let ans = true
+            function inorder(node) {
+                if (ans === false) return
+                let left = maxDeep(node.left)
+                let right = maxDeep(node.right)
+                // console.log(left, right);
+                if (Math.abs(left - right) > 1) {
+                    ans = false
+                    return
+                }
+                node.left && inorder(node.left)
+                node.right && inorder(node.right)
+
+            }
+            root && inorder(root)
+            return ans
+        }
+
     </script>
 </body>
 

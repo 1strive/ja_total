@@ -1,0 +1,62 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-08-19 00:53:11
+ * @LastEditTime: 2022-08-19 01:59:08
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 数据绑定与可观察对象
+        const userList = []
+        class User {
+            constructor(name) {
+                this.name_ = name
+            }
+        }
+
+        const proxy = new Proxy(User, {
+            construct() {
+                const newUser = Reflect.construct(...arguments)
+                userList.push(newUser)
+                return newUser
+            }
+        })
+
+        const a = new proxy('ja')
+        new proxy('das')
+        new proxy('ads')
+        new proxy('ads')
+
+        console.log(userList);
+
+        // 另外，还可以把集合绑定到一个事件分派程序，每次插入新程序都会发送消息
+
+        function emit(newVal) {
+            console.log(newVal, 'newVaasdl');
+        }
+
+        const listproxy = new Proxy(userList, {
+            set(target, property, val, receiver) {
+                const res = Reflect.set(...arguments)
+                if (res) {
+                    emit(Reflect.get(target, property, receiver))
+                }
+                return res
+            }
+        })
+
+        listproxy.push('Joas')
+    </script>
+</body>
+
+</html>

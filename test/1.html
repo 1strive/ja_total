@@ -1,7 +1,7 @@
 <!--
  * @Author: JA
- * @Date: 2021-12-12 22:07:02
- * @LastEditTime: 2022-08-21 17:23:05
+ * @Date: 2022-06-09 20:43:59
+ * @LastEditTime: 2022-08-31 17:02:39
  * @LastEditors: JA
 -->
 <!DOCTYPE html>
@@ -11,45 +11,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        form.form-example {
-            display: table;
-        }
-
-        div.form-example {
-            display: table-row;
-        }
-
-        label,
-        input {
-            display: table-cell;
-            margin-bottom: 10px;
-        }
-
-        label {
-            padding-right: 10px;
-        }
-    </style>
+    <title>Test</title>
 </head>
 
 <body>
-    <form action="" method="get" class="form-example">
-        <div class="form-example">
-            <label for="name">Enter your name: </label>
-            <input type="text" name="name" id="name" required>
-        </div>
-        <div class="form-example">
-            <label for="email">Enter your email: </label>
-            <input name="email" id="email" required>
-        </div>
-        <div class="form-example">
-            <input type="submit" value="Subscribe!">
-        </div>
-    </form>
- 
+    <button value="YES! ">YES! </button>
+    <button value="NO! ">NO! </button>
+    <button value="WE CAN! ">WE CAN! </button>
 
+    <hr />
 
+    <p id="p1">段落的第一行。</p>
+
+    <script>
+        const p1 = document.getElementById("p1"),
+            buttons = document.body.querySelectorAll(":scope > button");
+        function addTextNode(text) {
+            p1.appendChild(document.createTextNode(text));
+        }
+        buttons.forEach(button =>
+            button.addEventListener("click", () =>
+                addTextNode(button.value)
+            )
+        );
+    </script>
 </body>
 
-</html>+
+</html>

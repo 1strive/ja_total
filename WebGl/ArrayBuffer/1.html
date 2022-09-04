@@ -1,0 +1,28 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-08-23 23:30:54
+ * @LastEditTime: 2022-08-23 23:37:02
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const buf = new ArrayBuffer(16)
+        const fullDataView = new DataView(buf)
+        fullDataView.setUint8(1,255)
+        console.log(fullDataView.getInt8(0));
+        console.log(buf);
+        console.log(fullDataView);
+    </script>
+</body>
+
+</html>

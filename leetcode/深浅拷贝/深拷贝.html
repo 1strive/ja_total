@@ -1,8 +1,8 @@
 <!--
  * @Author: ja
  * @Date: 2021-12-29 10:48:08
- * @LastEditors: ja
- * @LastEditTime: 2021-12-29 17:34:27
+ * @LastEditors: JA
+ * @LastEditTime: 2022-08-24 23:30:26
 -->
 <!DOCTYPE html>
 <html lang="zh">
@@ -18,17 +18,17 @@
     <script>
         //深拷贝:拷贝还是复制,深:把一个对象中所有的属性或者方法,一个一个的找到.并且在另一个对象中开辟相应的空间,一个一个的存储到另一个对象中
         //浅拷贝更改obj1的属性，obj2的属性也会随之更改，而深拷贝不会
-        const obj1 = {
-            age: 10,
-            sex: "男",
-            car: ["奔驰", "宝马", "特斯拉", "奥拓"],
-            dog: {
-                name: "大黄",
-                age: 5,
-                color: "黑白色"
-            }
-        };
-        const obj2 = {};
+        // const obj1 = {
+        //     age: 10,
+        //     sex: "男",
+        //     car: ["奔驰", "宝马", "特斯拉", "奥拓"],
+        //     dog: {
+        //         name: "大黄",
+        //         age: 5,
+        //         color: "黑白色"
+        //     }
+        // };
+        // const obj2 = {};
         //判断拷贝的要进行深拷贝的是数组还是对象，是数组的话进行数组拷贝，对象的话进行对象拷贝
         //本质上是将引用数据类型重新开辟一个地址
 
@@ -59,30 +59,62 @@
 
 
 
-        //法三：Object.assign()只能深拷贝一层
-//针对深拷贝，需要使用其他办法，因为 Object.assign()拷贝的是（可枚举）属性值。
-// 假如源值是一个对象的引用，它仅仅会复制其引用值。
-        // const obj1 = {
-        //     age: 10,
-        //     sex: "男",
-        //     car: ["奔驰", "宝马", "特斯拉", "奥拓"],
-        //     dog: {
-        //         name: "大黄",
-        //         age: 5,
-        //         color: "黑白色"
-        //     },
-        //     f1: function () {
-        //         console.log(111);
-        //     },
-        // };
-        // let obj2 = {}
-        // Object.assign(obj2, obj1)
+        //法三：Object.assign()只能浅拷贝
+        //针对深拷贝，需要使用其他办法，因为 Object.assign()拷贝的是（可枚举）属性值。
+        // 假如源值是一个对象的引用，它仅仅会复制其引用值。
+        const obj1 = {
+            age: 10,
+            sex: "男",
+            car: ["奔驰", "宝马", "特斯拉", "奥拓"],
+            dog: {
+                name: "大黄",
+                age: 5,
+                color: "黑白色"
+            },
+            f1: function () {
+                console.log(111);
+            },
+        };
+        let obj2 = {}
+        Object.assign(obj2, obj1)
+        console.log(obj2);
+        console.log(obj1);
+        obj1.age = 22
+        // obj1.car[0] = 'ss'
         // console.log(obj2);
         // console.log(obj1);
-        // obj1.age = 22
-        // obj1.car[0] = 'ss'
 
+        //最终解决方案 
+        // map解决循环调用
+        //加传参level跟踪递归层数
+        const maxClone = (obj) => {
+            let deep = 1
+            const deepClone = (obj, level = 0, map = new Map()) => {
+                deep = Math.max(level, deep)
+                if (obj instanceof Object) {
+                    let cloneTarget = Array.isArray(obj) ? [] : {}
+                    if (!Object.keys(obj).length) {
+                        deep = Math.max(level + 1, deep)
+                    }
+                    if (map.get(obj)) {
+                        return target
+                    }
+                    map.set(obj, cloneTarget)
+                    for (const key in obj) {
+                        cloneTarget[key] = deepClone(obj[key], level + 1)
+                    }
+                    return cloneTarget
+                } else {
+                    return obj
+                }
+            }
+            const ans = deepClone(obj)
+            console.log(deep, 'deep');
+            return ans
+        }
 
+        const ans = maxClone(obj)
+        console.log(ans);
 
     </script>
 </body>

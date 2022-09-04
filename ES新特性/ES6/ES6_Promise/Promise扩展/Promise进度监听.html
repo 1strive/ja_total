@@ -1,0 +1,58 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-08-29 02:01:37
+ * @LastEditTime: 2022-08-29 17:59:21
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise进度监听</title>
+</head>
+
+<body>
+    <script>
+        class TrackablePromise extends Promise {
+            constructor(executor) {
+                const notifyHandlers = []
+                super((resolve, reject) => {
+                    return executor(resolve, reject, (status) => {
+                        console.log(status,'status');
+                        notifyHandlers.map((handler) => handler(status))
+                        // console.log(notifyHandlers,'notifyHandlers');
+                    })
+                })
+
+                this.notifyHandlers = notifyHandlers
+            }
+
+            notify(notifyHandler) {
+                this.notifyHandlers.push(notifyHandler)
+                return this
+            }
+        }
+
+        let p = new TrackablePromise((resolve, reject, notify) => {
+            function countdown(x) {
+                if (x > 0) {
+                    notify(`${20 * x} % remaining`)//这就是status参数
+                    setTimeout(() => countdown(x - 1), 1000)
+                } else {
+                    resolve()
+                }
+            }
+            countdown(5)
+        })
+
+        // p.notify((x) => setTimeout(console.log, 0, 'a:', x))//此处为andler
+        //     .notify((x) => setTimeout(console.log, 0, 'b:', x))
+
+        // p.then(() => setTimeout(console.log, 0, '完成'))//都完成后then才会执行
+    </script>
+</body>
+
+</html>

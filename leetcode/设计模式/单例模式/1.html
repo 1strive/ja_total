@@ -1,0 +1,63 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-08-26 23:46:53
+ * @LastEditTime: 2022-08-27 23:59:02
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单例</title>
+</head>
+
+<body>
+    <script>
+        // function CreateSingle(name) {
+        //     this.name = name;
+        // }
+        // CreateSingle.prototype.getName = function () {
+        //     console.log(this.name);
+        // }
+
+        const Singleton = function () {
+            let instance;
+            return function (name) {
+                if (instance) {  //函数执行后instance已经生成在闭包中
+                    return instance
+                }
+                instance = new CreateSingle(name)
+                return instance
+            }
+        }()
+
+        // const single = new Singleton('aaa')
+        // console.log(single);
+        // const s2 = new Singleton('ddd')
+        // console.log(s2);
+
+        let singleton = function () {
+            let privateVariable = 10
+
+            function privateFunction() {
+                return false
+            }
+
+            return {
+                publicProperty: true,
+                publicMethod() {
+                    privateVariable++
+                    return privateFunction()
+                }
+            }
+        }()
+
+       singleton.publicMethod
+       
+    </script>
+</body>
+
+</html>
