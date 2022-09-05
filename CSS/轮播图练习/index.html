@@ -1,0 +1,44 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-09-01 16:10:41
+ * @LastEditTime: 2022-09-01 18:27:08
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>轮播图</title>
+    <link rel="stylesheet" href="./1.css">
+</head>
+
+<body>
+    <div id="wrapper" class="slider-list">
+        <ul>
+            <li class="item--selected">
+                <img src="./assets/1.webp"
+                    onload="if(this.width >= 320){this.width=400 ,this.height = 600}">
+            </li>
+            <li class="item">
+                <img src="./assets/2.webp"
+                    onload="if(this.width >= 320){this.width=400 ,this.height = 600}">
+            </li>
+            <li class="item">
+                <img src="./assets/3.webp"
+                    onload="if(this.width >= 320){this.width=400 ,this.height = 600}">
+            </li>
+            <li class="item">
+                <img src="./assets/4.webp"
+                    onload="if(this.width >= 320){this.width=400 ,this.height = 600}">
+            </li>
+        </ul>
+        <a class="slide-list__next"></a>
+        <a class="slide-list__previous"></a>
+    </div>
+    <script src="./1.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,278 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-08-15 15:56:11
+ * @LastEditTime: 2022-08-31 20:12:13
+ * @LastEditors: JA
+-->
+<!--
+ * @Author: JA
+ * @Date: 2022-08-15 15:56:11
+ * @LastEditTime: 2022-08-15 20:03:48
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>四种遍历</title>
+</head>
+
+<body>
+    <script>
+        function TreeNode(val, left, right) {
+            this.val = (val === undefined ? 0 : val)
+            this.left = (left === undefined ? null : left)
+            this.right = (right === undefined ? null : right)
+        }
+
+        let t0 = new TreeNode(1)
+        let t1 = new TreeNode(2)
+        let t3 = new TreeNode(8)
+        let t4 = new TreeNode(5, t1, t0)
+        let t5 = new TreeNode(6, t4, t3)
+        let t6 = new TreeNode(6, t4, t5)
+
+        console.log(t6);
+        const ans = BFS1(t6)
+        console.log(ans, 'ans');
+        const ans1 = postorderTraversal2(t6)
+        console.log(ans1);
+        //DFS(迭代)（栈：stack 一端进 同一端出 先进后出） 等同于先序遍历
+        //前序遍历（先序遍历）
+        function DFS1(node) {
+
+            const stack = []
+            const ans = []
+
+            if (node == null) {
+                return ans
+            }
+
+            stack.unshift(node)
+
+            while (stack.length != 0) {
+                let temp = stack.shift()
+                ans.push(temp.val)
+                if (temp.right != null) {
+                    stack.unshift(temp.right)
+                }
+                if (temp.left != null) {
+                    stack.unshift(temp.left)
+                }
+            }
+
+            return ans
+        }
+
+        //前序 递归
+        function preorderTraversal(node) {
+            const ans = []
+            inorder(node, ans)
+            return ans
+
+            function inorder(node, res) {
+                if (node == null) {
+                    return
+                }
+
+                res.push(node.val)
+                inorder(node.left, res)
+                inorder(node.right, res) // 此处不需要递归的返回值故不用return(对比lc342)
+
+            }
+        }
+        /*************************************************************************************/
+        //中序遍历
+        function inorderTraversal(root) {
+            const ans = []
+            inorder(root, ans)
+            return ans
+        };
+
+        function inorder(root, ans) {
+            if (root == null) {
+                return
+            }
+
+            inorder(root.left, ans)
+            ans.push(root.val)
+            inorder(root.right, ans)
+
+        };
+
+        //栈依次存入左节点所有点，直到最左侧在栈顶。
+        //开始抛出栈顶并访问。(例如第一个抛出2)。如果有右节点。那么将右节点加入栈中
+        // ，然后右节点一致左下遍历直到尾部。（这里5和7没有左节点，所以不加）但是如果抛出15。
+        // 右节点加入23.再找23的左侧节点加入栈顶。就这样循环下去直到栈为空。
+
+        function inorderTraversal1(node) {
+            const stack = []
+            const ans = []
+            while (stack.length || node) {
+                if (node) {
+                    stack.push(node)
+                    node = node.left
+                } else {
+                    node = stack.pop()
+                    ans.push(node.val)
+                    node = node.right
+                }
+            }
+            return ans
+        }
+        /*************************************************************************************/
+        //后续遍历
+
+        function postorderTraversal(root) {
+            let result = [];
+            let postorderTraversalNode = (node) => {
+                if (node) {
+                    postorderTraversalNode(node.left);
+                    postorderTraversalNode(node.right);
+                    result.push(node.val);
+                }
+            }
+            postorderTraversalNode(root);
+            return result;
+        };
+        //TODO:优化
+        function postorderTraversal1(node) {
+            const stack = []
+            const map = new Map()
+            const ans = []
+            while (stack.length || node) {
+                if (node) {
+                    stack.push(node)
+                    map.set(node.val, 1) //node.val标记这个值节点出现的次数
+                    node = node.left
+                } else {
+                    node = stack.at(-1)
+                    if (map.get(node.val) == 2) {//第二次访问，抛出
+                        stack.pop();
+                        ans.push(node.val)
+                        node = null;//需要往上走
+                    }
+                    else {
+                        map.set(node.val, 2);
+                        node = node.right;
+                    }
+                }
+            }
+            return ans
+        }
+
+        function postorderTraversal2(node) {
+            const stack = []
+            const ret = []
+
+            while (node || stack.length) {
+                while (node) {
+                    stack.push(node)
+                    node = node.left
+                }
+                node = stack.pop()
+                if (node.right) {
+                    stack.push({ val: node.val })//若有右侧分支则讲其val单独压进栈，待右侧分支也遍历完毕后出栈
+                    console.log(...stack, 'ass');
+                } else {
+                    ret.push(node.val)
+                }
+                node = node.right
+            }
+            return ret
+        }
+        /*************************************************************************************/
+        //BFS 等同于层序遍历
+        function BFS(node) {
+            const queue = []
+            const ans = []
+
+            if (node == null) {
+                return ans
+            }
+
+            queue.unshift(node)
+
+            while (queue.length != 0) {
+                let temp = queue.pop()
+                ans.push(temp.val)
+                if (temp.left != null) {
+                    queue.unshift(temp.left)
+                }
+                if (temp.right != null) {
+                    queue.unshift(temp.right)
+                }
+            }
+
+            return ans
+
+        }
+        //按层输出 BFS lc102
+        function BFS1(node) {
+            const queue = []
+            const ans = []
+
+            if (node == null) {
+                return ans
+            }
+            queue.unshift(node)
+            // let n = 0
+            while (queue.length != 0) {
+                let len = queue.length
+                let level = []
+                for (let i = 0; i < len; i++) {
+                    let temp = queue.pop()
+                    level.push(temp.val)
+                    if (temp.left) {
+                        queue.unshift(temp.left)
+                    }
+                    if (temp.right) {
+                        queue.unshift(temp.right)
+                    }
+                }
+                ans.push(level)
+                n++
+            }
+            return ans.reverse()
+            // return n
+        }
+        /*************************************************************************************/
+
+        //最大深度
+        function maxDeep(root) {
+            if (root === null) {
+                return 0
+            } else {
+                let left = maxDeep(root.left)
+                let right = maxDeep(root.right)
+                return Math.max(left, right) + 1
+            }
+        }
+
+        //判断是否为平衡二叉树
+        function isBalanced(root) {
+            let ans = true
+            function inorder(node) {
+                if (ans === false) return
+                let left = maxDeep(node.left)
+                let right = maxDeep(node.right)
+                // console.log(left, right);
+                if (Math.abs(left - right) > 1) {
+                    ans = false
+                    return
+                }
+                node.left && inorder(node.left)
+                node.right && inorder(node.right)
+
+            }
+            root && inorder(root)
+            return ans
+        }
+
+    </script>
+</body>
+
+</html>

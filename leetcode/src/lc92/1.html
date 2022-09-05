@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function ListNode(val, next) {
+            this.val = (val === undefined ? 0 : val)
+            this.next = (next === undefined ? null : next)
+        }
+
+        // const head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))))
+        const head = new ListNode(5)
+        function reverseBetween(head, left, right) {
+            let curL = null
+            let cur = null
+            let rightN = right - left
+            while (left > 1) {
+                const next = head.next
+                head.next = curL
+                curL = head
+                head = next
+                left--
+            }
+            while (rightN >= 0) {
+                const next = head.next
+                head.next = cur
+                cur = head
+                head = next
+                rightN--
+            }
+            curL = reverse(curL)
+            if (curL) {
+                pinjie(curL).next = cur
+            } else {
+                curL = cur
+            }
+            pinjie(curL).next = head
+            return curL
+        };
+        function reverse(head) {
+            let pre = null
+            let cur = head
+            while (cur) {
+                const next = cur.next
+                cur.next = pre
+                pre = cur
+                cur = next
+            }
+            return pre
+        };
+
+        function pinjie(h) {
+            let tep
+            if (h.next) {
+                tep = h.next
+                while (tep.next) {
+                    tep = tep.next
+                }
+            } else {
+                tep = h
+            }
+            return tep
+        }
+        const ans = reverseBetween(head, 1, 1)
+        console.log(ans);
+    </script>
+</body>
+
+</html>

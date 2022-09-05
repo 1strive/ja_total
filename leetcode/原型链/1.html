@@ -1,0 +1,58 @@
+<!--
+ * @Author: JA
+ * @Date: 2021-12-12 22:07:02
+ * @LastEditTime: 2022-08-28 00:49:29
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function Test() {
+            if (new.target) {
+                console.log(new.target, 'new.target');
+            }
+            this.add = '3'
+        }
+        const test = new Test()
+        function add() {
+
+        }
+        console.log(Test.prototype.__proto__ === Object.prototype);//true
+        console.log(Object.__proto__ === Function.prototype);//true
+        console.log(Function.__proto__ === Function.prototype);//true
+        console.log(Function instanceof Object);//true
+        console.log(Function instanceof Function);//true
+        console.log(Object.prototype);
+
+        const RreatePre = function (age) {
+            this.age = age
+
+        }
+        RreatePre.prototype.sayname = () => {
+            console.log(this.age);
+        }
+        RreatePre.prototype.name = 'ja'
+        const a = new RreatePre(11)
+        console.log(a);
+        for (const ele in a) {
+            console.log(ele);
+        }
+        //age
+        //  sayname
+        //  name
+        console.log(Object.keys(a));//['age']
+
+    </script>
+    </script>
+</body>
+
+</html>

@@ -2,7 +2,7 @@
  * @Author: ja
  * @Date: 2021-12-30 11:09:38
  * @LastEditors: JA
- * @LastEditTime: 2022-03-26 20:39:15
+ * @LastEditTime: 2022-08-10 00:09:12
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -44,40 +44,66 @@
         //     callback(`${type},${message}`)
         // }
 
-        class Pubsub {
-            // 订阅者集合
-            // 集合的每个对象里都包含了订阅者类型 type，及要做的事情 callback
-            subs = {}
-            //订阅者订阅
-            subscribe(type, callback) {
-                // 每增加一个订阅者，就将其信息添加到订阅者集合中
-                //type为方法名，callback为方法
-                this.subs[type] = callback
-            }
-            // 发布者发布   当发布时 依赖其的订阅者会执行自身回调
-            publish(type, message) {
-                const callback = this.subs[type]  //匹配相应的回调
-                callback(`${type},${message}`)   //执行订阅时添加的回调方法
-            }
-        }
+        // class Pubsub {
+        //     // 订阅者集合
+        //     // 集合的每个对象里都包含了订阅者类型 type，及要做的事情 callback
+        //     subs = {}
+        //     //订阅者订阅
+        //     subscribe(type, callback) {
+        //         // 每增加一个订阅者，就将其信息添加到订阅者集合中
+        //         //type为方法名，callback为方法
+        //         this.subs[type] = callback
+        //     }
+        //     // 发布者发布   当发布时 依赖其的订阅者会执行自身回调
+        //     publish(type, message) {
+        //         const callback = this.subs[type]  //匹配相应的回调
+        //         callback(`${type},${message}`)   //执行订阅时添加的回调方法
+        //     }
+        // }
 
-        //创建一个事件调度中心
-        const pb = new Pubsub()
-        console.log(pb);
-        // 小明在微信点餐了
-        pb.subscribe('小明，200号', (msg) => {
-            console.log('微信通知', msg);
-        })
-        // 小红在微信点餐了
-        pb.subscribe('小红，201号', (msg) => {
-            console.log('微信通知', msg);
-        })
+        // //创建一个事件调度中心
+        // const pb = new Pubsub()
+        // console.log(pb);
+        // // 小明在微信点餐了
+        // pb.subscribe('小明，200号', (msg) => {
+        //     console.log('微信通知', msg);
+        // })
+        // // 小红在微信点餐了
+        // pb.subscribe('小红，201号', (msg) => {
+        //     console.log('微信通知', msg);
+        // })
 
-        pb.publish('小明，200号', '您的餐好了')
+        // pb.publish('小明，200号', '您的餐好了')
 
-        pb.publish('小红，201号', '您的餐好了')
+        // pb.publish('小红，201号', '您的餐好了')
 
+        //订阅发布(这个准)
+        const PubSub = (() => {
+            const topics = {};  //保存订阅主题
+            const subscribe = (type, fn) => {   //订阅某类型主题
+                if (!topics[type]) {
+                    topics[type] = [];
+                }
+                topics[type].push(fn);
+            };
+            const publish = (type, ...args) => {    //发布某类型主题
+                if (!topics[type]) {
+                    return;
+                }
+                for (let fn of topics[type]) {      //通知相关主题订阅者
+                    fn(args);
+                }
+            };
+            return { subscribe, publish };
+        })();
 
+        let subA = { type: 'event1' },
+            subB = { type: 'event2' },
+            subC = { type: 'event1' };
+        PubSub.subscribe(subA.type, () => console.log(`update eventType: ${subA.type} subA`));   //订阅者A订阅topic1
+        PubSub.subscribe(subB.type, () => console.log(`update eventType: ${subB.type} subB`));   //订阅者B订阅topic2
+        PubSub.subscribe(subC.type, () => console.log(`update eventType: ${subC.type} subC`));   //订阅者C订阅topic1
+        PubSub.publish(subA.type);  //发布topic通知，通知订阅者A、C
 
 
     </script>

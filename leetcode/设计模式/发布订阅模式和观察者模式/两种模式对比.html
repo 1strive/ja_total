@@ -1,0 +1,86 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-06-09 20:43:59
+ * @LastEditTime: 2022-08-10 19:03:45
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //观察者
+        class Subject {
+            observers = []
+
+            add(ob) {
+                this.observers.push(ob)
+            }
+
+            notify() {
+                for (let ob of this.observers) {
+                    typeof ob.update === 'function' && ob.update();
+                }
+            }
+        }
+
+        const subject = new Subject()
+        let ob1 = {
+            update: () => {
+                console.log('updateSubA');
+            }
+        },
+            ob2 = {
+                update: () => {
+                    console.log('updateSubB');
+                }
+            };
+
+
+        subject.add(ob1)
+        subject.add(ob2)
+        subject.notify()
+
+        //订阅发布
+        class PubSub {
+            topics = {};  //保存订阅主题
+            subscribe = (type, fn) => {   //订阅某类型主题
+                if (!this.topics[type]) {
+                    this.topics[type] = [];
+                }
+                this.topics[type].push(fn);
+            };
+            publish = (type, ...args) => {    //发布某类型主题
+                if (!this.topics[type]) {
+                    return;
+                }
+               
+                for (let fn of this.topics[type]) {      //通知相关主题订阅者
+                    fn(...args);
+                }
+            };
+        }
+
+        let subA = { type: 'event1' },
+            subB = { type: 'event2' },
+            subC = { type: 'event1' };
+        // PubSub.subscribe(subA.type, () => console.log(`update eventType: ${subA.type} subA`));   //订阅者A订阅topic1
+        // PubSub.subscribe(subB.type, () => console.log(`update eventType: ${subB.type} subB`));   //订阅者B订阅topic2
+        // PubSub.subscribe(subC.type, () => console.log(`update eventType: ${subC.type} subC`));   //订阅者C订阅topic1
+        // PubSub.publish(subA.type);  //发布topic通知，通知订阅者A、C
+        const pubSub = new PubSub()
+        pubSub.subscribe(subC.type, (a, b) => console.log(`update eventType: ${subC.type} ${a + 2} ${b} subC`));   //订阅者C订阅topic1
+        pubSub.subscribe(subA.type, (a, b) => console.log(`update eventType: ${subA.type} subA`));   //订阅者A订阅topic1
+        pubSub.publish('event1', 3, 'asdasd')
+
+    </script>
+</body>
+
+</html>

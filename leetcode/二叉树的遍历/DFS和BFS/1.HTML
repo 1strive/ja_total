@@ -1,0 +1,121 @@
+<!--
+ * @Description: 
+ * @Author: JA
+ * @Date: 2021-11-27 13:33:20
+ * @LastEditTime: 2022-08-15 16:19:34
+ * @LastEditors: JA
+ * @Reference: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // DFS和BFS遍历二叉树 DFS和BFS属于图的算法
+        function TreeNode(val, left, right) {
+            this.val = (val === undefined ? 0 : val)
+            this.left = (left === undefined ? null : left)
+            this.right = (right === undefined ? null : right)
+        }
+
+        var t0 = new TreeNode(1)
+        var t1 = new TreeNode(2)
+        var t3 = new TreeNode(8)
+        var t4 = new TreeNode(5, t1, t0)
+        var t5 = new TreeNode(6, t4, t3)
+        var t6 = new TreeNode(6, t4, t5)
+
+        console.log(t6);
+
+        // var dfs = DFS(t6)
+        // console.log(dfs);
+
+        // var bfs = BFS(t6)
+        // console.log(bfs);
+
+        // var dfs1 = DFS1(t6)
+        // console.log(dfs1);
+
+        var dfs2 = BFS(t6)
+        console.log(dfs2);
+
+        //DFS(递归)
+        function DFS(node) {
+            const ans = []
+            inorder(node, ans)
+            return ans
+
+            function inorder(node, res) {
+                if (node == null) {
+                    return
+                }
+
+                res.push(node.val)
+                inorder(node.left, res)
+                inorder(node.right, res) // 此处不需要递归的返回值故不用return(对比lc342)
+
+            }
+        }
+        //DFS(迭代)（栈：stack 一端进 同一端出 先进后出）
+        function DFS1(node) {
+            const stack = []
+            const ans = []
+
+            if (node == null) {
+                return ans
+            }
+
+            stack.unshift(node)
+
+            while (stack.length != 0) {
+                var temp = stack.shift()
+                ans.push(temp.val)
+                if (temp.right != null) {
+                    stack.unshift(temp.right)
+                }
+                if (temp.left != null) {
+                    stack.unshift(temp.left)
+                }
+            }
+
+            return ans
+
+        }
+        //BFS(迭代)(队列：queue  一端进 另一端出 先进先出)
+        function BFS(node) {
+            const queue = []
+            const ans = []
+
+            if (node == null) {
+                return ans
+            }
+
+            queue.unshift(node)
+
+            while (queue.length != 0) {
+                var temp = queue.pop()
+                ans.push(temp.val)
+                if (temp.left != null) {
+                    queue.unshift(temp.left)
+                }
+                if (temp.right != null) {
+                    queue.unshift(temp.right)
+                }
+            }
+
+            return ans
+
+        }
+
+
+    </script>
+</body>
+
+</html>

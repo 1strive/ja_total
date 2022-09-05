@@ -1,0 +1,63 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-08-17 21:46:49
+ * @LastEditTime: 2022-08-17 21:50:08
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+ * @Author: JA
+ * @Date: 2022-08-17 21:44:36
+ * @LastEditTime: 2022-08-17 21:46:03
+ * @LastEditors: JA
+ */
+        const store = {
+            // 存储过期时间映射
+            setExpireMap: (key, expire) => {
+                const expireMap = localStorage.getItem('EXPIRE_MAP') || "{}"
+                localStorage.setItem(
+                    'EXPIRE_MAP',
+                    JSON.stringify({
+                        ...JSON.parse(expireMap),
+                        key: expire
+                    }))
+            },
+            setItem: (key, value, expire) => {
+                store.setExpireMap(key, expire)
+                localStorage.setItem(key, value)
+            },
+            getItem: (key) => {
+                // 在取值之前先判断是否过期
+                const expireMap = JSON.parse(
+                    localStorage.getItem('EXPIRE_MAP') || "{}"
+                )
+                if (expireMap[key] && expireMap[key] < Date.now()) {
+                    return localStorage.getItem(key)
+                } else {
+                    localStorage.removeItem(key)
+                    return null
+                }
+            }
+            // ...
+        }
+        // 重写
+        localStorage.__proto__.getItem = () => {
+            console.log(1);
+            return 'asd'
+        }
+        console.log(localStorage.getItem('person'));
+    </script>
+</body>
+
+</html>

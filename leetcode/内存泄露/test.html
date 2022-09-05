@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function f() {
+            var o = { one: 'one' };
+            var o2 = { two: 'two' };
+            o.a = o2; // o 引用 o2
+            o2.a = o; // o2 引用 o
+
+            console.log(o);
+            // console.log(o.a);
+            return "azerty";
+        }
+
+        f();
+//循环引用指函数运行结束之后，因为引用仍然存在而不会触发引用计数垃圾回收
+    </script>
+</body>
+
+</html>

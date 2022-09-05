@@ -1,0 +1,49 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-08-29 23:43:13
+ * @LastEditTime: 2022-08-30 01:53:40
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+
+<body>
+    <div id="virtual-dom">
+        <p>Virtual DOM</p>
+        <ul id="list">
+            <li class="item">Item 1</li>
+            <li class="item">Item 2</li>
+            <li class="item">Item 3</li>
+        </ul>
+        <div>Hello World</div>
+    </div>
+
+    <script>
+        class User {
+
+            constructor(id) {
+                this.id = id
+                this.adds = this.add.bind(this)
+            }
+
+            add() {
+                this.id++
+            }
+        }
+
+        const user = new User(3)
+        user.adds()
+        user.adds()
+        user.add()
+        console.log(user);
+    </script>
+</body>
+
+</html>

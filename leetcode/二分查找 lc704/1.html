@@ -1,0 +1,45 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-08-30 23:18:50
+ * @LastEditTime: 2022-08-30 23:52:34
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        nums = [-1, 0, 3, 5, 9, 12], target = 2
+
+        function search(nums, target) {
+            let left = 0
+            let right = nums.length - 1
+            let mid = Math.floor((right - left) / 2) + left
+
+            while (left <= right) {
+                let mid = Math.floor((right - left) / 2) + left
+                let num = nums[mid]
+                if (target === num) {
+                    return mid
+                } else if (target > num) {
+                    left = mid + 1
+                } else {
+                    right = mid - 1
+                }
+            }
+            return -1
+        }
+        console.log(search(nums, target));
+
+
+    </script>
+</body>
+
+</html>

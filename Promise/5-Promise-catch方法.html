@@ -6,15 +6,17 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>catch方法</title>
 </head>
+
 <body>
     <script>
-        const p = new Promise((resolve, reject)=>{
-            setTimeout(()=>{
+        const p = new Promise((resolve, reject) => {
+            setTimeout(() => {
                 //设置 p 对象的状态为失败, 并设置失败的值
                 reject("出错啦!");
             }, 1000)
@@ -26,9 +28,13 @@
 
 
         //等价于then方法省去第一个参数（语法糖）
-        p.catch(function(reason){
+        p.catch(function (reason) {
             console.warn(reason);
-        });
+            return Promise.resolve(3)
+        }).then((val) => {
+            console.log('after a catch the chain is restored');
+        })
     </script>
 </body>
+
 </html>
