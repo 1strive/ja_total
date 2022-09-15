@@ -1,0 +1,61 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-06-09 20:43:56
+ * @LastEditTime: 2022-09-06 18:30:01
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            font-size: 0px;
+        }
+
+        /*行内元素之间有默认的空隙  是由于HTML代码中的回车换行被转成一个空白符*/
+        .left {
+            display: inline-block;
+            margin: 0;
+            width: 100px;
+            background-color: red;
+            font-size: 14px;
+        }
+
+        .mid {
+            display: inline-block;
+            width: calc(100% - 200px);
+            background-color: green;
+            font-size: 14px;
+        }
+
+        .right {
+            display: inline-block;
+            width: 100px;
+            background-color: red;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class='left'>1</div>
+        <div class='mid'>222</div>
+        <div class='right'>3</div>
+    </div>
+    <span>123</span>
+</body>
+
+</html>

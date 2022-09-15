@@ -1,0 +1,47 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-09-10 01:25:17
+ * @LastEditTime: 2022-09-10 02:52:09
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>grid</title>
+    <style>
+        .wrapper {
+            display: grid;
+            /* grid-template-columns: 100px auto 100px; */
+            /* grid-template-rows: 100vh;
+            grid-template-columns: 100px auto 100px; */
+            grid-template: 100vh/100px auto 100px;
+            background-color: #bfa;
+        }
+
+        .left {
+            background-color: red;
+        }
+
+        .mid {
+            background-color: green;
+        }
+
+        .right {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class='left'>1</div>
+        <div class='mid'>222</div>
+        <div class='right'>3</div>
+    </div>
+</body>
+
+</html>

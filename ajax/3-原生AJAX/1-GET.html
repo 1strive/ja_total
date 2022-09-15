@@ -1,3 +1,9 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-06-09 20:43:57
+ * @LastEditTime: 2022-09-11 21:41:59
+ * @LastEditors: JA
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,13 +31,16 @@
             //1. 创建对象
             const xhr = new XMLHttpRequest();
             //2. 初始化 设置请求方法和 url
+            //同源时可以写成相对的
             xhr.open('GET', 'http://127.0.0.1:8000/server?a=100&b=200&c=300');
             //3. 发送
+            // xhr.setRequestHeader('name', 'JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
             xhr.send();
             //4. 事件绑定 处理服务端返回的结果
             // on  when 当....时候
             // readystate 是 xhr 对象中的属性, 表示状态 0 1 2 3 4
             // change  改变
+
             xhr.onreadystatechange = function(){
                 //判断 (服务端返回了所有的结果)
                 if(xhr.readyState === 4){

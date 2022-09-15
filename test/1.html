@@ -1,6 +1,47 @@
 <!--
  * @Author: JA
- * @Date: 2022-06-09 20:43:59
- * @LastEditTime: 2022-09-04 11:52:14
+ * @Date: 2022-06-09 20:43:56
+ * @LastEditTime: 2022-09-15 00:16:34
  * @LastEditors: JA
 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .big {
+            height: 6000px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <iframe src="./test.html" frameborder="1"></iframe> -->
+    <a href="https://www.baidu.com/" target="">11</a>
+    <button id="btn">移动哈哈哈哈</button>
+    <div class="big"></div>
+    <script>
+        console.log(window.innerWidth);
+        console.log(document.documentElement.clientWidth);
+        btn.onclick = () => {
+            // window.scrollTo({
+            //     top: 1000,
+            //     behavior: 'smooth'
+            // })
+            window.open("https://www.baidu.com/", '_blank', 'width = 200,height=200,location=yes')
+        }
+        let n = 0
+        window.onscroll = () => {
+            let m = ++n
+            console.log(window.pageYOffset, 'pageYOffset', m);
+            console.log(window.scrollY, 'scrollY', m);
+        }
+        console.log(document.compatMode);
+    </script>
+</body>
+
+</html>
