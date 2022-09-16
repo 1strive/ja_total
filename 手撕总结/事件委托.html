@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <title>事件委托</title>
+</head>
+
+<body>
+    <ul>
+        <li>.</li>
+        <li>.</li>
+        <li>.</li>
+    </ul>
+
+    <script type="text/javascript">
+        // 补全代码
+        function test() {
+            const lis = document.querySelectorAll('li');
+            li1 = lis[0]; li2 = lis[1]; li3 = lis[2];
+            li1.click(); li2.click(); li3.click();
+            console.log(li1.innerText);
+            return li1.innerText === '..' && li2.innerText === '..' && li3.innerText === '..'
+        }
+        const li = document.querySelectorAll('li')
+        for (const ele of li) {
+            ele.onclick = (e) => {
+                let m = e.target.innerHTML
+                e.target.innerHTML = m + '.'
+            }
+        }
+        console.log(test());
+    </script>
+</body>
+
+</html>
