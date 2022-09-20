@@ -1,0 +1,43 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-09-08 20:51:44
+ * @LastEditTime: 2022-09-08 21:48:24
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>curry</title>
+</head>
+
+<body>
+    <script>
+        // 柯里化的意思是将一个多元函数，转换成一个依次调用的单元函数。
+        //长度有限版
+        function curry(fn, ...users) {
+            return function (...args) {
+                return args.length + users.length === fn.length ? fn.apply(this, [...users, ...args]) : curry(fn, ...users, ...args)
+            };
+        }
+
+        // var test = curry(function (a, b, c, d, f) {
+        //     return [a, b, c, d, f]
+        // })
+        // console.log(test(1)(2, 3));
+        // console.log(test(1, 2, 3));
+        // console.log(test(1)(2)(3)(4)(5));
+
+        // const curry1 = (fn, ...args) =>
+        //     args.length >= fn.length // 这个判断很关键！！！
+        //         ? fn(...args)
+        //         : (..._args) => curry1(fn, ...args, ..._args);
+
+      
+    </script>
+</body>
+
+</html>

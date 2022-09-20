@@ -1,7 +1,7 @@
 <!--
  * @Author: JA
  * @Date: 2022-06-09 20:43:57
- * @LastEditTime: 2022-07-03 01:30:33
+ * @LastEditTime: 2022-09-10 17:13:00
  * @LastEditors: JA
 -->
 <!DOCTYPE html>
@@ -15,25 +15,29 @@
 
 <body>
     <button>AJAX请求</button>
+    <input type="file" name="" id="">
     <script>
         //文档地址
         //https://developer.mozilla.org/zh-CN/docs/Web/API/WindowOrWorkerGlobalScope/fetch
 
         const btn = document.querySelector('button');
-
+        // fetch 返回一个最后会resloved为response对象的Promise
         btn.onclick = function () {
-            fetch('http://127.0.0.1:8000/fetch-server?vip=10', {
+            fetch('http://47.109.34.108:8000/server?vip=10&夹袄=23', {
                 //请求方法
                 method: 'POST',
                 //请求头
                 headers: {
-                    name: 'atguigu'
+                    name: 'JAAAAAAAAAAAAA'
                 },
                 //请求体
                 body: 'username=admin&password=admin'
             }).then((response) => {
-                // return response.text();
-                return response.json();//Response  mixin 的 json() 方法接收一个 Response 流，并将其读取完成。它返回一个 Promise，Promise 的解析 resolve 结果是将文本体解析为 JSON。
+                console.log(response);
+                return response.text();
+                // return response.json();//Response  mixin 的 json() 方法接收一个 Response 流，并将其读取完成。它返回一个 Promise，Promise 的解析 resolve 结果是将文本体解析为 JSON。
+            }, (err) => {
+                console.log(err);
             }).then(response => {
                 console.log(response);
             });

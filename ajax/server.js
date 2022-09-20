@@ -21,7 +21,9 @@ app.all('/server', (request, response) => {
     //响应头
     response.setHeader('Access-Control-Allow-Headers', '*');
     //设置响应体
-    response.send('HELLO AJAX POST');
+    setTimeout(() => {
+        response.send('HELLO AJAX POssST');
+    }, 3000);
 });
 
 //JSON 响应

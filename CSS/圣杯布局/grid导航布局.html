@@ -1,0 +1,54 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-09-10 01:39:22
+ * @LastEditTime: 2022-09-10 03:27:19
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #page {
+            display: grid;
+            width: 100%;
+            height: 200px;
+            grid-template: "head head head" 30px "nav nav main" 1fr "nav nav foot" 30px/300px 1fr 1fr
+        }
+
+        header {
+            background-color: lime;
+            grid-area: head;
+        }
+
+        nav {
+            background-color: lightblue;
+            grid-area: nav;
+        }
+
+        main {
+            background-color: yellow;
+            grid-area: main;
+        }
+
+        footer {
+            background-color: red;
+            grid-area: foot;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="page">
+        <header>Header</header>
+        <nav>Navigation</nav>
+        <main>Main area</main>
+        <footer>Footer</footer>
+    </section>
+</body>
+
+</html>

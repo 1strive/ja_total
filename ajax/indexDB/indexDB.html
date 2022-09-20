@@ -1,0 +1,136 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-09-11 14:07:13
+ * @LastEditTime: 2022-09-11 16:25:30
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>indexDB</title>
+</head>
+
+<body>
+    <script>
+        /**
+      *  数据库： IDBDatabase
+         表格：对象仓库（IDBObjectStore）
+         行数据：对象仓库存储的一条数据
+         索引：IDBindex，加速数据的检索（在对象仓库里面可为不同的键创建）
+         事务：IDBTransaction
+         操作请求：IDBRequest
+         IDBCursor：遍历对象存储空间和索引
+         IDBKeyRange：定义键的范围数据
+      */
+        let dbase  //定义数据库实例
+        // uploaddb:数据库名
+        let udb = window.indexedDB.open('uploaddb')  //创建一个数据库  同步声明 异步open
+
+        function dbObj() {
+            return new Promise((resolve, reject) => {
+                udb.onsuccess = function (event) {
+                    console.log('数据库创建成功')
+                    dbase = event.target.result  //数据库实例 IDBDatabase
+                    resolve(dbase)
+                }
+
+                udb.onerror = function (event) {
+                    console.log('数据库创建失败')
+                }
+                //如果指定的版本号，大于数据库的实际版本号，就会发生数据库升级事件
+                // 新建数据库或者数据库版本大于当前版本会触发onupgradeneeded事件
+                udb.onupgradeneeded = function (event) {
+                    let db = event.target.result
+                    // 数据库中没有这个表   objectStoreNames：表名
+                    if (!db.objectStoreNames.contains('upload')) {
+                        // upload:表名
+                        let objectStore = db.createObjectStore('upload', { keyPath: 'id' }) //第二个属性为指定主键id
+                        objectStore.createIndex('id', 'id', { unique: true })
+                        objectStore.createIndex('name', 'name')
+                        objectStore.createIndex('age', 'age')
+                    }
+                    console.log(db, '更新')
+                }
+            })
+        }
+
+        function insertBase(dbase, data, cb) {
+            // let transaction=dbase.transaction(['upload','readwrite'])
+            // let objectStore=transaction.objectStore('upload')
+            let res = dbase.transaction(['upload'], 'readwrite').objectStore('upload').add(data);
+            res.onsuccess = function (event) {
+                cb(event)
+                console.log('数据写入成功')
+            }
+            res.onerror = function (event) {
+                console.log('数据写入失败');
+            }
+        }
+
+        function deleteBase(dbase, key, cb) {
+            // key 主键键值
+            let transaction = dbase.transaction(['upload'], 'readwrite')
+            let objectStore = transaction.objectStore('upload')
+            let res = objectStore.delete(key)
+            res.onsuccess = function () {
+                console.log('删除成功')
+            }
+            res.onerror = function () {
+                console.log('删除失败')
+            }
+        }
+
+        function updateBase(dbase, key, data, cb) {
+            let transaction = dbase.transaction(['upload'], 'readwrite')
+            let objectStore = transaction.objectStore('upload')
+            let res = objectStore.get(key)
+            res.onsuccess = function () {
+                console.log('数据更新成功')
+                objectStore.put(data)
+            }
+            res.onerror = function () {
+                console.log('数据更新失败')
+            }
+        }
+
+        function findAllBase(dbse, cb) {
+            let res = dbase.transaction(['upload']).objectStore('upload').getAll()
+            res.onsuccess = function () {
+                console.log('获取数据成功')
+                // objectStore.put(data)
+            }
+            res.onerror = function () {
+                console.log('获取数据失败')
+            }
+        }
+
+        dbObj().then(db => {
+            console.log(db)
+            let params = [
+                { id: "1", name: "张三", age: 18 },
+                { id: "2", name: "李四", age: 19 }
+            ]
+            params.forEach(item => {
+                insertBase(db, item, (event) => {
+                    console.log('执行回调了')
+                })
+            })
+
+            setTimeout(() => {
+                deleteBase(db, '1')
+                updateBase(db, '1', { id: "1", name: "焦傲", age: 18 })
+            }, 2000)
+            findAllBase(db)
+            // setTimeout(()=>{
+            //     window.indexedDB.deleteDatabase('uploaddb')
+            // },2000)
+        })
+
+    </script>
+</body>
+
+</html>

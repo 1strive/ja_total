@@ -1,0 +1,36 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-09-11 00:44:25
+ * @LastEditTime: 2022-09-11 22:22:41
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cookie</title>
+    <!-- <script crossorigin="anonymous" src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script> -->
+    <style>
+    </style>
+</head>
+
+<body>
+    <button id="btn">cookie发送</button>
+    <script>
+
+        console.log(localStorage.msg2);
+        // document.cookie = `${encodeURI("name")}=${encodeURI('JA傲')}`
+        const p = document.cookie
+        btn.onclick = () => {
+            const xhr = new XMLHttpRequest()
+            xhr.withCredentials = true;
+            xhr.open('get', 'http://127.0.0.1:8000/server')
+            xhr.send()
+        }
+    </script>
+</body>
+
+</html>

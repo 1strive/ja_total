@@ -1,7 +1,14 @@
+/*
+ * @Author: JA
+ * @Date: 2022-09-01 18:29:36
+ * @LastEditTime: 2022-09-06 12:06:07
+ * @LastEditors: JA
+ */
 class Slider {
     constructor(id, delay = 2500) {
         this.container = document.getElementById(id);
         this.items = this.container.querySelectorAll('.item, .item--selected');
+        // console.log(this.items);
         this.delay = delay;
 
 
