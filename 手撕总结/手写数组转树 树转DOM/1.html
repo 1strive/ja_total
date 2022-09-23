@@ -1,0 +1,128 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-09-19 16:35:13
+ * @LastEditTime: 2022-09-22 02:10:48
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手写数组转树</title>
+    <style>
+        * {
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+    </div>
+    <script>
+        let input = [
+            {
+                id: 1, val: '学校', parentId: null
+            },
+            {
+                id: 2, val: '班级1', parentId: 1
+            },
+            {
+                id: 3, val: '班级2', parentId: 1
+            },
+            {
+                id: 4, val: '学生1', parentId: 2
+            },
+            {
+                id: 5, val: '学生2', parentId: 2
+            },
+            {
+                id: 6, val: '学生3', parentId: 2
+            },
+        ]
+        const ans = arrayToTree(input)
+        const init = toDom(ans)
+        const text = document.createTextNode('焦傲大帅比')//文本节点
+        root.append(text)
+        root.append(init)
+        //根据数组生成虚拟DOM
+        function arrayToTree(arr) {
+            if (!arr.length) return null
+            const initId = arr.shift()
+            const ans = {
+                id: initId.id,
+                val: initId.val,
+                children: arr.length > 0 ? totree(initId.id, arr) : []
+            }
+            return ans
+        }
+
+        function totree(pId, arr) {
+            let children = []
+            for (let i = 0; i < arr.length; i++) {
+                const node = arr[i]
+                if (node.parentId === pId) {
+                    children.push({
+                        id: node.id,
+                        val: node.val,
+                        children: totree(node.id, arr)
+                    })
+                }
+            }
+            return children
+        }
+        //递归转换为真实DOM
+        function toDom(obj) {
+            const cur = document.createElement('div')
+            const span = document.createElement('span')
+            const strong = document.createElement('strong')
+            const child = document.createElement('div')
+            span.innerHTML = obj.id
+            strong.innerHTML = obj.val
+            cur.append(span)
+            cur.append(strong)
+            cur.append(child)
+            if (obj.children.length === 0) {
+                return cur
+            }
+            for (const ele of obj.children) {
+                child.append(toDom(ele))
+            }
+            return cur
+        }
+
+
+        // let textNode = root.children[1]
+        // console.log(textNode.nodeType === Node.TEXT_NODE);//true
+        const list = document.getElementsByTagName('div')[1]
+        const output = toArr(list)
+        console.log(output);
+        //递归DFS
+        function toArr(list) {
+            const ans = []
+            inorder(list, ans)
+            function inorder(node, ans) {
+                const nodeList = node.children
+                console.log(nodeList);
+                let children = [...nodeList[2].children]
+                const obj = {
+                    id: nodeList[0].textContent,
+                    val: nodeList[1].textContent,
+                    children
+                }
+                ans.push(obj)
+                obj.children = children.map((ele) => {
+                    return inorder(ele, ans)
+                })
+                return obj
+            }
+            return ans
+        }
+
+    </script>
+</body>
+
+</html>

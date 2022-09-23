@@ -1,0 +1,52 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-09-16 22:37:14
+ * @LastEditTime: 2022-09-16 23:15:22
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>559</title>
+</head>
+
+<body>
+    <script>
+        function Node(val, children) {
+            this.val = val;
+            this.children = children;
+        };
+        const n1 = new Node(1, null)
+        const n2 = new Node(2, [n1])
+        const n3 = new Node(3, [n1, n2])
+        const n0 = new Node(0, [n1, n2, n3])
+        console.log(n0);
+        function maxDepth(root) {
+            let level = 0
+            if (root === null) {
+                return level
+            }
+            const stack = []
+            stack.push(root)
+            while (stack.length) {
+                let len = stack.length
+                for (let i = 0; i < len; i++) {
+                    const node = stack.shift()
+                    if (node.children) {
+                        stack.push(...node.children)
+                    }
+                }
+                level++
+            }
+            return level
+        }
+
+        maxDepth(n0)
+    </script>
+</body>
+
+</html>

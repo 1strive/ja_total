@@ -1,7 +1,7 @@
 <!--
  * @Author: JA
  * @Date: 2022-01-19 22:57:30
- * @LastEditTime: 2022-03-27 17:27:19
+ * @LastEditTime: 2022-09-18 15:30:56
  * @LastEditors: JA
 -->
 <!DOCTYPE html>
@@ -45,10 +45,11 @@
 
     <div id="circle">0</div>
     <script>
-        function Throttle(fn, time = 500) {//节流  每过规定时间执行一次事件
+        function Throttle(fn, time = 1000) {//节流  每过规定时间执行一次事件
             let timer;
             console.log(timer, 'timer');
             return function (...args) {
+                console.log(timer);
                 if (timer == null) {
                     // function的this指向调用的上下文对象
                     fn.apply(this, args)
@@ -60,7 +61,7 @@
         }
 
         const btn = document.querySelector('button')
-        btn.onclick = Throttle(function (e) {
+        btn.onclick = Throttle(function () {
             circle.innerHTML = parseInt(circle.innerHTML) + 1
             circle.className = 'fade'
             setTimeout(() => {

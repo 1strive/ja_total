@@ -1,7 +1,7 @@
 <!--
  * @Author: JA
  * @Date: 2022-06-09 20:43:53
- * @LastEditTime: 2022-09-01 18:30:39
+ * @LastEditTime: 2022-09-20 01:40:48
  * @LastEditors: JA
 -->
 <!DOCTYPE html>
@@ -41,14 +41,6 @@
         }
 
 
-        /* #big {
-            width: 300px;
-            height: 300px;
-            overflow: hidden;
-            margin-left: 20px;
-            position: relative;
-        } */
-
         #bigimg {
             position: absolute;
             left: 0;
@@ -76,7 +68,7 @@
         const n = 2 //放大倍数
         small.onmousemove = function (e) {
             //遮罩相对于小图的偏移（(鼠标所在坐标）
-            var s_left = e.pageX - mark.offsetWidth / 2 - small.offsetLeft + small.offsetWidth / 2
+            var s_left = e.pageX - mark.offsetWidth / 2 - small.offsetLeft + small.offsetWidth / 2 // 因为使用了 transform: translate(-50%, -50%); 所以要加上small.offsetWidth / 2
             var s_top = e.pageY - mark.offsetHeight / 2 - small.offsetTop + small.offsetHeight / 2
 
             max_left = small.offsetWidth - mark.offsetWidth / 2

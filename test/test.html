@@ -1,7 +1,7 @@
 <!--
  * @Author: JA
  * @Date: 2022-06-09 20:43:59
- * @LastEditTime: 2022-09-14 14:26:27
+ * @LastEditTime: 2022-09-19 00:32:41
  * @LastEditors: JA
 -->
 <!DOCTYPE html>
@@ -17,7 +17,7 @@
             text-color: red;
         }
 
-        #content{
+        #content {
             color: green;
         }
 
@@ -36,11 +36,12 @@
 </head>
 
 <body>
-
-    <div id="content">
+    <div id="content" ja="123">
         <span class="text"><span class="title">Hello,hundsun.</span></span>
     </div>
     <script>
+        console.log(content.getAttribute('ja'));
+        window.postMessage('焦傲急啊急啊急啊', '*')
     </script>
 </body>
 

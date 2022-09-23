@@ -1,0 +1,116 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-09-19 17:29:36
+ * @LastEditTime: 2022-09-20 00:57:46
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单轮播</title>
+    <style>
+        .wrapper {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .item,
+        .item_pick {
+            left: 50%;
+            transform: translateX(-50%);
+            color: red;
+            position: absolute;
+            opacity: 0;
+            transition: 1s;
+        }
+
+
+        .item_pick {
+            opacity: 1;
+            transition: 1s;
+        }
+
+
+
+        .left::before {
+            content: '<';
+            position: absolute;
+            opacity: 0;
+            transition: 1s;
+        }
+
+        .right::before {
+            right: 0;
+            content: '>';
+            position: absolute;
+            opacity: 0;
+            transition: 1s;
+        }
+
+        .wrapper:hover .left::before {
+            opacity: 1;
+        }
+
+        .wrapper:hover .right::before {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="wrapper ja">
+        <li class="left"></li>
+        <li class="item_pick"><span>1</span></li>
+        <li class="item "><span>2</span></li>
+        <li class="item"><span>3</span></li>
+        <li class="item"><span>4</span></li>
+        <li class="right"></li>
+    </ul>
+    <script>
+        const wrapper = document.getElementsByClassName('wrapper')[0]
+
+        class Slider {
+            constructor(node, delay = 1000) {
+                this.node = node
+                this.delay = delay
+                this.list = [...node.querySelectorAll('.item,.item_pick')]
+            }
+
+            getCur() {
+                return this.node.querySelector('.item_pick')
+            }
+
+            getIdx() {
+                return this.list.indexOf(this.getCur())
+            }
+
+            slideTo(target) {
+                if (target >= this.list.length) {
+                    target = 0
+                }
+                this.getCur().className = "item"
+                this.list[target].className = 'item_pick'
+            }
+
+            start() {
+                setInterval(() => {
+                    this.slideTo(this.getIdx() + 1)
+                }, this.delay)
+            }
+        }
+
+        const slider = new Slider(wrapper)
+        slider.start()
+    </script>
+</body>
+
+</html>

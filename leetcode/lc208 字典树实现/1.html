@@ -1,0 +1,76 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-09-19 14:22:27
+ * @LastEditTime: 2022-09-19 16:29:06
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>208</title>
+</head>
+
+<body>
+    <script>
+        class Trie {
+            constructor() {
+                this.children = {};
+            }
+            insert(word) {
+                let node = this.children;
+                for (const ch of word) {
+                    if (!node[ch]) {
+                        node[ch] = {};
+                    }
+                    node = node[ch];
+                }
+                node.isEnd = true;
+            }
+
+
+            searchPrefix(prefix) {
+                let node = this.children;
+                for (const ch of prefix) {
+                    if (!node[ch]) {
+                        return false;
+                    }
+                    node = node[ch];
+                }
+                return node;
+            }
+
+
+
+            search(word) {
+                const node = this.searchPrefix(word);
+                return node !== undefined && node.isEnd !== undefined;
+            }
+
+            startsWith(prefix) {
+                const node = this.searchPrefix(prefix);
+                // let node = this.children;
+                // for (const ch of prefix) {
+                //     if (!node[ch]) {
+                //         return false;
+                //     }
+                //     node = node[ch];
+                // }
+                return !!node;
+            }
+        }
+        const trie = new Trie();
+        console.log(trie.insert("apple"));
+        console.log(trie.search("apple"));   // 返回 True
+        console.log(trie.search("app"));  // 返回 False
+        console.log(trie.startsWith("app")); // 返回 True
+        console.log(trie.insert("app"));
+        console.log(trie.search("app"));     // 返回 True
+
+    </script>
+</body>
+
+</html>

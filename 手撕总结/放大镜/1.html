@@ -1,0 +1,88 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-09-20 00:58:37
+ * @LastEditTime: 2022-09-20 01:45:44
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>放大镜</title>
+    <style>
+        #small {
+            position: fixed;
+            width: 400px;
+            height: 500px;
+            display: flex;
+            background-color: #bfa;
+        }
+
+
+        #mark {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            visibility: hidden;
+            overflow: hidden;
+            border: 1px solid black;
+        }
+
+        #bigimg {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="small">
+        <img src="./testJa.jpg" alt="焦傲大帅比" width="100%" id="smallImg">
+        <div id="mark">
+            <img id="bigimg">
+        </div>
+    </div>
+    <script>
+        const n = 2
+        small.onmousemove = function (e) {
+            const s_left = e.pageX - mark.offsetWidth / 2 - small.offsetLeft
+            const s_top = e.pageY - mark.offsetHeight / 2 - small.offsetTop
+
+            max_left = small.offsetWidth - mark.offsetWidth / 2
+            max_top = small.offsetHeight - mark.offsetHeight / 2
+            min_left = -mark.offsetWidth / 2
+            min_top = -mark.offsetHeight / 2
+            if (s_left > max_left) s_left = max_left
+            if (s_left < min_left) s_left = min_left
+            if (s_top > max_top) s_top = max_top
+            if (s_top < min_top) s_top = min_top
+            mark.style.left = `${s_left}px`
+            mark.style.top = `${s_top}px`
+
+
+            bigimg.width = n * small.offsetWidth
+            bigimg.height = n * small.offsetHeight
+            bigimg.src = smallImg.src
+            bigimg.style.left = -n * s_left + 'px'
+            bigimg.style.top = - n * s_top + 'px'
+        }
+
+        small.onmouseenter = function () {
+            console.log(mark.offsetWidth);
+            mark.style.visibility = "visible"
+            big.style.visibility = "visible"
+        }
+
+        small.onmouseleave = function () {
+            mark.style.visibility = "hidden"
+            big.style.visibility = "hidden"
+        }
+    </script>
+</body>
+
+</html>

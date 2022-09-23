@@ -2,7 +2,7 @@
  * @Author: ja
  * @Date: 2021-12-29 11:41:00
  * @LastEditors: JA
- * @LastEditTime: 2022-08-24 23:29:20
+ * @LastEditTime: 2022-09-17 00:31:55
 -->
 <!DOCTYPE html>
 <html lang="zh">
@@ -26,10 +26,10 @@
         // 继续克隆
 
         function deepClone(target, map = new Map()) {
-            if (target instanceof Object) {
+            if (typeof target === 'object') {
                 let cloneTarget = Array.isArray(target) ? [] : {}
                 if (map.get(target)) {
-                    return target
+                    return map.get(target)
                 }
                 map.set(target, cloneTarget)
                 for (const key in target) {

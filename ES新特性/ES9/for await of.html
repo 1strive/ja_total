@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const now = Date.now()
+        function Gen(time) {
+            return new Promise((resolve, reject) => {
+                setTimeout(function () {
+                    resolve(time)
+                }, time)
+            })
+        }
+
+        // async function test() {
+        //     const start = Date.now()
+        //     await Gen(2000).then(console.log)
+        //     await Gen(1000).then(console.log)
+        //     await Gen(3000).then(console.log)
+        //     console.log(Date.now() - start);//6000
+        // }
+        // async function test() {
+        //     const start = Date.now()
+        //     const arr = [Gen(2000), Gen(1000), Gen(3000)]
+        //     for (let ele of arr) {
+        //         await ele.then(console.log)
+        //     }
+        //     console.log(Date.now() - start);//3000
+        // }
+        async function test() {
+            const start = Date.now()
+            const arr = [Gen(2000), Gen(1000), Gen(3000), Promise.reject(1)]
+            try {
+                for await (let ele of arr) {
+                    console.log(ele);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+
+            console.log(Date.now() - start);//3000
+        }
+
+        test()
+
+    </script>
+</body>
+</html>

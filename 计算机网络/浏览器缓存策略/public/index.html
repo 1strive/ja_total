@@ -1,0 +1,36 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-09-18 00:04:01
+ * @LastEditTime: 2022-09-18 03:04:38
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>123</div>
+    <button id='btn'>点击发送请求</button>
+    <img src="https://t7.baidu.com/it/u=4198287529,2774471735&fm=193&f=GIF" alt="">
+    <script src="./test.js"></script>
+    <script>
+        btn.onclick = function () {
+            const xhr = new XMLHttpRequest()
+            xhr.open('GET', '/server')
+            xhr.onload = function (res) {
+                console.log(res);
+            }
+            xhr.setRequestHeader('Cache-Control', 'max-age=1000');
+            xhr.send(null)
+        }
+
+    </script>
+</body>
+
+</html>

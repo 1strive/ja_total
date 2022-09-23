@@ -1,0 +1,142 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-09-18 17:18:24
+ * @LastEditTime: 2022-09-18 23:41:56
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>allrace</title>
+</head>
+
+<body>
+    <script>
+        const test1 = [new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(3)
+            }, 2000);
+        }), new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(99)
+            }, 1000);
+        })
+        ]
+        const test = [Promise.reject(3), 1, new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(3)
+            }, 2000);
+        }), new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(99)
+            }, 1000);
+        }), new Promise((resolve, reject) => {
+            setTimeout(() => {
+                reject(19)
+            }, 3000);
+        }), new Promise((resolve, reject) => {
+            setTimeout(() => {
+                reject(98)
+            }, 2000)
+        })
+        ]
+        // Promise._all = (arr) => {
+        //     return new Promise((resolve, reject) => {
+        //         arr = [...arr]//将可迭代对象变为数组
+        //         let ans = []
+        //         let count = 0
+        //         for (let i = 0; i < arr.length; i++) {
+        //             //并行开启
+        //             Promise.resolve(arr[i]).then((val) => {//并不是push进result数组的，而是通过下标的方式进行存储，这是因为我们为了保证输出的顺序，因为Promise对象执行的时间可能不同，push的话会破坏顺序。
+        //                 count++
+        //                 ans[i] = val
+        //                 if (count === arr.length) {
+        //                     resolve(ans)
+        //                 }
+        //             }, reject)
+        //         }
+        //     })
+        // }
+
+
+        // Promise._all(test).then((val) => {
+        //     console.log(val);
+        // }, (e) => {
+        //     console.log(e, 'ans');
+        // })
+
+
+        // Promise.all(test).then((val) => {
+        //     console.log(val);
+        // }, (e) => {
+        //     console.log(e, 'err');
+        // })
+
+
+        // for await of 相当于每个前加了await的for of循环 ,但会保证顺序 ele为await后返回的结果
+        // async function add() {
+        //     for await (const ele of test) {
+        //         Promise.resolve(ele).then((val) => {
+        //             console.log(val);
+        //         })
+        //     }
+        // }
+        // add()
+
+
+        Promise.race
+        const race = function (arr) {
+            arr = [...arr]
+            return new Promise((resolve, reject) => {
+                for (let i = 0; i < arr.length; i++) {
+                    Promise.resolve(arr[i]).then(resolve, reject)//注意此处要都写到一个then里面
+                }
+            })
+        }
+
+
+        race(test).then((val) => {
+            console.log(val, 'val');
+        }).catch((e) => {
+            console.log(e, 'errorrace')
+        })
+
+        //Promise.any
+        //与all正好相反
+        const any = function (arr) {
+            arr = [...arr]
+            let count = 0
+            const errors = []
+            return new Promise((resolve, reject) => {
+                for (let i = 0; i < arr.length; i++) {
+                    Promise.resolve(arr[i]).then(resolve, (e) => {
+                        count++
+                        errors[i] = e
+                        if (count === arr.length) {
+                            reject(new AggregateError(errors))
+                        }
+                    })
+                }
+
+            })
+        }
+
+
+        any([new Promise((resolve, reject) => {
+            setTimeout(() => {
+                reject(98)
+            }, 2000)
+        }),1, Promise.reject(2)]).then((val) => {
+            console.log(val, 'val');
+        }).catch((e) => {
+            console.log(e.errors, 'error')
+            console.log(e, 'error')
+        })
+    </script>
+</body>
+
+</html>

@@ -1,7 +1,7 @@
 <!--
  * @Author: JA
  * @Date: 2022-06-09 20:43:56
- * @LastEditTime: 2022-09-15 00:16:34
+ * @LastEditTime: 2022-09-19 00:40:31
  * @LastEditors: JA
 -->
 <!DOCTYPE html>
@@ -25,22 +25,20 @@
     <button id="btn">移动哈哈哈哈</button>
     <div class="big"></div>
     <script>
-        console.log(window.innerWidth);
-        console.log(document.documentElement.clientWidth);
-        btn.onclick = () => {
-            // window.scrollTo({
-            //     top: 1000,
-            //     behavior: 'smooth'
-            // })
-            window.open("https://www.baidu.com/", '_blank', 'width = 200,height=200,location=yes')
-        }
-        let n = 0
-        window.onscroll = () => {
-            let m = ++n
-            console.log(window.pageYOffset, 'pageYOffset', m);
-            console.log(window.scrollY, 'scrollY', m);
-        }
-        console.log(document.compatMode);
+         let a = 'promise1'
+      setTimeout(() => {
+    console.log('timer1')
+   
+    Promise.resolve().then(function () {
+        console.log(a)
+    })
+}, 0)
+setTimeout(() => {
+    console.log('timer2')
+    Promise.resolve().then(function () {
+        console.log('promise2')
+    })
+}, 0)
     </script>
 </body>
 

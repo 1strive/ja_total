@@ -75,8 +75,10 @@ div#wrapper {
 
 #wrapper:hover .slide-list__next {
     opacity: 1;
+
 }
 
 #wrapper:hover .slide-list__previous {
     opacity: 1;
+
 }

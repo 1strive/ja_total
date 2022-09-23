@@ -1,7 +1,7 @@
 /*
  * @Author: JA
  * @Date: 2021-12-23 14:12:37
- * @LastEditTime: 2021-12-23 16:06:18
+ * @LastEditTime: 2022-09-18 16:39:02
  * @LastEditors: JA
  */
 
@@ -45,7 +45,7 @@ function flatten1(arr) {
 //三、reduce
 function flatten3(arr) {
     return arr.reduce((prev, next) => {
-        return prev.concat(Array.isArray(next) ? flatten(next) : next)
+        return prev.concat(Array.isArray(next) ? flatten3(next) : next)
     }, [])//reducer后的参数作为初始值（此处为[]）
 }
 
