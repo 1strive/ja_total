@@ -1,0 +1,52 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-09-24 00:31:11
+ * @LastEditTime: 2022-09-24 01:45:07
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+
+<body>
+    <button id="btn">发送请求</button>
+    <script>
+        const xhr = new XMLHttpRequest()
+        const xhr1 = new XMLHttpRequest()
+        btn.onclick = function () {
+            xhr.open('GET', 'http://127.0.0.1:8080/server')
+            xhr1.open('GET', 'http://127.0.0.1:8080/syn')
+            xhr.onload = ((res) => {
+                console.log(xhr.response);
+            })
+            xhr1.onload = ((res) => {
+                console.log(xhr1.response);
+            })
+            xhr.send()
+            xhr1.send()
+        }
+
+        async function* ints() {
+            for (let i = 0; i < 5; i++) {
+                yield await new Promise((resolve, reject) => {
+                    setTimeout(resolve, 1000, i)
+                })
+            }
+        }
+        const int = ints()
+        console.log(int.next().then(console.log));
+        console.log(int.next().then(console.log));
+        console.log(int.next().then(console.log));
+        console.log(int.next().then(console.log));
+        console.log(int.next().then(console.log));
+        console.log(int.next().then(console.log));
+    </script>
+</body>
+
+</html>
