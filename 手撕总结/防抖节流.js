@@ -6,7 +6,7 @@ function torottle(fn, delay) {
         if (!timer) {
             fn.apply(this, args)
             timer = setTimeout(() => {
-                clearTimeout(timer)
+                timer = null
             }, delay);
         }
     }
