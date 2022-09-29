@@ -1,7 +1,5 @@
-/*
- * @Author: JA
- * @Date: 2022-09-14 19:13:39
- * @LastEditTime: 2022-09-14 19:13:49
- * @LastEditors: JA
- */
-var arr = [1, 2, 'ooo'];
+let i = 10
+let j = 10
+let k = 3
+k *= i + j
+console.log(k);
