@@ -1,10 +1,17 @@
+/*
+ * @Author: JA
+ * @Date: 2022-06-09 20:43:56
+ * @LastEditTime: 2022-09-27 00:01:54
+ * @LastEditors: JA
+ */
 
 
 // decorator 外部可以包装一个函数，函数可以带参数
 function Decorator(type) {
     /**
      * 这里是真正的 decorator
-     * @target 装饰的属性所述的类的原型，注意，不是实例后的类。如果装饰的是 Car 的某个属性，这个 target 的值就是 Car.prototype
+     * @target 装饰的属性所述的类的原型，注意，不是实例后的类。如果装饰的是 Car 的某个属性，这个 target 的值
+     * 就是 Car.prototype
      * @name 装饰的属性的 key
      * @descriptor 装饰的对象的描述对象
      */
@@ -23,4 +30,13 @@ function Decorator(type) {
             }
         }
     }
+}
+
+function nonenumerable(target, name, descriptor) {
+    descriptor.enumerable = false;
+    return descriptor;
+}
+class Person {
+    @nonenumerable
+    kidCount() { return this.children.length; }
 }

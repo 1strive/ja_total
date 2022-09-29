@@ -1,3 +1,9 @@
+/*
+ * @Author: JA
+ * @Date: 2022-09-18 15:10:13
+ * @LastEditTime: 2022-09-23 17:37:05
+ * @LastEditors: JA
+ */
 
 
 function torottle(fn, delay) {
@@ -6,7 +12,7 @@ function torottle(fn, delay) {
         if (!timer) {
             fn.apply(this, args)
             timer = setTimeout(() => {
-                clearTimeout(timer)
+                timer = null
             }, delay);
         }
     }
@@ -22,4 +28,4 @@ function debounce(fn, delay) {
     }
 }
 
-setTimeout(console.log, 100, 2)
+// setTimeout(console.log, 100, 2)
