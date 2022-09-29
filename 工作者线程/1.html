@@ -1,7 +1,7 @@
 <!--
  * @Author: JA
  * @Date: 2022-09-24 00:31:11
- * @LastEditTime: 2022-09-25 23:17:43
+ * @LastEditTime: 2022-09-26 14:07:26
  * @LastEditors: JA
 -->
 <!DOCTYPE html>
@@ -17,8 +17,8 @@
 <body>
     <button id="btn">发送请求</button>
     <script>
-        console.log(decodeURI(location.href));
-
+        const worker = new Worker('/工作者线程/emptyWorker.js')
+        console.log(worker);
     </script>
 </body>
 

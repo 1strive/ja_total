@@ -1,7 +1,7 @@
 <!--
  * @Author: JA
  * @Date: 2021-12-12 22:07:02
- * @LastEditTime: 2022-09-15 19:42:31
+ * @LastEditTime: 2022-09-24 00:17:48
  * @LastEditors: JA
 -->
 <!DOCTYPE html>
@@ -35,7 +35,8 @@
         const s2 = new Supertype()
         s1.property = null
         console.log(s1.property);
-        console.log(s2);
+        console.log(s2.__proto__.constructor === Supertype);
+        console.log(s2.constructor, 'asd');
 
         //常用四种继承模型
         // 组合继承  原型链 + 盗用构造函数
@@ -58,7 +59,8 @@
         // }
         // console.log(Test.prototype.__proto__ === Object.prototype);//true
         // console.log(Object.__proto__ === Function.prototype);//true
-        // console.log(Function.__proto__ === Function.prototype);//true
+        console.log(Function.__proto__ === Function.prototype);//true
+        //因为Function本身既是对象也是函数
         // console.log(Function instanceof Object);//true
         // console.log(Function instanceof Function);//true
         // console.log(Object.prototype);
