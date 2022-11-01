@@ -58,8 +58,8 @@
 // add(2)(2)(3,5)		// 12
 
 function add(...args) {
-    let fn = function (...args) {
-        return add.apply(null, args.concat(args))
+    let fn = function (...arr) {
+        return add.apply(null, args.concat(arr))
     }
     fn.toString = () => args.reduce((a, b) => a + b)
     return fn

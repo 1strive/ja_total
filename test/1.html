@@ -1,7 +1,7 @@
 <!--
  * @Author: JA
- * @Date: 2022-06-09 20:43:56
- * @LastEditTime: 2022-09-19 00:40:31
+ * @Date: 2022-09-17 21:29:23
+ * @LastEditTime: 2022-11-01 17:23:33
  * @LastEditors: JA
 -->
 <!DOCTYPE html>
@@ -11,35 +11,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TEST</title>
     <style>
-        .big {
-            height: 6000px;
-        }
+
     </style>
 </head>
 
 <body>
-    <!-- <iframe src="./test.html" frameborder="1"></iframe> -->
-    <a href="https://www.baidu.com/" target="">11</a>
-    <button id="btn">移动哈哈哈哈</button>
-    <div class="big"></div>
+    <ul id="list">
+        <li class="item">item 1</li>
+        <li class="item">item 1</li>
+        <li class="item">item 1</li>
+        <li class="item">item 1</li>
+        <li class="item">item 1</li>
+    </ul>
     <script>
-         let a = 'promise1'
-      setTimeout(() => {
-    console.log('timer1')
-   
-    Promise.resolve().then(function () {
-        console.log(a)
-    })
-}, 0)
-setTimeout(() => {
-    console.log('timer2')
-    Promise.resolve().then(function () {
-        console.log('promise2')
-    })
-}, 0)
+        function resolveLru(str) {
+            let arr1 = str.split("?")[1]
+            let arr2 = arr1.split("&")
+            let obj = arr2.reduce((begin, item) => {
+                //name=dzp
+                let arr3 = item.split("=")
+                begin[arr3[0]] = arr3[1]
+                return begin
+            }, {})
+            return obj
+        }
+
+        let obj = resolveLru("http://www.baidu.com?name=dzp&age=22")
+        console.log(obj)
+
     </script>
+
 </body>
 
 </html>
