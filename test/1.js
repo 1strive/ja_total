@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * @Author: JA
  * @Date: 2022-06-09 20:43:59
@@ -18,3 +19,10 @@ function resolveLru(str) {
   
   let obj = resolveLru("http://www.baidu.com?name=dzp&age=22")
   console.log(obj)
+=======
+let i = 10
+let j = 10
+let k = 3
+k *= i + j
+console.log(k);
+>>>>>>> 820c5966d58407dd01611cf8ad9db59297fa2e0b
