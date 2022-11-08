@@ -1,155 +1,64 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-11-07 18:51:41
+ * @LastEditTime: 2022-11-08 23:35:45
+ * @LastEditors: JA
+-->
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta name="keywords" content="风舞红枫,前端技术,canvas"/>
-	<meta name="description" content="风舞红枫,前端技术,canvas,vue,react,node,个人博客"/>
+	<meta name="keywords" content="风舞红枫,前端技术,canvas" />
+	<meta name="description" content="风舞红枫,前端技术,canvas,vue,react,node,个人博客" />
 	<meta charset="utf-8">
 	<link rel="icon" href="../image/icon2.ico">
 	<title>love you</title>
 	<style type="text/css">
-		html,body{
-			height:100%;
-			margin:0;
-			padding:0;
-			background-color:#111;
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
 		}
-		canvas{
-			display:block;
+
+		canvas {
+			display: block;
 		}
-		.top{
-			position:absolute;
-			top:0;
-			left:0;
+
+		.top {
+			position: absolute;
+			top: 0;
+			left: 0;
 		}
 	</style>
 </head>
+
 <body>
-<canvas></canvas>
-<canvas class="top"></canvas>
+	<canvas></canvas>
+	<canvas class="top"></canvas>
 </body>
 <script type="text/javascript">
-var width = document.body.clientWidth;
-var height = document.body.clientHeight ;
-
-var canvas = document.getElementsByTagName('canvas')[0];
-var canvas1 = document.getElementsByTagName('canvas')[1];
-canvas.width = width;
-canvas.height = height;
-canvas1.width = width;
-canvas1.height = height;
-
-var context = canvas.getContext('2d');
-var context1 = canvas1.getContext('2d');
-
-var Style = context.createLinearGradient(0,0,width,0);
-Style.addColorStop(0,"Skyblue");
-Style.addColorStop(1,"pink");
-var Style1 = context1.createLinearGradient(0,0,width,0);
-Style1.addColorStop(0,"Skyblue");
-Style1.addColorStop(1,"pink");
-
-var leftI = 2;
-var rightI = 2;
-var leftInterval = setInterval(function(){
-	var obj = loveCurve(2*Math.PI*(leftI/60),10);
-	heart(context,rand(6,8)/10,width/4,height/4,obj.x*1.4,obj.y*1.4,Style);
-	leftI += 1;
-	if(leftI == 29){
-		leftI += 4;
+	const canvas = document.querySelector("canvas");
+	let w = canvas.width = 800;
+	let h = canvas.height = 600;
+	let ctx = canvas.getContext("2d");
+	ctx.save();
+	ctx.beginPath();
+	ctx.fillStyle = "red";
+	ctx.translate(w / 2, h / 2);
+	ctx.scale(1, -1);
+	ctx.moveTo(0, 0);
+	let angle = 0, x = 0, y = 0, a = 6;
+	for (let i = 0; i < 30; i += 0.2) {
+		angle = i / Math.PI;
+		x = a * (16 * Math.sin(angle) ** 3);
+		y = a * (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle));
+		ctx.lineTo(x, y);
 	}
-	if(leftI == 59){
-		clearInterval(leftInterval);
-		var rightInterval = setInterval(function(){
-			var obj = loveCurve(2*Math.PI*(rightI/60),10);
-			heart(context,rand(4,8)/10,width/4+200,height/4,obj.x*1.4,obj.y*1.4,Style);
-			rightI += 1;
-			if(rightI == 29){
-				rightI += 4;
-			}
-			if(rightI == 59){
-				clearInterval(rightInterval);
-				arrow();
-				
-			}
-		},20)
-	}
-},20)
-
-var hotArr = [];
-var text = "LOVE";
-var hotInterval = setInterval(function(){
-	if(rand(-19,19) == 1 && hotArr.length < 2){
-		hotArr.push([2,rand(30,width-30),height,text[rand(0,text.length-1)]]);
-	}
-	context1.clearRect(0,0,width,height);
-	context1.font="30px Verdana";
-	for(var i = 0 ; i < hotArr.length ; i++){
-		heart(context1,hotArr[i][0],hotArr[i][1],hotArr[i][2],0,0,Style1);
-		context1.fillStyle = Style1;
-		context1.fillRect(hotArr[i][1]+85,hotArr[i][2]+90,30,30);
-		context1.fillStyle = "violet";
-		context1.fillText(hotArr[i][3],hotArr[i][1]+90,hotArr[i][2]+115);
-		hotArr[i][2] -= 3;
-		if(hotArr[i][2] <= -20){
-			hotArr.splice(i,1);
-			i--;
-		}
-	}
-},30)
-
-
-// function arrow(){
-// 	context.beginPath();
-// 	context.lineWidth = 4;
-// 	context.strokeStyle = Style;
-// 	context.lineCap = 'round';
-// 	context.lineJoin = 'round';
-// 	var arrowI = 0;
-// 	var arrowX = width/4*3.4 - width/4*0.6;
-// 	var arrowY = height/4*3 - height/4*1;
-// 	var arrowInterval = setInterval(function(){
-// 		context.lineTo(width/4*3.4-arrowX*arrowI/10,height/4*1+arrowY*arrowI/10);
-// 		context.lineTo(width/4*3.4-arrowX*(arrowI+1)/10,height/4*1+arrowY*(arrowI+1)/10);
-// 		context.stroke();
-// 		arrowI += 1;
-// 		if(arrowI == 10){
-// 			clearInterval(arrowInterval);
-// 			context.lineTo(width/4*0.6,height/4*3);
-// 			context.lineTo(width/4*0.6+20,height/4*3-32);
-// 			context.stroke();
-// 			context.lineTo(width/4*0.6,height/4*3);
-// 			context.lineTo(width/4*0.6+30,height/4*3+12);
-// 			context.stroke();
-// 		}
-// 	},20)
-// 	context.closePath();
-// }
-
-function heart(context,r,scaleX,scaleY,x,y,color){
-	context.beginPath();
-	context.strokeStyle = color;
-	context.fillStyle = color;
-	for(var i = 0 ; i <= 360 ; i++){
-		var obj = loveCurve(2*Math.PI*(i/360),r);
-		context.lineTo(obj.x+scaleX+x,(obj.y+scaleY+y).toFixed(2));
-		context.stroke();
-	}
-	context.fill();
-	context.closePath();
-}
-
-//爱心曲线	t的取值范围是0到2*Math.PI。
-function loveCurve(t,r){
-	var obj = {
-		x : 100 + r * (16 * Math.pow(Math.sin(t), 3)),
-		y : 50 - r * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t))
-	}
-	return obj;
-}
-
-function rand(n,m){
-	var c = m - n + 1;
-	return Math.floor(Math.random() * c + n);
-}
+	ctx.fill();
+	ctx.closePath();
+	ctx.restore();
+	document.body.appendChild(canvas);
 </script>
+
 </html>
