@@ -1,0 +1,50 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-11-24 21:23:32
+ * @LastEditTime: 2022-11-24 22:16:24
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSS攻防演练</title>
+</head>
+
+<body>
+    <h3>基于DOM的XSS</h3>
+    <input type="text" id="input">
+    <button id="btn">提交内容</button>
+    <div id="div"></div>
+    <div id="testXSS" data-name=""></div>
+</body>
+<script>
+
+    const input = document.getElementById('input');
+    const btn = document.getElementById('btn');
+    const div = document.getElementById('div');
+
+    let inputValue;
+
+    // document.cookie = "ooo=222"//加上httponly不能读但可以写
+    const p = document.cookie
+
+    const xhr = new XMLHttpRequest()
+    // xhr.withCredentials = true;
+
+
+    input.addEventListener('change', (e) => {
+        inputValue = e.target.value;
+    }, false);
+    btn.addEventListener('click', () => {
+        console.log(p);
+        div.innerHTML = `<a href='' ${inputValue}>链接地址</a>`
+        xhr.open('get', 'http://127.0.0.1:3000/ja')
+        xhr.send()
+    }, false);
+</script>
+
+</html>

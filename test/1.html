@@ -1,9 +1,3 @@
-<!--
- * @Author: JA
- * @Date: 2022-09-17 21:29:23
- * @LastEditTime: 2022-11-02 10:43:38
- * @LastEditors: JA
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,38 +5,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEST</title>
+    <title>love</title>
     <style>
+   
 
+        .love::before {
+            width: 100px;
+            height: 100px;
+            background-color: #bfa;
+        }
+
+
+        /* .love {
+            animation: ja 5s infinite 2s backwards
+        }
+
+
+
+        @keyframes ja {
+            from {
+                width: 300px;
+                height: 300px;
+                margin: 0 auto;
+                background-color: rgb(202, 50, 50);
+            }
+
+            to {
+                width: 500px;
+                height: 500px;
+                margin: 0 auto;
+                background-color: rgb(202, 50, 50);
+            }
+
+        } */
     </style>
 </head>
 
 <body>
-    <ul id="list">
-        <li class="item">item 1</li>
-        <li class="item">item 1</li>
-        <li class="item">item 1</li>
-        <li class="item">item 1</li>
-        <li class="item">item 1</li>
-    </ul>
-    <script>
-        function resolveLru(str) {
-            let arr1 = str.split("?")[1]
-            let arr2 = arr1.split("&")
-            let obj = arr2.reduce((begin, item) => {
-                //name=dzp
-                let arr3 = item.split("=")
-                begin[arr3[0]] = arr3[1]
-                return begin
-            }, {})
-            return obj
-        }
-
-        let obj = resolveLru("http://www.baidu.com?name=dzp&age=22")
-        console.log(obj)
-        console.log(fetch);
-    </script>
-
+    <div class="outer">
+        <div class="love"></div>
+    </div>
 </body>
 
 </html>

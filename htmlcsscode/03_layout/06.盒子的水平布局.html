@@ -1,27 +1,35 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-06-09 20:43:57
+ * @LastEditTime: 2022-11-17 16:29:08
+ * @LastEditors: JA
+-->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        .outer{
+        .outer {
             width: 800px;
             height: 200px;
             border: 10px red solid;
         }
 
-        .inner{
+        .inner {
             /* width: auto;  width的值默认就是auto*/
             width: 200px;
             height: 200px;
             background-color: #bfa;
-            margin-right: auto;
-            margin-left: auto;
-            /* margin-left: 100px;
+            margin: 0 auto;
+                /* margin-right: auto;
+            margin-left: auto; */
+                /* margin-left: 100px;
             margin-right: 400px */
-            /* 
+                /* 
                 元素的水平方向的布局：
                     元素在其父元素中水平方向的位置由以下几个属性共同决定“
                         margin-left
@@ -72,6 +80,7 @@ margin-left+border-left+padding-left+width+padding-right+border-right+margin-rig
         }
     </style>
 </head>
+
 <body>
 
     <div class="outer">
@@ -79,6 +88,7 @@ margin-left+border-left+padding-left+width+padding-right+border-right+margin-rig
         <div class="inner"></div>
 
     </div>
-    
+
 </body>
+
 </html>

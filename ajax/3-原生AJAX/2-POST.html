@@ -1,7 +1,7 @@
 <!--
  * @Author: JA
  * @Date: 2022-06-09 20:43:57
- * @LastEditTime: 2022-09-08 00:08:56
+ * @LastEditTime: 2022-11-25 01:08:54
  * @LastEditors: JA
 -->
 <!DOCTYPE html>
@@ -48,25 +48,25 @@
         //绑定事件
         btn.addEventListener("click", function () {
             const xhr = new XMLHttpRequest();
-            xhr.onprogress = (e) => {
-                if (e.lengthComputable) {
-                    console.log(e);
-                    divStatus.innerHTML = `收到${e.loaded}/${e.total}`
-                }
-            }
-            xhr.onload = function () {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    //处理服务端返回的结果
-                    result.innerHTML = JSON.parse(xhr.response).name;
-                    console.log(xhr.getAllResponseHeaders(), 'ggg');
-                }
-            }
+            // xhr.onprogress = (e) => {
+            //     if (e.lengthComputable) {
+            //         console.log(e);
+            //         divStatus.innerHTML = `收到${e.loaded}/${e.total}`
+            //     }
+            // }
+            // xhr.onload = function () {
+            //     if (xhr.status >= 200 && xhr.status < 300) {
+            //         //处理服务端返回的结果
+            //         result.innerHTML = JSON.parse(xhr.response).name;
+            //         console.log(xhr.getAllResponseHeaders(), 'ggg');
+            //     }
+            // }
             // xhr.withCredentials = true
             xhr.open('POST', 'http://127.0.0.1:8000/server');
             //设置请求头
             // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.setRequestHeader('name', 'JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-            // xhr.setRequestHeader('kkkk', 'JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+            xhr.setRequestHeader('kkkk', 'JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+            //有自定义请求时需要预请求
             let data = new FormData()
             data.append('ja', 'Pride')
             // xhr.timeout = 1500
