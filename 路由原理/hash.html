@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>路由hash</title>
+</head>
+
+<body>
+    <ul>
+        <li><a href="#/">/</a></li>
+        <li><a href="#/page1">page1</a></li>
+        <li><a href="#/page2">page2</a></li>
+        <li>
+            <div class="render"></div>
+        </li>
+        <button id="backBtn">back</button>
+    </ul>
+    <script>
+        const render = document.querySelector('div')
+
+        class HashRouter {
+            constructor() {
+                this.routes = {} //记录路径标识符对应的cb
+                this.currentUrl = '' //记录hash方便执行cb
+                window.addEventListener('load', () => this.render())
+                //因为第一次加载不会触发hashchange
+                window.addEventListener('hashchange', () => this.render())
+                this.historyStack = [] //hash栈
+                this.isBack = false //记录当前是否为回退
+            }
+
+            static init() {
+                window.Router = new HashRouter()
+            }
+
+            route(path, cb) {
+                this.routes[path] = cb || function () { }
+            }
+
+            render() {
+                console.log(this.historyStack);
+                console.log(this.isBack);
+                if (this.isBack) {      // 如果是由backoff进入，则置false之后return
+                    this.isBack = false // 其他操作在backoff方法中已经做了
+                    return
+                }
+                this.currentUrl = location.hash.slice(1) || '/'
+                this.historyStack.push(this.currentUrl)
+                this.routes[this.currentUrl]()
+                console.log(this.historyStack, 'ja');
+            }
+
+            /* 路由后退 */
+            back() {
+                this.isBack = true
+                let { length } = this.historyStack
+                //长度判定提前，并在不满足时将isBack置为false
+                if (length < 2) {
+                    this.isBack = false
+                    return
+                }
+                this.historyStack.pop()
+                length = this.historyStack.length
+                let prev = this.historyStack[length - 1]
+                location.hash = `#${prev}`
+                this.currentUrl = prev
+                this.routes[prev]() //执行对应cb
+            }
+        }
+
+        HashRouter.init()
+        const exec = content => render.innerHTML = content
+        // 创建路由规则
+        Router.route('/', () => exec('啥子都没得'))
+        Router.route('/page1', () => exec('page1'))
+        Router.route('/page2', () => exec('page2'))
+
+        backBtn.onclick = () => {
+            Router.back()
+        }
+
+    </script>
+</body>
+
+</html>

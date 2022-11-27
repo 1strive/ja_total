@@ -36,7 +36,7 @@ app.all('/ja', (request, response) => {
     })
     response.send(JSON.stringify(data));
 })
-app.all('/japost', (request, response) => {
+app.all('/japost/*', (request, response) => {
     console.log(request.body);
     // console.log(request.query);
     //设置响应头  设置允许跨域
