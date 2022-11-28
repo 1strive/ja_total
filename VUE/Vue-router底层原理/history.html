@@ -34,6 +34,7 @@
     let routerView = routeView
     window.addEventListener('DOMContentLoaded', onLoad)
     window.addEventListener('popstate', () => {
+        // 主要起到追踪记录的作用
         routerView.innerHTML = location.pathname
     })
 

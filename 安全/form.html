@@ -1,0 +1,120 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-11-22 22:11:07
+ * @LastEditTime: 2022-11-25 17:38:10
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form</title>
+    <style>
+        .outer {
+            width: 400px;
+            height: 400px;
+            box-shadow: 0 0 3px 10px gray;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -100%);
+        }
+
+        .foot {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+    <script crossorigin="anonymous" src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
+</head>
+![](https://awps-assets.meituan.net/mit-x/blog-images-bundle-2018b/ff0cdbee.example/withdraw?amount=10000&for=hacker)
+<!-- 因为原页面用 form 提交到另一个域名之后，原页面的脚本无法获取新页面中的内容。
+所以浏览器认为这是安全的。而 AJAX 是可以读取响应内容的，因此浏览器不能允许你这样做。
+如果你细心的话你会发现，其实请求已经发送出去了，你只是拿不到响应而已。
+所以浏览器这个策略的本质是，一个域名的 JS ，在未经允许的情况下，不得读取另一个域名的内容。
+但浏览器并不阻止你向另一个域名发送请求。 -->
+
+<!-- 同源策略是浏览器的行为，是为了保护本地数据不被JavaScript代码获取回来的数据污染，因此拦截的是客户端发出的请求回来的数据接收，
+即请求发送了，服务器响应了，但是无法被浏览器接收。 -->
+
+<body>
+    <div class="outer">
+ 
+        <form action="http://127.0.0.1:3000/japost" class="formJa" method="post"
+            enctype="application/x-www-form-urlencoded">
+            <div class="formJa">
+                <label for="name">姓名:
+                    <input type="text" name="username" id="name">
+                </label>
+            </div>
+            <div class="formJa">
+                <label for="password">密码:
+                    <input type="password" name="password" id="password">
+                </label>
+            </div>
+            <div class="foot">
+                <div class="formJa">
+                    <label for="submit">
+                        <!-- <button>提交</button> -->
+                        <input type="submit" name="submit" id="submit">
+                    </label>
+                </div>
+                <button class="reset">重置</button>
+            </div>
+        </form>
+        <button id="btn">666</button>
+    </div>
+    <script>
+        const submit = document.querySelector('#submit')
+        const form = document.querySelector('form')
+
+
+
+        const username = document.querySelector('[name="username"]')
+        const password = document.querySelector('[name="password"]')
+        submit.onclick = function sub(e) {
+            e.preventDefault();
+            const xhr = new XMLHttpRequest()
+            xhr.open('POST', 'http://127.0.0.1:3000/japost/pppp')
+            // let data = new FormData()
+            xhr.withCredentials = true;
+            // data.append('username', username.value)
+            // data.append('password', password.value)
+            const data = [
+                username.value,
+                password.value
+            ]
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+            xhr.send(`username=${username.value}&h = 3`)
+        }
+        const resetBtn = document.querySelector('.reset')
+        resetBtn.onclick = (e) => {
+            e.preventDefault()
+            form.reset()
+        }
+
+        //有提交的input时，submit事件失效
+        btn.onclick = async (e) => {
+            // console.log(document.forms[0]);
+            // document.forms[0].submit();
+            // const xm = new XMLHttpRequest()
+            // xm.open('get','http://127.0.0.1:3000/japost?232323')
+            // xm.withCredentials = true
+            // xm.send(22)
+            try {
+                const ppp = await axios.post('http://127.0.0.1:3000/japost', {
+                    username: username.value,
+                    password: password.value
+                })
+                console.log(ppp);
+            } catch (e) {
+                console.log(e);
+            }
+
+        }
+    </script>
+</body>
+
+</html>

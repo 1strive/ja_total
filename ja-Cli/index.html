@@ -1,0 +1,52 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-11-25 20:14:39
+ * @LastEditTime: 2022-11-25 21:43:19
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="one">
+        <div class="t1"></div>
+        <div class="ja"></div>
+        <div class="t2"></div>
+        <div class="t3">
+            <div class="th1"></div>
+            <div class="th2"></div>
+            <div class="th3"></div>
+        </div>
+    </div>
+    <script>
+        const list = document.getElementsByTagName('div')[0]
+        console.log(list);
+        function toArr(list) {
+            const ans = []
+            inorder(list, ans)
+            function inorder(node, ans) {
+                ans.push(node)
+                const nodeList = node.children
+                if (nodeList.length === 0) {
+                    return
+                }
+                [...nodeList].map((i) => {
+                    inorder(i, ans)
+                })
+            }
+            return ans
+        }
+
+        const ans = toArr(list)
+        console.log(ans, 'ans');
+    </script>
+</body>
+
+</html>
