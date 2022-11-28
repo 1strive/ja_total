@@ -1,6 +1,21 @@
-/*
- * @Author: JA
- * @Date: 2022-06-09 20:43:59
- * @LastEditTime: 2022-09-04 11:52:26
- * @LastEditors: JA
- */
+const wait = (time)=>new Promise(resolve=>{
+    setTimeout(()=>resolve(),time)
+})
+
+let result = 0
+async function asyncGetNum(num){
+    await wait(100)
+    return num
+}
+
+async function asyncAdd(num){
+    result += await asyncGetNum(num)
+}
+
+asyncAdd(3)
+asyncAdd(2)
+asyncAdd(1)
+
+wait(150).then(()=>{
+    console.log(result);
+})
