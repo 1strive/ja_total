@@ -1,0 +1,90 @@
+<!--
+ * @Author: JA
+ * @Date: 2022-08-27 18:11:20
+ * @LastEditTime: 2022-08-27 19:38:51
+ * @LastEditors: JA
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+
+<body>
+    <script>
+        class Node {
+            constructor(id) {
+                this.id = id
+                this.neighbors = new Set()
+            }
+
+            connect(node) {
+                this.neighbors.add(node)
+                node.neighbors.add(this)
+            }
+        }
+
+        //无向图
+        class RandomGraph {
+            constructor(size) {
+                this.nodes = new Set()
+
+                //创建节点
+                for (let i = 0; i < size; i++) {
+                    this.nodes.add(new Node(i))
+                }
+
+                //随机连接节点
+                const threshold = 1 / size
+                for (const x of this.nodes) {
+                    for (const y of this.nodes) {
+                        if (Math.random() < threshold) {
+                            x.connect(y)
+                        }
+                    }
+                }
+
+                //该方法仅用于测试
+            }
+            print() {
+                for (const node of this.nodes) {
+                    const ids = [...node.neighbors].map((n) => n.id).join(',')
+                    console.log(`${node.id} : ${ids}` + '       图图图图');
+                }
+            }
+
+            //DFS测试是否为连通图
+            isConnected(firstNode) {
+                const visitedNodes = new Set()
+
+                function* traverse(nodes) {
+                    for (const node of nodes) {
+                        if (!visitedNodes.has(node)) {
+                            yield node
+                            yield* traverse(node.neighbors)
+                        }
+                    }
+                }
+
+                //取得集合中的第一个节点
+                const firstNodes = this.nodes[Symbol.iterator]().next().value
+
+                //使用递归生成器迭代每个节点
+                for (const node of traverse([firstNode])) {
+                    visitedNodes.add(node)
+                }
+
+                return visitedNodes.size === this.nodes.size
+            }
+        }
+
+        const g = new RandomGraph()
+        console.log(g.isConnected(1, 2, 3));
+    </script>
+</body>
+
+</html>
