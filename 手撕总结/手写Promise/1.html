@@ -27,6 +27,7 @@
                     if (this.status === 'pending') {
                         this.status = 'fulfilled'
                         this.value = value;
+                        console.log(this.onFulfilledCallbacks, '1');
                         this.onFulfilledCallbacks.forEach(fn => fn()) // 调用成功的回调函数
                     }
                 }
@@ -79,20 +80,28 @@
         // 测试
         function p1() {
             return new MyPromise((resolve, reject) => {
-                setTimeout(resolve, 1000, 1)
+                setTimeout(resolve, 1000, '1')
             })
         }
         function p2() {
             return new MyPromise((resolve, reject) => {
-                setTimeout(resolve, 1000, 2)
+                setTimeout(resolve, 0, '2')
             })
         }
+        // p1().then(res => {
+        //     console.log(res) // 1
+        //     return p2()
+        // }).then(ret => {
+        //     console.log(ret) // 2
+        // })
         p1().then(res => {
             console.log(res) // 1
-            return p2()
-        }).then(ret => {
-            console.log(ret) // 2
+            // return p2()
         })
+
+
+
+
     </script>
 </body>
 
