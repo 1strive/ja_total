@@ -1,7 +1,7 @@
-console.log('print.js被加载了~');
+console.log('print.js被ss加载了~');
 
 function print() {
-  const content = 'hello print';
+  const content = 'hello pri阿斯顿sdsdsdt';
   console.log(content);
 }
 

@@ -47,9 +47,7 @@
     <script>
         function Throttle(fn, time = 1000) {//节流  每过规定时间执行一次事件
             let timer;
-            console.log(timer, 'timer');
             return function (...args) {
-                console.log(timer);
                 if (timer == null) {
                     // function的this指向调用的上下文对象
                     fn.apply(this, args)

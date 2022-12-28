@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .one {
+            width: 10rem;
+            height: 10rem;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class="one"></div> -->
+    <script>
+
+
+        function setRem() {
+            const docEl = document.documentElement
+            const dpr = window.devicePixelRatio || 1
+            console.log(dpr);
+
+            // set 1rem = viewWidth / 10
+            function setRemUnit() {
+                const rem = docEl.clientWidth / 10;
+                console.log(rem);
+                docEl.style.fontSize = rem + 'px';
+            }
+            setRemUnit()
+            console.log();
+        }
+        setRem()
+    </script>
+</body>
+
+</html>

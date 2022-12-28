@@ -62,7 +62,7 @@ module.exports = {
     open: true,
     hot: true
   },
-  devtool: 'source-map'
+  devtool: 'cheap-source-map'
 };
 
 /*
