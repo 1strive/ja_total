@@ -2,7 +2,6 @@ const { resolve } = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 /*
   tree shaking：去除无用代码
     前提：1. 必须使用ES6模块化  2. 开启production环境
