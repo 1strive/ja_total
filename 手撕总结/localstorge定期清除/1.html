@@ -34,7 +34,7 @@
                     'EXPIRE_MAP',
                     JSON.stringify({
                         ...JSON.parse(expireMap),
-                        key: expire
+                        [key]: expire
                     }))
             }
             setItem(key, value, expire) {
@@ -46,31 +46,34 @@
                 const expireMap = JSON.parse(
                     localStorage.getItem('EXPIRE_MAP') || "{}"
                 )
+                console.log(expireMap, 'expireMap');
+                console.log(expireMap[key], Date.now(), 'expireMap[key]');
                 if (expireMap[key] && expireMap[key] < Date.now()) {
                     return localStorage.getItem(key)
                 } else {
-                    localStorage.removeItem(key)
+                    localStorage.removeItem(key)//value字段逐渐增大 可以在此处去除对应值
                     return null
                 }
             }
             // ...
         }
 
-        //使用自己写的Store的对象的方法进行开发  采用浏览器内存的方法，比如expire和当前时间比较来判断是否过期
+        //使用自己写的Store类的对象的方法进行开发  采用浏览器内存的方法，比如expire和当前时间比较来判断是否过期
+        //缺点是会永远存在一个用来存储时间的localstorge，且value字段逐渐增大
         const store = new Store()
         console.log(store);
-        store.setItem('k1', 'v', 200000)
+        store.setItem('k', 'v', Date.now() - 1000)
         const ans = store.getItem('k')
-        console.log(ans,'ans');
+        console.log(ans, 'ans');
 
 
         // 或者直接重写localStorage的方法也可以
-        // console.log(localStorage);
-        // localStorage.__proto__.getItem = () => {
-        //     console.log(1);
-        //     return 'asd'
-        // }
-        // console.log(localStorage.getItem('person'));
+        console.log(localStorage.__proto__ === Storage.prototype);//true
+        localStorage.__proto__.getItem = () => {
+            console.log(1);
+            return 'asd'
+        }
+        console.log(localStorage.getItem('person'));
     </script>
 </body>
 
