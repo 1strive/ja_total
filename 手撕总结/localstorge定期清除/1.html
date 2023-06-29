@@ -22,9 +22,13 @@
  * @LastEditTime: 2022-08-17 21:46:03
  * @LastEditors: JA
  */
-        const store = {
+        class Store {
+
+            constructor() {
+
+            }
             // 存储过期时间映射
-            setExpireMap: (key, expire) => {
+            setExpireMap(key, expire) {
                 const expireMap = localStorage.getItem('EXPIRE_MAP') || "{}"
                 localStorage.setItem(
                     'EXPIRE_MAP',
@@ -32,12 +36,12 @@
                         ...JSON.parse(expireMap),
                         key: expire
                     }))
-            },
-            setItem: (key, value, expire) => {
+            }
+            setItem(key, value, expire) {
                 store.setExpireMap(key, expire)
                 localStorage.setItem(key, value)
-            },
-            getItem: (key) => {
+            }
+            getItem(key) {
                 // 在取值之前先判断是否过期
                 const expireMap = JSON.parse(
                     localStorage.getItem('EXPIRE_MAP') || "{}"
@@ -51,12 +55,22 @@
             }
             // ...
         }
-        // 重写
-        localStorage.__proto__.getItem = () => {
-            console.log(1);
-            return 'asd'
-        }
-        console.log(localStorage.getItem('person'));
+
+        //使用自己写的Store的对象的方法进行开发  采用浏览器内存的方法，比如expire和当前时间比较来判断是否过期
+        const store = new Store()
+        console.log(store);
+        store.setItem('k1', 'v', 200000)
+        const ans = store.getItem('k')
+        console.log(ans,'ans');
+
+
+        // 或者直接重写localStorage的方法也可以
+        // console.log(localStorage);
+        // localStorage.__proto__.getItem = () => {
+        //     console.log(1);
+        //     return 'asd'
+        // }
+        // console.log(localStorage.getItem('person'));
     </script>
 </body>
 
