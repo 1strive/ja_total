@@ -1,0 +1,70 @@
+{
+    "fields": [
+        {
+            "gutter": "12",
+            "model": "rowSpellPlatformList",
+            "label": "",
+            "id": 21268,
+            "type": "RowFormItems",
+            "fields": [
+                {
+                    "model": "rowSpellPlatformList.spellPlatformList",
+                    "rules": [
+                        {
+                            "message": "请填写拼播平台",
+                            "required": true
+                        }
+                    ],
+                    "label": "拼播平台",
+                    "type": "CheckboxGroup",
+                    "required": true,
+                    "props": {
+                        "options": [
+                            {
+                                "label": "腾讯视频",
+                                "value": "tencent"
+                            },
+                            {
+                                "label": "爱奇艺",
+                                "value": "iqiyi"
+                            },
+                            {
+                                "label": "其它",
+                                "value": "100"
+                            }
+                        ],
+                        "style": {
+                            "width": "280px"
+                        }
+                    }
+                },
+                {
+                    "dependsOn": [
+                        {
+                            "rowSpellPlatformList.spellPlatformList[0]": "100"
+                        },
+                        {
+                            "rowSpellPlatformList.spellPlatformList[1]": "100"
+                        },
+                        {
+                            "rowSpellPlatformList.spellPlatformList[2]": "100"
+                        }
+                    ],
+                    "model": "rowSpellPlatformList.other",
+                    "label": "",
+                    "id": 21168,
+                    "type": "TagSelect",
+                    "props": {
+                        "placeholder": "请注明"
+                    }
+                }
+            ]
+        },
+        {
+            "model": "tag",
+            "label": "tag",
+            "id": 21168,
+            "type": "TagSelect"
+        }
+    ]
+}

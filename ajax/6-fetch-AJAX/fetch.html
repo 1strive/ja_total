@@ -19,11 +19,11 @@
     <script>
         //文档地址
         //https://developer.mozilla.org/zh-CN/docs/Web/API/WindowOrWorkerGlobalScope/fetch
-
+        const file = new File([], 'ka')
         const btn = document.querySelector('button');
         // fetch 返回一个最后会resloved为response对象的Promise
         btn.onclick = function () {
-            fetch('http://47.109.34.108:8000/server?vip=10&夹袄=23', {
+            fetch('http://127.0.0.1:8000/server?vip=10&夹袄=23', {
                 //请求方法
                 method: 'POST',
                 //请求头
@@ -31,7 +31,9 @@
                     name: 'JAAAAAAAAAAAAA'
                 },
                 //请求体
-                body: 'username=admin&password=admin'
+                body: {
+                    file
+                }
             }).then((response) => {
                 console.log(response);
                 return response.text();

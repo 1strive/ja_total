@@ -13,7 +13,7 @@ const app = express();
 
 app.all('/server', (request, response) => {
     //设置响应头  设置允许跨域
-    response.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5501');
+    response.header('Access-Control-Allow-Origin', '*');
     response.header('Access-Control-Allow-Credentials', "true");
     response.cookie("user", "jay", { maxAge: 2000000 });
     // response.setHeader('Access-Control-Allow-Methods', 'POST');
@@ -22,7 +22,7 @@ app.all('/server', (request, response) => {
     response.header('Access-Control-Allow-Headers', '*');
     //设置响应体
     const data = {
-        name: '焦傲大帅比'
+        name: '成功返回'
     };
     let str = JSON.stringify(data);
     if (request.method === 'POST') {
@@ -30,7 +30,7 @@ app.all('/server', (request, response) => {
             response.send(str);
         }, 1000)
     } else {
-        response.send('焦傲大帅比');
+        response.send('成功返回');
     }
 });
 app.get('/track', (request, response) => {

@@ -68,7 +68,8 @@
             xhr.setRequestHeader('kkkk', 'JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
             //有自定义请求时需要预请求
             let data = new FormData()
-            data.append('ja', 'Pride')
+            const f = new File([], 'ak')
+            data.append('file', f)
             // xhr.timeout = 1500
             // xhr.ontimeout = () => {
             //     result.innerHTML = '太慢了'
