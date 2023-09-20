@@ -1,10 +1,12 @@
 // 在某些不支持 proxy 的低版本浏览器中，会有一种快照沙箱的实现思路，主要实现原理基于 diff 方式
 // ，存有两个对象 windowSnapshot 保存 window 上面的快照信息，modifyPropsMap 保存沙箱环境与
 // 外部环境不同的快照信息。
-// 当沙箱激活后，将 window 的全部属性存储到 windowSnapshot，同时将 modifyPropsMap 存储的
-// 沙箱环境加载到 window 上；退出沙箱后，利用 windowSnapshot 恢复 window 环境，
+// 当沙箱激活后(对应激活生命周期)，将 window 的全部属性存储到 windowSnapshot，同时将 modifyPropsMap 存储的
+// 沙箱环境加载到 window 上；
+// 退出沙箱后（对应失活生命周期），利用 windowSnapshot 恢复 window 环境，
 // 将发生变化的属性存储到 modifyPropsMap。
 
+// 缺点：每次微应用 unmount 时都要对每个属性值做一次 Diff
 
 
 class snapshotSandbox {
@@ -35,6 +37,7 @@ class snapshotSandbox {
             if (this.windowSnapshot[item] !== window[item]) {
                 // 记录变更 下次激活时重新应用变更
                 this.modifyPropsMap[item] = window[item];
+                console.log(this.modifyPropsMap, 'ja');
                 // 还原window
                 window[item] = this.windowSnapshot[item];
             }

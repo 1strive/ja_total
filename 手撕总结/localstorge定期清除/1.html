@@ -23,7 +23,6 @@
  * @LastEditors: JA
  */
         class Store {
-
             constructor() {
 
             }
@@ -52,6 +51,7 @@
                     return localStorage.getItem(key)
                 } else {
                     localStorage.removeItem(key)//value字段逐渐增大 可以在此处去除对应值
+                    //可以在此处把时间的localStorage也清除
                     return null
                 }
             }

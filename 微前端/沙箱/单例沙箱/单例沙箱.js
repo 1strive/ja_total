@@ -67,7 +67,7 @@ class legacySandbox {
                 // 不管是新增还是更新，都是当前沙箱环境的变化
                 // 记录修改属性以及修改后的值
                 currentUpdatedPropsValueMap.set(prop, value)
-                // 更新至全局 window 上，还是会对 window 产生一定的污染
+                // 更新至全局 window 上，还是会对 window 产生一定的污染(只在一个页面中有多个微前端应用时有影响)
                 rawWindow[prop] = value;
                 // console.log(rawWindow === window);//true
                 return true;
@@ -77,18 +77,19 @@ class legacySandbox {
                 return window[prop]
             }
         })
-
+        console.log(proxy, 'a');
         this.proxy = proxy
     }
 }
 
+
 const sandBox = new legacySandbox("代理沙箱");
 const proxyWindow = sandBox.proxy;
 //多例同时运行时会影响window，从而影响个proxy的返回(get)值，故不支持多沙箱同时运行
+//实际代码中，js运行的上下文将绑定为proxyWindow
 proxyWindow.a = "1";
 console.log("开启沙箱", proxyWindow.a, window.a); // 开启沙箱 1 1
 sandBox.inactive(); //失活沙箱
 console.log("关闭沙箱", proxyWindow.a, window.a); // 关闭沙箱 undefined undefined
 sandBox.active(); // 激活沙箱
 console.log("激活沙箱", proxyWindow.a, window.a); // 激活沙箱 1 1
-

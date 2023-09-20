@@ -1,3 +1,4 @@
+
 class ProxySandbox {
     active() {
         //沙箱开启
@@ -35,7 +36,8 @@ const sandbox1 = new ProxySandbox();
 const sandbox2 = new ProxySandbox();
 sandbox1.active();
 sandbox2.active();
-
+//其实就是为每个微前端应用都准备了一个代理fakewindow的上下文，开启时变化的数据都存在fakeWindow里，优先从fakeWindow里取值
+//一个页面中每个微应用都给一个proxyWin当上下文
 const proxyWin1 = sandbox1.proxy;
 const proxyWin2 = sandbox2.proxy;
 

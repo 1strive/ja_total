@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const setWindowProp = (prop, value, isDel) => {
+            if (value === undefined || isDel) {
+                delete window[prop]
+            } else {
+                window[prop] = value
+            }
+        }
+
+        class legacySandbox {
+            active() {
+                //将沙箱内的更改恢复
+                this.currentUpdatedPropsValueMap.forEach((v, p) => setWindowProp(p, v))
+            }
+
+            inactive() {
+                // 将沙箱期间修改的属性还原为原先的属性
+                this.modifiedPropsOriginalValueMapInSandbox.forEach((v, p) => setWindowProp(p, v))
+                // 将沙箱期间新增的全局变量删除
+                this.addedPropsMapInSandbox.forEach((_, p) =>
+                    // (method) Map<any, any>.forEach(callbackfn: (value: any, key: any, map: Map<any, any>) => void, thisArg?: any): void
+                    setWindowProp(p, undefined, true)
+                );
+            }
+
+            constructor(name) {
+                this.name = name
+                this.proxy = null
+                //存放新增的全局变量
+                this.addedPropsMapInSandbox = new Map()
+                // 存放沙箱期间更新的全局变量,记录原始值
+                this.modifiedPropsOriginalValueMapInSandbox = new Map();
+                // 存在新增和修改的全局变量，在沙箱激活的时候使用
+                this.currentUpdatedPropsValueMap = new Map();
+
+                const {
+                    addedPropsMapInSandbox,
+                    currentUpdatedPropsValueMap,
+                    modifiedPropsOriginalValueMapInSandbox,
+                } = this
+
+                const rawWindow = window
+                const fakewindow = Object.create(null)
+                const proxy = new Proxy(fakewindow, {
+                    set(target, prop, value) {
+                        // 如果 window 没有该属性，代表发生了新增，则将此属性记录到新增属性里
+                        if (!window.hasOwnProperty(prop)) {
+                            addedPropsMapInSandbox.set(prop, value);
+                        } else if (!modifiedPropsOriginalValueMapInSandbox.has(prop)) {
+                            // 如果window对象有该属性，但未发生过更新，则记录该
+                            // 属性在 window 上的原始值，等沙箱卸载后还原全局环境
+                            const originalValue = window[prop]
+                            modifiedPropsOriginalValueMapInSandbox.set(prop, originalValue)
+                        }
+
+                        //*** 更新到currentUpdatedPropsValueMap和全局window上
+                        // 不管是新增还是更新，都是当前沙箱环境的变化
+                        // 记录修改属性以及修改后的值
+                        currentUpdatedPropsValueMap.set(prop, value)
+                        // 更新至全局 window 上，还是会对 window 产生一定的污染(只在一个页面中有多个微前端应用时有影响)
+                        rawWindow[prop] = value;
+                        // console.log(rawWindow === window);//true
+                        return true;
+                    },
+                    //!!!!!!返回的是window上的值
+                    get(target, prop) {
+                        return window[prop]
+                    }
+                })
+                this.proxy = proxy
+            }
+        }
+        const sandBox = new legacySandbox("代理沙箱");
+        const proxyWindow = sandBox.proxy;
+        //多例同时运行时会影响window，从而影响个proxy的返回(get)值，故不支持多沙箱同时运行
+        //实际代码中，js运行的上下文将绑定为proxyWindow
+        // sandBox.active(); // 激活沙箱
+        const bodyNode = document.body;
+        const jsStr = fetch('./1.js').then((res) => {
+            return res.text()
+        }).then((ans) => {
+            eval(`(function (window, self, globalThis) {
+                console.log('ja执行')
+                ${ans}
+            }).bind(proxyWindow)(proxyWindow, proxyWindow, proxyWindow)
+            //sandBox.inactive();
+            scriptEle1 = document.createElement('script');
+            scriptEle1.type = 'text/javascript';
+            scriptEle1.src = './2.js';
+            bodyNode.appendChild(scriptEle1);
+            `)
+        })
+    </script>
+</body>
+
+</html>
