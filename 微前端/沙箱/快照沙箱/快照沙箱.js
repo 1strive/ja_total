@@ -52,8 +52,9 @@ window.a = "1";
 console.log("启动沙箱", window.a); // 1
 snadbox.inactive(); //失活沙箱
 console.log("关闭沙箱", window.a); // undefined
-snadbox.active(); // 重新激活
-console.log("激活沙箱", window.a); // 1
+// snadbox.active(); // 重新激活
+// console.log("激活沙箱", window.a); // 1
 
 // 沙箱启用过程有可能会存有部分新增属性，例如案例中的 window.a 属性，当沙箱关闭后，
-// 经过还原后 window.a 值变为 undefined，但该属性依旧存在，污染了全局环境。
+
+// 经过还原后 window.a 值变为 undefined，但该属性依旧存在，污染了全局环境。(这是因为只记录了变化，不能区分新增还是更新，单例沙箱中通过代理可以区分新增和更新，所以可以在失活时进行删除)

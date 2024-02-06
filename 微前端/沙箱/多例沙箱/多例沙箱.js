@@ -39,19 +39,21 @@ sandbox2.active();
 //其实就是为每个微前端应用都准备了一个代理fakewindow的上下文，开启时变化的数据都存在fakeWindow里，优先从fakeWindow里取值
 //一个页面中每个微应用都给一个proxyWin当上下文
 const proxyWin1 = sandbox1.proxy;
-const proxyWin2 = sandbox2.proxy;
+// const proxyWin2 = sandbox2.proxy;
 
 proxyWin1.a = 1; // 设置沙箱 1 的值
-proxyWin2.a = 2; // 设置沙箱 2 的值
-window.a = 3; // 设置 window 的值
-console.log("沙箱1，沙箱2，外部值：", proxyWin1.a, proxyWin2.a, window.a);
+// proxyWin2.a = 2; // 设置沙箱 2 的值
+// window.a = 3; // 设置 window 的值
+console.log(proxyWin1.a);
+console.log(window.a);
+// console.log("沙箱1，沙箱2，外部值：", proxyWin1.a, proxyWin2.a, window.a);
 
-sandbox1.inactive();
-sandbox2.inactive();
+// sandbox1.inactive();
+// sandbox2.inactive();
 
-proxyWin1.a = 11; // 设置沙箱 1 的值
-proxyWin2.a = 22; // 设置沙箱 2 的值
-window.a = 33; // 设置 window 的值
-console.log("沙箱1，沙箱2，外部值：", proxyWin1.a, proxyWin2.a, window.a);
+// proxyWin1.a = 11; // 设置沙箱 1 的值
+// proxyWin2.a = 22; // 设置沙箱 2 的值
+// window.a = 33; // 设置 window 的值
+// console.log("沙箱1，沙箱2，外部值：", proxyWin1.a, proxyWin2.a, window.a);
 
 // proxySandbox 即可以支持多个沙箱同时加载，也不会对全局 window 环境产生污染，是一种非常好的沙箱实现方案。

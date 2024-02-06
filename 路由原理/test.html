@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li><a href="/">/</a></li>
+        <li><a href="/page1">page1</a></li>
+        <li><a href="/page2">page2</a></li>
+    </ul>
+    <script>
+        // window.addEventListener('popstate', (e) => {
+        //     console.log(e);
+        // })
+        // history.pushState({}, '', 'p1')
+        // history.go()
+        console.log(window.history, 'ja');
+        // History.push('./p1')
+        setTimeout(() => {
+            // window.location.search = '?123'
+            history.pushState({}, '', 'p1')
+        }, 3000)
+    </script>
+</body>
+
+</html>

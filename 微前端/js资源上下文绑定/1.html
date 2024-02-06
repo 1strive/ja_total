@@ -5,9 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .kkk {
+            background-color: black;
+            width: 500px;
+            height: 800px;
+            padding-top: 200px;
+        }
+    </style>
 </head>
 
 <body>
+    <button id="btn">123</button>
+    <!-- <div class="kkk">
+        <img src="https://liangcang-material.alicdn.com/prod/upload/773123b02c59477d90e22200abe7415f.webp" alt="">
+    </div> -->
     <script>
         const setWindowProp = (prop, value, isDel) => {
             if (value === undefined || isDel) {
@@ -74,32 +86,76 @@
                     },
                     //!!!!!!返回的是window上的值
                     get(target, prop) {
-                        return window[prop]
+                        // 获取原始window对象的属性
+                        const value = window[prop];
+                        // 特殊处理构造函数，比如 BigInt64Array
+                        function isUpperCase(str) {
+                            return str[0] === str[0].toUpperCase();
+                        }
+                        // 检查属性是否可能是一个构造函数
+                        if (typeof value === 'function' && isUpperCase(prop)) {
+                            console.log(value, 'javvv');
+                            return new Proxy(value, {
+                                // 对构造函数使用construct陷阱
+                                construct: (target, argumentsList) => {
+                                    return new target(...argumentsList);
+                                },
+                                // 对普通函数调用使用apply陷阱
+                                apply: (target, thisArg, argumentsList) => {
+                                    return target.apply(window, argumentsList);
+                                }
+                            });
+                        }
+
+                        // 如果是函数，则返回一个包装函数
+                        if (typeof value === 'function') {
+                            return (...args) => {
+                                // 使用原始window对象的上下文调用函数
+                                return value.apply(window, args);
+                            };
+                        }
+
+                        return value
                     }
                 })
                 this.proxy = proxy
             }
         }
-        const sandBox = new legacySandbox("代理沙箱");
-        const proxyWindow = sandBox.proxy;
-        //多例同时运行时会影响window，从而影响个proxy的返回(get)值，故不支持多沙箱同时运行
-        //实际代码中，js运行的上下文将绑定为proxyWindow
-        // sandBox.active(); // 激活沙箱
-        const bodyNode = document.body;
-        const jsStr = fetch('./1.js').then((res) => {
-            return res.text()
-        }).then((ans) => {
-            eval(`(function (window, self, globalThis) {
-                console.log('ja执行')
+        //TODO:报错总结： TypeError: Illegal invocation
+        // 1、在你提供的 loadJs 函数中，使用 eval 函数执行脚本并且尝试通过一个立即执行函数（IIFE）将 proxyWindow 作为 window 对象传递
+        // 给脚本。如果脚本中使用了例如 console.log、setTimeout、localStorage 等浏览器 API，并且这些 API 被直接赋值给 proxyWindow 对象
+        // ，可能会导致 Illegal invocation 错误。
+        // 在你的 loadJs 函数中，如果你的脚本尝试调用这些方法或访问像 document 或 localStorage 这类的属性，你需要确保它们被正确地绑定到原始的 window 对象。在将方法和属性复制到 proxyWindow 时，你可能需要使用函数包装器或绑定来保持正确的上下文。
+        // 2、 Constructor BigInt64Array requires 'new'（所有构造函数都会有）
+        //需要使用 new 关键字来调用，不仅仅是因为它们是函数。当你尝试以普通函数的方式调用它们时，JavaScript 引擎将会抛出错误，因为它们是专门设计用来构造新实例的。
+        // 为了解决这个问题，你需要对构造函数进行特殊处理，确保在代理中以构造函数的形式调用它们。
+
+
+        function loadJs(url, old) {
+            const sandBox = new legacySandbox(url)
+            const proxyWindow = sandBox.proxy;
+            const jsStr = fetch(url).then((res) => {
+                return res.text()
+            })
+                .then((ans) => {
+                    eval(`
+                if (old) {
+                    old.name !== url && old.inactive()
+                }
+                (function (window, self, globalThis) {
                 ${ans}
-            }).bind(proxyWindow)(proxyWindow, proxyWindow, proxyWindow)
-            //sandBox.inactive();
-            scriptEle1 = document.createElement('script');
-            scriptEle1.type = 'text/javascript';
-            scriptEle1.src = './2.js';
-            bodyNode.appendChild(scriptEle1);
+            }).bind()(proxyWindow, proxyWindow, proxyWindow)
             `)
+                })
+            return sandBox
+        }
+        const one = loadJs('./1.js')
+        // console.log(one);
+        btn.addEventListener('click', () => {
+            const one1 = loadJs('./2.js', one)
         })
+        // loadJs('./2.js', one)
+
     </script>
 </body>
 

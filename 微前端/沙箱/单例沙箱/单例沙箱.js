@@ -9,6 +9,8 @@
 
 // 该部分来源于 qiankun 源码
 // 修改 window 属性的公共方法
+
+// 快照沙箱因为只记录了变化，不能区分新增还是更新，单例沙箱中通过代理可以区分新增和更新，所以可以在失活时进行删除)
 const setWindowProp = (prop, value, isDel) => {
     if (value === undefined || isDel) {
         delete window[prop]
@@ -91,5 +93,5 @@ proxyWindow.a = "1";
 console.log("开启沙箱", proxyWindow.a, window.a); // 开启沙箱 1 1
 sandBox.inactive(); //失活沙箱
 console.log("关闭沙箱", proxyWindow.a, window.a); // 关闭沙箱 undefined undefined
-sandBox.active(); // 激活沙箱
-console.log("激活沙箱", proxyWindow.a, window.a); // 激活沙箱 1 1
+// sandBox.active(); // 激活沙箱
+// console.log("激活沙箱", proxyWindow.a, window.a); // 激活沙箱 1 1

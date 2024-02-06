@@ -1,1 +1,2 @@
-console.log(a, '2');
+// window.am = 'JA'
+console.log(a, 'ja2');

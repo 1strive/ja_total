@@ -50,7 +50,8 @@
             return function (...args) {
                 if (timer == null) {
                     // function的this指向调用的上下文对象
-                    fn.apply(this, args)
+                    // fn.apply(this, args)
+                    fn(...args)
                     timer = setTimeout(() => {  //返回值timeoutID是一个正整数，表示定时器的编号。这个值可以传递给clearTimeout()来取消该定时器。
                         timer = null
                     }, time)
