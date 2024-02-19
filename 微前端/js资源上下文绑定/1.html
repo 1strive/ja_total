@@ -17,6 +17,7 @@
 
 <body>
     <button id="btn">123</button>
+    <button id="btn1">321</button>
     <!-- <div class="kkk">
         <img src="https://liangcang-material.alicdn.com/prod/upload/773123b02c59477d90e22200abe7415f.webp" alt="">
     </div> -->
@@ -38,11 +39,21 @@
             inactive() {
                 // 将沙箱期间修改的属性还原为原先的属性
                 this.modifiedPropsOriginalValueMapInSandbox.forEach((v, p) => setWindowProp(p, v))
-                // 将沙箱期间新增的全局变量删除
+                // 将沙箱期间新增的全局变量删除（撤销全局变量赋值）
                 this.addedPropsMapInSandbox.forEach((_, p) =>
                     // (method) Map<any, any>.forEach(callbackfn: (value: any, key: any, map: Map<any, any>) => void, thisArg?: any): void
                     setWindowProp(p, undefined, true)
                 );
+                this.timer.forEach((i) => {
+                    clearInterval(i)
+                    clearTimeout(i)
+                })
+                this.events.forEach((i) => {
+                    window.removeEventListener(i[0], i[1])
+                })
+
+                //移除事件监听器
+                //清除定时器
             }
 
             constructor(name) {
@@ -54,11 +65,16 @@
                 this.modifiedPropsOriginalValueMapInSandbox = new Map();
                 // 存在新增和修改的全局变量，在沙箱激活的时候使用
                 this.currentUpdatedPropsValueMap = new Map();
-
+                //存放定时器
+                this.timer = []
+                //存放事件监听器
+                this.events = []
                 const {
                     addedPropsMapInSandbox,
                     currentUpdatedPropsValueMap,
                     modifiedPropsOriginalValueMapInSandbox,
+                    timer,
+                    events
                 } = this
 
                 const rawWindow = window
@@ -89,12 +105,16 @@
                         // 获取原始window对象的属性
                         const value = window[prop];
                         // 特殊处理构造函数，比如 BigInt64Array
-                        function isUpperCase(str) {
-                            return str[0] === str[0].toUpperCase();
+                        function isConstructor(func) {
+                            try {
+                                new new Proxy(func, { construct: () => ({}) });
+                                return true;
+                            } catch (err) {
+                                return false;
+                            }
                         }
                         // 检查属性是否可能是一个构造函数
-                        if (typeof value === 'function' && isUpperCase(prop)) {
-                            console.log(value, 'javvv');
+                        if (typeof value === 'function' && isConstructor(prop)) {
                             return new Proxy(value, {
                                 // 对构造函数使用construct陷阱
                                 construct: (target, argumentsList) => {
@@ -109,12 +129,28 @@
 
                         // 如果是函数，则返回一个包装函数
                         if (typeof value === 'function') {
+                            console.log(value.name, 'javvv');
+                            if (value.name === 'setInterval' || value.name === 'setTimeout') {
+                                return (...args) => {
+                                    // 使用原始window对象的上下文调用函数
+                                    const id = value.apply(window, args);
+                                    timer.push(id)
+                                    return id
+                                };
+                            }
+                            if (value.name === 'addEventListener') {
+                                return (...args) => {
+                                    events.push(args)
+                                    // 使用原始window对象的上下文调用函数
+                                    return value.apply(window, args);
+
+                                };
+                            }
                             return (...args) => {
                                 // 使用原始window对象的上下文调用函数
                                 return value.apply(window, args);
                             };
                         }
-
                         return value
                     }
                 })
