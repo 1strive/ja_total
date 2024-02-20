@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>性能优化test</title>
+</head>
+
+<body>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>1223</div>
+    <!-- <img src="https://gw.alicdn.com/imgextra/i2/O1CN017O3YZb1JbZYMfKsdK_!!6000000001047-1-tps-528-490.gif" alt=""> -->
+    <script>
+        // SPA性能检测
+        // 如果你正处在一个 SPA (单页应用程序) 的上下文中，页面的绘制指标可能在初始页面加载时记录，后续的视图变化可能不会再引起这些指标的记录
+        // 。SPA 中可能需要使用 PerformanceObserver 来监测后续的绘制时间。 
+
+
+        //访问常用指标
+        // window.addEventListener('load', function () {
+        //     setTimeout(function () {
+        //         var performanceEntries = performance.getEntriesByType("navigation");
+        //         if (performanceEntries.length > 0) {
+        //             var navigationEntry = performanceEntries[0];
+        //             // console.log(navigationEntry, 'ja1');
+        //         }
+        //     }); // 推迟到事件循环的下一个tick
+        // });
+
+        //FCP:First Contentful Paint
+        //FCP 测量的是页面加载过程中第一次绘制任何文本、图像（包括背景图像）、非白色的 <canvas> 或 SVG 的时间点，这个信息可以通过
+        // PerformancePaintTiming接口获得，这是PerformanceEntry的一个子接口。
+        const observer = new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            console.log(entries);
+            entries.forEach((entry) => {
+                if (entry.name === 'https://xxxxxx.xxx.jpg') {
+                    console.log(entry.startTime);
+                }
+            });
+        });
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

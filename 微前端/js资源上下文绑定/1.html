@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>micro-test</title>
     <style>
         .kkk {
             background-color: black;
@@ -22,6 +22,13 @@
         <img src="https://liangcang-material.alicdn.com/prod/upload/773123b02c59477d90e22200abe7415f.webp" alt="">
     </div> -->
     <script>
+        //  如果在微前端子应用中使用new BigInt64Array(123)未能被代理捕获到，而使用new window.BigInt64Array(123)可以捕获到，这可能是因为在JavaScript中直接引用的全局对象的属性可能不会通过代理的window对象。
+
+        //   这个行为可以通过JavaScript的作用域链和原型链来解释。当你直接调用new BigInt64Array(123)时，JavaScript引擎会在当前作用域链中寻找BigInt64Array，如果未找到则继续向上查找直至全局作用域，并使用全局对象中的BigInt64Array构造函数。这个查找过程没有通过Proxy代理的window对象，因此代理的get陷阱无法捕获到该操作。
+
+        // 而当你使用new window.BigInt64Array(123)时，你显式地从window对象上获取BigInt64Array属性，这就使得代理能够通过其get陷阱捕获到访问，因为你是在通过代理来访问window对象的属性。
+
+        // TODO:后续可以考虑从打包层面，将调用全部换为显式调用从而实现全部捕获
         const setWindowProp = (prop, value, isDel) => {
             if (value === undefined || isDel) {
                 delete window[prop]
@@ -104,6 +111,9 @@
                     get(target, prop) {
                         // 获取原始window对象的属性
                         const value = window[prop];
+                        console.log(value, 'jap');
+                        console.log(typeof value === 'function' && isConstructor(prop));
+
                         // 特殊处理构造函数，比如 BigInt64Array
                         function isConstructor(func) {
                             try {
@@ -113,14 +123,15 @@
                                 return false;
                             }
                         }
-                        // 检查属性是否可能是一个构造函数
-                        if (typeof value === 'function' && isConstructor(prop)) {
+                        // // 检查属性是否可能是一个构造函数
+                        if (typeof value === 'function' && isConstructor(value)) {
+                            console.log(value, 'ja构造');
                             return new Proxy(value, {
                                 // 对构造函数使用construct陷阱
                                 construct: (target, argumentsList) => {
                                     return new target(...argumentsList);
                                 },
-                                // 对普通函数调用使用apply陷阱
+                                // 对普通函数调用使用apply陷阱（首字母大写的普通函数如Number,String,Symbol,RegExp使用时触发）
                                 apply: (target, thisArg, argumentsList) => {
                                     return target.apply(window, argumentsList);
                                 }
@@ -180,7 +191,7 @@
                 }
                 (function (window, self, globalThis) {
                 ${ans}
-            }).bind()(proxyWindow, proxyWindow, proxyWindow)
+            }).bind(proxyWindow)(proxyWindow, proxyWindow, proxyWindow)
             `)
                 })
             return sandBox

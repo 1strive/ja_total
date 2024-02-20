@@ -1,2 +1,1 @@
-// window.am = 'JA'
-console.log(a, 'ja2');
+// console.log(m, 'ja2');
