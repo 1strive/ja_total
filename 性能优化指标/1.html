@@ -15,6 +15,7 @@
     <div>123</div>
     <div>123</div>
     <div>1223</div>
+    <!-- <div>123</div> -->
     <!-- <img src="https://gw.alicdn.com/imgextra/i2/O1CN017O3YZb1JbZYMfKsdK_!!6000000001047-1-tps-528-490.gif" alt=""> -->
     <script>
         // SPA性能检测
@@ -23,28 +24,38 @@
 
 
         //访问常用指标
-        // window.addEventListener('load', function () {
-        //     setTimeout(function () {
-        //         var performanceEntries = performance.getEntriesByType("navigation");
-        //         if (performanceEntries.length > 0) {
-        //             var navigationEntry = performanceEntries[0];
-        //             // console.log(navigationEntry, 'ja1');
-        //         }
-        //     }); // 推迟到事件循环的下一个tick
-        // });
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                console.log(window.performance?.getEntriesByName('first-contentful-paint')[0]?.startTime, 'jafcp');
+                console.log(window.performance.getEntriesByName('first-paint')[0]?.startTime, 'jafp');
+                // var performanceEntries = performance.getEntriesByType("navigation");
+                // if (performanceEntries.length > 0) {
+                //     var navigationEntry = performanceEntries[0];
+                //     // console.log(navigationEntry, 'ja1');
+                // }
+            }); // 推迟到事件循环的下一个tick
+        });
 
         //FCP:First Contentful Paint
         //FCP 测量的是页面加载过程中第一次绘制任何文本、图像（包括背景图像）、非白色的 <canvas> 或 SVG 的时间点，这个信息可以通过
         // PerformancePaintTiming接口获得，这是PerformanceEntry的一个子接口。
-        const observer = new PerformanceObserver((list) => {
-            const entries = list.getEntries();
-            console.log(entries);
-            entries.forEach((entry) => {
-                if (entry.name === 'https://xxxxxx.xxx.jpg') {
-                    console.log(entry.startTime);
-                }
-            });
+        // 创建一个性能观察者实例以观察性能度量
+        // PerformanceObserver获取FCP
+        let perfObserver = new PerformanceObserver((entryList, observer) => {
+            console.log(entryList.getEntries(), 'ja');
+            // 迭代每一条性能监视条目
+            for (const entry of entryList.getEntriesByName('paint')) {
+                // 处理 FCP 数据
+                console.log('FCP time:', entry.startTime);
+
+                // 由于我们只关心第一次 FCP，可以在这里取消观察
+                observer.disconnect();
+            }
+
         });
+
+        // 启动性能观察者并指定 'paint' 类型的性能度量
+        perfObserver.observe({ type: 'paint', buffered: true });
 
 
 

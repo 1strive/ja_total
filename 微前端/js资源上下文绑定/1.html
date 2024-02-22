@@ -118,6 +118,7 @@
                         function isConstructor(func) {
                             try {
                                 new new Proxy(func, { construct: () => ({}) });
+                                 //如果 target 或者 newTarget 不是构造函数，抛出TypeError,异常。
                                 return true;
                             } catch (err) {
                                 return false;
