@@ -9,7 +9,32 @@
 
 <body>
     <script>
-        const num = new BigInt64Array(123)
+
+        const post = async function (url, config) {
+            if (config?.contentType) {
+                if (['form', 'FORM'].includes(config.contentType)) {
+                    config.headers = config.headers || {}
+                    config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+                    if (config.data) config.data = JSON.stringify(config.data)
+                }
+            }
+            return await jaf({ ...config, url, method: 'post' })
+        }
+
+        const jaf = function (config, ticket) {
+            console.log(config);
+            let url = config.url;
+            if (ticket) {
+                const [path, search] = url.split('?')
+                const query = parse(search)
+                url = [path, JSON.stringify({ ...query, SSO_TICKET: ticket })].join('?')
+            }
+        }
+
+        post('//pre-ykcop-manage.youku.com/api/ja', {
+            contentType: "form",
+            data: ['JJAA'],
+        })
 
     </script>
 </body>

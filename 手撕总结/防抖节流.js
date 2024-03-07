@@ -21,11 +21,13 @@ function torottle(fn, delay) {
 function debounce(fn, delay) {
     let timer
     return function (...args) {
-        clearTimeout(timer)
-        timer = setTimeout(() => {
+        // const later = function (this: any {
+        const later = function () {
+            timer = null
             fn.apply(this, args)
-        }, delay)
+        }
+        clearTimeout(timer)
+        timer = setTimeout(later, delay)
     }
 }
-
 // setTimeout(console.log, 100, 2)
