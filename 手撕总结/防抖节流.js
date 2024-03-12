@@ -6,7 +6,7 @@
  */
 
 
-function torottle(fn, delay) {
+function throttle(fn, delay) {
     let timer
     return function (...args) {
         if (!timer) {
@@ -21,13 +21,12 @@ function torottle(fn, delay) {
 function debounce(fn, delay) {
     let timer
     return function (...args) {
-        // const later = function (this: any {
-        const later = function () {
-            timer = null
-            fn.apply(this, args)
-        }
         clearTimeout(timer)
-        timer = setTimeout(later, delay)
+        timer = setTimeout(() => {
+            fn.apply(this, args)
+        }, delay)
     }
 }
+
+
 // setTimeout(console.log, 100, 2)

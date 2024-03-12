@@ -1,22 +1,40 @@
-//写Service Worker的相关逻辑的js文件 (且叫sw.js)
+const cacheName = 'JA'; // 缓存的名字
 
-// self等同于 this
+
 self.addEventListener('install', function (event) {
-    console.log('install');
-    // ... 安装完成 可以开始拦截请求加入缓存 cache 中
-});
+    self.skipWaiting();
+    event.waitUntil(
+        caches.open(cacheName).then(function (cache) {
+            console.log('内存更新JA');
+            cache.addAll([
+                './index.html',
+                './images/avatar.png'
+            ])
+        })
+
+    )
+})
 
 self.addEventListener('activate', function (event) {
-    console.log('activate');
-    // ... 激活完成 可以开始拦截请求加入缓存 cache 中
-});
-const k = new Promise((resolve) => {
-   
+    console.log('sw已激活！！！！！');
 })
-const m = Promise.resolve(k).then((res) => {
-   
-    return res.then((o)=>{
-        console.log(o);
-    })
+
+const cacheFirst = async (request) => {
+    const keyList = await caches.keys();
+    console.log(keyList, 'jaresk');
+    // TODO:如何实现缓存更新？
+    //TODO:为什么没有html的请求
+    const responseFromCache = await caches.match(request)
+    if (responseFromCache) {
+        console.log(responseFromCache, 'jaresponseFromCache');
+        return responseFromCache
+    }
+    const responseFromServer = await fetch(request);
+    console.log(responseFromServer, 'jares');
+    return responseFromServer
+}
+
+self.addEventListener('fetch', (event) => {
+    console.log(event, 'jafetch拦截');
+    event.respondWith(cacheFirst(event.request))
 })
-console.log(m);

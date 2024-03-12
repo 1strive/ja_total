@@ -64,16 +64,14 @@
             bird.className = "sprite " + 'bird' + ((i++) % 3);
         }, 1000 / 10);
 
-        function debounce(fn, delay) {
-            let timer
-            return function (...args) {
-                // const later = function (this: any {
-                const later = function () {
-                    timer = null
-                    fn.apply(this, args)
-                }
-                clearTimeout(timer)
-                timer = setTimeout(later, delay)
+        function debounce(fn, dur) {
+            dur = dur || 100;
+            let timer;
+            return function () {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    fn.apply(this, arguments);
+                }, dur);
             }
         }
 
