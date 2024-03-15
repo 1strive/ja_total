@@ -1,40 +1,57 @@
 const cacheName = 'JA'; // 缓存的名字
 
-
 self.addEventListener('install', function (event) {
-    self.skipWaiting();
     event.waitUntil(
-        caches.open(cacheName).then(function (cache) {
-            console.log('内存更新JA');
+        // 创建了叫做 v1 的新缓存
+        caches.open('v1').then(function (cache) {
             cache.addAll([
-                './index.html',
-                './images/avatar.png'
-            ])
+                './index.html', // 相对于 sw.js 的路径 缓存 index.html
+            ]);
         })
-
-    )
+    );
+    self.skipWaiting();
 })
-
-self.addEventListener('activate', function (event) {
-    console.log('sw已激活！！！！！');
-})
-
 const cacheFirst = async (request) => {
-    const keyList = await caches.keys();
-    console.log(keyList, 'jaresk');
-    // TODO:如何实现缓存更新？
-    //TODO:为什么没有html的请求
     const responseFromCache = await caches.match(request)
     if (responseFromCache) {
-        console.log(responseFromCache, 'jaresponseFromCache');
         return responseFromCache
     }
     const responseFromServer = await fetch(request);
-    console.log(responseFromServer, 'jares');
+    const cache = await caches.open(cacheName)
+    cache.put(request, responseFromServer.clone())
     return responseFromServer
 }
 
 self.addEventListener('fetch', (event) => {
-    console.log(event, 'jafetch拦截');
+    console.log(event.request, 'jae');
     event.respondWith(cacheFirst(event.request))
+})
+
+
+const deleteOldCaches = async () => {
+    const keyList = await caches.keys();
+    console.log(keyList,'jakey');
+    //清除对应老缓存
+    const cacheDel = keyList.filter(i => [cacheName].includes(i))
+    await Promise.all(cacheDel.map(async (key) => {
+        await caches.delete(key)
+    }));
+}
+
+//更新时重新激活
+self.addEventListener('activate', function (event) {
+    console.log('sw已激活！！！！！');
+    clients.claim()
+    event.waitUntil(
+        Promise.all(
+            [
+                deleteOldCaches(),
+                clients.matchAll({ type: 'window' }).then((clients) => {
+                    clients.forEach((client) => {
+                        client.postMessage('swUpdated')
+                    })
+                })
+            ]
+        )
+    );
 })

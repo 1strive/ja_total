@@ -10,32 +10,55 @@
 </head>
 
 <body>
-    <h1>测试ssasds更新1是23 Service W123orker111ss2311sa</h1>
+    <h1>Service 新in</h1>
     <script src="./test.js"></script>
+    <!-- <img src="https://gw.alicdn.com/imgextra/i2/O1CN017O3YZb1JbZYMfKsdK_!!6000000001047-1-tps-528-490.gif" alt=""> -->
+    <img width="200" src="https://ykcop-public.youku.com/public/34699d27e8e023ffe6ef16422fee09fb.png" alt="">
+    <img width="200" src="https://ykcop-public.youku.com/public/b23b13dbe62755cb4d61cf620ab6e5b8.png" alt="">
+    <!-- <img src="https://ykcop-public.youku.com/public/d8331f9f8319b787237774f9de4b784e.png" alt="">
+    <img src="https://ykcop-public.youku.com/public/19fe0989704e8cfab6ceb7c310f05c12.png" alt="">
+    <img src="https://ykcop-public.youku.com/public/252989454a3d50d56d6e3ba526c55b6b.png" alt="">
+    <img src="https://ykcop-public.youku.com/public/561ebad91e6c7e6bb0f7c4c08b5a1dbe.png" alt="">
+    <img src="https://ykcop-public.youku.com/public/459d1ec20e5792fa6644ba2be8804d7e.png" alt="">
+    <img src="https://ykcop-public.youku.com/public/efa4ca55c5fe2b73844d187e1eebc1ea.png" alt="">
+    <img src="https://ykcop-public.youku.com/public/4ed5c326e25f4aa3b2eab0bd0af9f5cb.png" alt=""> -->
     <script>
         // 这里开始注册 Service Worker
-        if ('serviceWorker' in window.navigator) {
-            const registerServiceWorker = async () => {
-                if ("serviceWorker" in navigator) {
-                    try {
-                        const registration = await navigator.serviceWorker.register("./sw.js", {
-                            scope: "./",
-                        });
-                        console.log(registration, 'jaregistration');
-                        if (registration.installing) {
-                            console.log("正在安装 Service worker");
-                        } else if (registration.waiting) {
-                            console.log("已安装 Service worker installed");
-                        } else if (registration.active) {
-                            console.log("激活 Service worker");
+        // 将注册放到页面 load 之后，防止 SW 过早注册
+        window.addEventListener('load', () => {
+            if ('serviceWorker' in window.navigator) {
+                const registerServiceWorker = async () => {
+                    if ("serviceWorker" in navigator) {
+                        try {
+                            const registration = await navigator.serviceWorker.register("./sw.js", {
+                                scope: "./",
+                            });
+                            if (registration.installing) {
+                                console.log("正在安装 Service worker");
+                            } else if (registration.waiting) {
+                                console.log("已安装 Service worker installed");
+                            } else if (registration.active) {
+                                console.log("激活 Service worker");
+                            }
+                            navigator.serviceWorker.addEventListener('message', event => {
+                                if (event.data === 'swUpdated') {
+                                    // 显示一个消息通知用户更新已经准备好
+                                    let notification = document.createElement('div');
+                                    notification.innerHTML = `
+                                <p>一个新版本已经准备好了！</p>
+                                <button onclick="window.location.reload(true)">立即更新</button> `;
+                                    document.body.appendChild(notification);
+                                }
+                            })
+                        } catch (error) {
+                            console.error(`注册失败：${error}`);
                         }
-                    } catch (error) {
-                        console.error(`注册失败：${error}`);
                     }
-                }
-            };
-            registerServiceWorker();
-        }
+                };
+                registerServiceWorker();
+            }
+        })
+
     </script>
 </body>
 
